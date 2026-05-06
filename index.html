@@ -1,1492 +1,702 @@
-<!-- COLE APENAS O CONTEÚDO ABAIXO NO EDITOR HTML DO BLOGGER -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+<meta name="theme-color" content="#e8ff3c">
+<title>PLAYLIST MUSICAL - Acervo de Músicas</title>
 <style>
-/* RESET BLOGGER INTERFERENCE */
-.post-body, .post-body * { box-sizing: border-box; }
-.post-body a { text-decoration: none !important; color: inherit !important; }
-.post-body h2, .post-body h3 { margin: 0; }
-
-/* ROOT VARS */
-#vinil-app {
-  --bg: #07070d;
-  --bg2: #0f0f1a;
-  --bg3: #151525;
-  --surface: #1a1a2e;
-  --border: rgba(255,255,255,0.06);
-  --accent: #e8ff3c;
-  --accent2: #ff3c8e;
-  --accent3: #3cffb8;
-  --text: #f0f0f8;
-  --muted: #6b6b8a;
-}
-
-/* CONTAINER PRINCIPAL */
-#vinil-app {
-  width: 100% !important;
-  max-width: 100% !important;
-  min-height: 100vh;
-  background: radial-gradient(circle at 10% 10%, #1b1528 0%, #07070d 70%);
-  color: var(--text);
-  font-family: 'DM Sans', 'Segoe UI', sans-serif;
-  position: relative;
-  overflow-x: hidden;
-  margin: -15px -20px;
-  padding: 0;
-}
-
-/* FORÇAR RESET NO POST-OUTER DO BLOGGER */
-.post-outer { background: transparent !important; border: none !important; padding: 0 !important; margin: 0 !important; }
-.post-body { line-height: normal !important; font-size: 100% !important; }
-
-/* TOPBAR */
-#vinil-topbar {
-  background: rgba(7,7,13,0.95);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
-  padding: 0.8rem 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: sticky;
-  top: 0;
-  z-index: 500;
-  flex-wrap: wrap;
-  gap: 0.8rem;
-}
-
-.vinil-logo {
-  font-size: 1.8rem;
-  font-weight: 900;
-  color: var(--accent);
-  letter-spacing: 0.05em;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: Georgia, serif;
-}
-
-.vinil-logo-dot {
-  width: 8px; height: 8px;
-  background: var(--accent2);
-  border-radius: 50%;
-  animation: vdot 2s infinite;
-}
-@keyframes vdot {
-  0%,100%{transform:scale(1);opacity:1}
-  50%{transform:scale(1.5);opacity:.6}
-}
-
-.vinil-online {
-  font-size: 0.75rem;
-  color: var(--accent3);
-  font-family: monospace;
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-.vinil-online-dot {
-  width: 6px; height: 6px;
-  background: var(--accent3);
-  border-radius: 50%;
-  animation: vdot 1.5s infinite;
-}
-
-.vinil-stats {
-  display: flex;
-  gap: 1.5rem;
-}
-
-.vinil-stat { text-align: center; font-family: monospace; }
-.vinil-stat-n { font-size: 1rem; font-weight: 700; color: var(--accent); line-height: 1; }
-.vinil-stat-l { font-size: 0.55rem; text-transform: uppercase; color: var(--muted); letter-spacing: 0.1em; }
-
-/* SEARCH */
-#vinil-search-wrap {
-  padding: 0.8rem 1.5rem;
-  background: var(--bg2);
-  border-bottom: 1px solid var(--border);
-  position: relative;
-}
-
-#vinil-search {
-  width: 100%;
-  max-width: 500px;
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 0.7rem 1rem 0.7rem 2.4rem;
-  color: var(--text);
-  font-size: 0.9rem;
-  font-family: inherit;
-  transition: 0.2s;
-}
-
-#vinil-search:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(232,255,60,0.1);
-}
-
-.vinil-search-icon {
-  position: absolute;
-  left: 2.3rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--muted);
-  font-size: 0.85rem;
-}
-
-/* CATS BAR - scrollável horizontal */
-#vinil-cats-bar {
-  display: flex;
-  gap: 0.5rem;
-  overflow-x: auto;
-  padding: 0.8rem 1.5rem;
-  background: var(--bg2);
-  border-bottom: 1px solid var(--border);
-  scrollbar-width: none;
-}
-#vinil-cats-bar::-webkit-scrollbar { display: none; }
-
-.vinil-cat-pill {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.45rem 0.9rem;
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: 30px;
-  cursor: pointer;
-  transition: all 0.15s;
-  white-space: nowrap;
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--muted);
-  flex-shrink: 0;
-}
-
-.vinil-cat-pill:hover {
-  border-color: rgba(232,255,60,0.3);
-  color: var(--text);
-  background: #1e1e35;
-}
-
-.vinil-cat-pill.active {
-  background: rgba(232,255,60,0.1);
-  border-color: rgba(232,255,60,0.35);
-  color: var(--accent);
-}
-
-.vinil-cat-count {
-  background: rgba(255,255,255,0.06);
-  padding: 0.05rem 0.4rem;
-  border-radius: 20px;
-  font-size: 0.65rem;
-  font-family: monospace;
-}
-
-/* BREADCRUMB */
-#vinil-breadcrumb {
-  padding: 0.6rem 1.5rem;
-  font-size: 0.8rem;
-  color: var(--muted);
-  background: var(--bg);
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-#vinil-breadcrumb .vbc-current { color: var(--text); font-weight: 600; }
-#vinil-breadcrumb .vbc-home { cursor: pointer; }
-#vinil-breadcrumb .vbc-home:hover { color: var(--text); }
-
-/* CONTENT AREA */
-#vinil-content {
-  padding: 1.5rem;
-  min-height: 400px;
-}
-
-/* SECTION */
-.vinil-section-header {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  margin: 1.5rem 0 1rem;
-}
-
-.vinil-section-title {
-  font-size: 1.4rem;
-  font-weight: 800;
-  font-family: Georgia, serif;
-  letter-spacing: 0.02em;
-}
-
-.vinil-section-badge {
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  padding: 0.15rem 0.6rem;
-  border-radius: 20px;
-  font-size: 0.65rem;
-  font-family: monospace;
-  color: var(--muted);
-}
-
-.vinil-section-line {
-  flex: 1;
-  height: 1px;
-  background: var(--border);
-}
-
-/* GRID PRINCIPAL */
-.vinil-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-  gap: 1rem;
-}
-
-/* CARD */
-.vinil-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.vinil-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(232,255,60,0.3);
-  box-shadow: 0 15px 30px rgba(0,0,0,0.5);
-}
-
-.vinil-card-cover {
-  aspect-ratio: 1;
-  position: relative;
-  overflow: hidden;
-}
-
-.vinil-cover-gen {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 0.3rem;
-}
-
-.vinil-cover-shape {
-  font-size: 2.5rem;
-  opacity: 0.12;
-  position: absolute;
-}
-
-.vinil-cover-text {
-  font-family: Georgia, serif;
-  font-size: 0.78rem;
-  font-weight: 700;
-  text-align: center;
-  padding: 0.4rem;
-  color: rgba(255,255,255,0.92);
-  line-height: 1.2;
-  word-break: break-word;
-  max-width: 90%;
-  position: relative;
-  z-index: 2;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.6);
-}
-
-.vinil-card-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 55%);
-  opacity: 0;
-  transition: 0.2s;
-  display: flex;
-  align-items: flex-end;
-  padding: 0.8rem;
-}
-
-.vinil-card:hover .vinil-card-overlay { opacity: 1; }
-
-.vinil-dl-btn-small {
-  width: 100%;
-  background: var(--accent);
-  color: #000 !important;
-  border: none;
-  padding: 0.5rem;
-  border-radius: 6px;
-  font-weight: 700;
-  font-size: 0.75rem;
-  cursor: pointer;
-  letter-spacing: 0.05em;
-  text-decoration: none !important;
-  display: block;
-  text-align: center;
-}
-
-.vinil-card-info { padding: 0.8rem; }
-.vinil-card-title {
-  font-weight: 600;
-  font-size: 0.82rem;
-  margin-bottom: 0.2rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: var(--text);
-}
-.vinil-card-artist {
-  font-size: 0.72rem;
-  color: var(--muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-bottom: 0.6rem;
-}
-.vinil-card-foot {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.vinil-card-dl-direct {
-  font-size: 0.68rem;
-  font-weight: 700;
-  color: var(--accent) !important;
-  background: rgba(232,255,60,0.08);
-  border: 1px solid rgba(232,255,60,0.2);
-  padding: 0.15rem 0.5rem;
-  border-radius: 4px;
-  text-decoration: none !important;
-  transition: 0.15s;
-  letter-spacing: 0.03em;
-}
-.vinil-card-dl-direct:hover {
-  background: var(--accent);
-  color: #000 !important;
-  border-color: var(--accent);
-}
-.vinil-badge-mp3 {
-  font-size: 0.6rem;
-  font-family: monospace;
-  color: var(--accent3);
-  background: rgba(60,255,184,0.08);
-  border: 1px solid rgba(60,255,184,0.15);
-  padding: 0.1rem 0.35rem;
-  border-radius: 3px;
-}
-.vinil-badge-src { font-size: 0.6rem; font-family: monospace; color: var(--muted); }
-
-/* TOP LIST */
-.vinil-top-list { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1rem; }
-
-.vinil-top-item {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 0.8rem 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-
-.vinil-top-item:hover {
-  border-color: rgba(232,255,60,0.3);
-  background: var(--bg3);
-  transform: translateX(4px);
-}
-
-.vinil-top-rank {
-  font-family: Georgia, serif;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: rgba(255,255,255,0.06);
-  width: 36px;
-  flex-shrink: 0;
-  text-align: center;
-}
-
-.vinil-top-mini-cover {
-  width: 48px;
-  height: 48px;
-  border-radius: 6px;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-.vinil-top-info { flex: 1; overflow: hidden; }
-.vinil-top-title {
-  font-weight: 600;
-  font-size: 0.85rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-bottom: 0.2rem;
-}
-.vinil-top-artist { font-size: 0.7rem; color: var(--muted); }
-
-.vinil-top-dl {
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  color: var(--text) !important;
-  padding: 0.45rem 0.9rem;
-  border-radius: 6px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.15s;
-  white-space: nowrap;
-  flex-shrink: 0;
-  text-decoration: none !important;
-  display: inline-block;
-}
-.vinil-top-dl:hover { background: var(--accent); color: #000 !important; border-color: var(--accent); }
-
-/* CAT GRID HOME */
-.vinil-cat-grid-home {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 0.8rem;
-}
-
-.vinil-cat-card-home {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 1rem;
-  cursor: pointer;
-  transition: all 0.15s;
-  text-align: center;
-}
-.vinil-cat-card-home:hover {
-  border-color: rgba(232,255,60,0.3);
-  transform: translateY(-2px);
-  background: var(--bg3);
-}
-.vinil-cat-emoji { font-size: 1.6rem; margin-bottom: 0.4rem; }
-.vinil-cat-name { font-weight: 600; font-size: 0.8rem; margin-bottom: 0.2rem; color: var(--text); }
-.vinil-cat-cnt { font-size: 0.68rem; color: var(--muted); }
-
-/* MODAL */
-#vinil-modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.88);
-  backdrop-filter: blur(14px);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  padding: 1rem;
-}
-#vinil-modal-overlay.open { display: flex; }
-
-#vinil-modal {
-  background: var(--bg2);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 20px;
-  width: 100%;
-  max-width: 400px;
-  overflow: hidden;
-  animation: vmodalin 0.22s ease;
-  box-shadow: 0 40px 80px rgba(0,0,0,0.9);
-}
-@keyframes vmodalin {
-  from{opacity:0;transform:scale(0.95) translateY(8px)}
-  to{opacity:1;transform:scale(1) translateY(0)}
-}
-
-#vinil-modal-art {
-  height: 180px;
-  position: relative;
-  overflow: hidden;
-}
-
-.vinil-modal-close {
-  position: absolute;
-  top: 0.8rem;
-  right: 0.8rem;
-  background: rgba(0,0,0,0.6);
-  border: none;
-  color: white;
-  width: 30px; height: 30px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 0.9rem;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.vinil-modal-close:hover { background: rgba(255,255,255,0.15); }
-
-.vinil-modal-body { padding: 1.2rem 1.2rem 1.5rem; }
-
-#vinil-modal-cat {
-  font-size: 0.6rem;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  color: var(--accent);
-  font-family: monospace;
-  margin-bottom: 0.3rem;
-}
-#vinil-modal-title {
-  font-family: Georgia, serif;
-  font-size: 1.5rem;
-  font-weight: 700;
-  line-height: 1.1;
-  margin-bottom: 0.25rem;
-  color: var(--text);
-}
-#vinil-modal-artist { color: var(--muted); font-size: 0.85rem; margin-bottom: 1.2rem; }
-
-.vinil-modal-actions { display: flex; flex-direction: column; gap: 0.6rem; }
-
-#vinil-btn-dl {
-  width: 100%;
-  background: var(--accent);
-  color: #000 !important;
-  border: none;
-  padding: 0.9rem;
-  border-radius: 8px;
-  font-weight: 700;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: 0.15s;
-  letter-spacing: 0.05em;
-  text-decoration: none !important;
-  display: block;
-  text-align: center;
-}
-#vinil-btn-dl:hover { transform: scale(1.02); box-shadow: 0 8px 20px rgba(232,255,60,0.35); }
-
-#vinil-btn-copy {
-  width: 100%;
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text);
-  padding: 0.75rem;
-  border-radius: 8px;
-  font-weight: 500;
-  font-size: 0.85rem;
-  cursor: pointer;
-  transition: 0.15s;
-}
-#vinil-btn-copy:hover { border-color: rgba(255,255,255,0.2); background: var(--bg3); }
-
-/* TOASTS */
-#vinil-toasts {
-  position: fixed;
-  bottom: 1.2rem;
-  right: 1.2rem;
-  z-index: 99999;
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  pointer-events: none;
-}
-
-.vinil-toast {
-  background: var(--bg2);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-left: 3px solid var(--accent);
-  padding: 0.7rem 1rem;
-  border-radius: 8px;
-  font-size: 0.78rem;
-  max-width: 260px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.7);
-  animation: vtoast 0.2s ease;
-  color: var(--text);
-}
-.vinil-toast.pink { border-left-color: var(--accent2); }
-.vinil-toast.green { border-left-color: var(--accent3); }
-@keyframes vtoast {
-  from{transform:translateX(25px);opacity:0}
-  to{transform:translateX(0);opacity:1}
-}
-
-/* EMPTY */
-.vinil-empty { text-align: center; padding: 3rem 1rem; color: var(--muted); }
-.vinil-empty-icon { font-size: 2.5rem; margin-bottom: 0.8rem; opacity: 0.3; }
-
-/* SCROLLBAR */
-#vinil-app ::-webkit-scrollbar { width: 4px; height: 4px; }
-#vinil-app ::-webkit-scrollbar-track { background: var(--bg); }
-#vinil-app ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
-
-/* MOBILE */
-@media (max-width: 600px) {
-  #vinil-content { padding: 1rem; }
-  .vinil-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.7rem; }
-  .vinil-stats { display: none; }
-  .vinil-top-rank { display: none; }
-  #vinil-topbar { padding: 0.6rem 1rem; }
-}
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--bg:#07070d;--bg2:#0f0f1a;--bg3:#151525;--surface:#1a1a2e;--border:rgba(255,255,255,0.06);--accent:#e8ff3c;--accent2:#ff3c8e;--accent3:#3cffb8;--text:#f0f0f8;--muted:#6b6b8a;}
+body.light{--bg:#f5f5f5;--bg2:#fff;--card:#fff;--text:#1a1a1a;--text2:#555;--border:#ddd;}
+body{font-family:'DM Sans','Segoe UI',sans-serif;background:var(--bg);color:var(--text);transition:all 0.3s;overflow-x:hidden;}
+.meteor-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9998;overflow:hidden;}
+.meteor{position:absolute;width:2px;height:70px;background:linear-gradient(to bottom,var(--accent),transparent);opacity:0;animation:meteorFall 1.2s ease-out forwards;}
+@keyframes meteorFall{0%{transform:translateX(0) translateY(0) rotate(45deg);opacity:1;}100%{transform:translateX(250px) translateY(250px) rotate(45deg);opacity:0;}}
+.music-rain{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9997;overflow:hidden;}
+.music-note{position:absolute;font-size:24px;opacity:0;animation:noteFall 4s linear forwards;text-shadow:0 0 5px var(--accent);}
+@keyframes noteFall{0%{transform:translateY(-100px) rotate(0deg);opacity:0.9;}100%{transform:translateY(100vh) rotate(360deg);opacity:0;}}
+.theme-toggle{position:fixed;top:20px;right:20px;background:var(--surface);border:1px solid var(--border);border-radius:50px;padding:8px 16px;cursor:pointer;z-index:10000;display:flex;gap:8px;font-size:14px;font-weight:600;color:var(--text);transition:0.2s;backdrop-filter:blur(10px);}
+.theme-toggle:hover{border-color:var(--accent);}
+.container{max-width:1300px;margin:0 auto;padding:0 20px;}
+header{padding:20px 0;}
+.top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px;margin-bottom:20px;}
+#menu ul{display:flex;gap:20px;list-style:none;flex-wrap:wrap;}
+#menu ul li a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;transition:0.2s;cursor:pointer;}
+#menu ul li a:hover{color:var(--accent);}
+.logo{text-align:center;margin:20px 0;}
+.logo img{max-width:320px;width:100%;}
+#search{max-width:500px;margin:0 auto 30px;display:flex;gap:10px;}
+#search input{flex:1;padding:12px 20px;border-radius:50px;border:1px solid var(--border);background:var(--bg3);color:var(--text);font-size:16px;outline:none;}
+#search input:focus{border-color:var(--accent);}
+#search button{background:var(--accent);border:none;padding:0 25px;border-radius:50px;color:#000;font-weight:bold;cursor:pointer;transition:0.2s;}
+#search button:hover{background:var(--accent2);}
+.cat-wrapper{position:relative;margin:30px 0;}
+.cat-title{text-align:center;font-size:20px;font-weight:700;margin-bottom:14px;color:var(--text);}
+.cat-title:after{content:'';display:block;width:60px;height:2px;background:var(--accent);margin:6px auto 0;}
+.cat-scroll{display:flex;gap:14px;overflow-x:auto;padding:14px 60px;scroll-behavior:smooth;}
+.cat-scroll::-webkit-scrollbar{display:none;}
+.cat-scroll a{display:inline-block;flex:0 0 auto;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(6px);color:var(--text);padding:8px 20px;border-radius:999px;font-size:13px;text-decoration:none;white-space:nowrap;transition:all 0.25s ease;cursor:pointer;}
+.cat-scroll a:hover{background:var(--accent);color:#000;transform:scale(1.08);}
+.cat-scroll a.active{background:var(--accent);color:#000;}
+.cat-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.7);backdrop-filter:blur(6px);color:#fff;border:1px solid rgba(255,255,255,0.1);width:36px;height:36px;border-radius:50%;cursor:pointer;z-index:20;display:flex;align-items:center;justify-content:center;transition:0.2s;}
+.cat-btn.prev{left:10px;}.cat-btn.next{right:10px;}
+.cat-btn:hover{background:var(--accent);}
+.post_list{margin:40px 0;}
+.main_title h2{text-align:center;font-weight:700;font-size:28px;margin-bottom:30px;color:var(--text);}
+.row{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:25px;}
+.post{transition:transform 0.3s;}
+.post:hover{transform:translateY(-8px);}
+.inner{background:var(--surface);border-radius:12px;overflow:hidden;border:1px solid var(--border);}
+.thumb{aspect-ratio:1;position:relative;overflow:hidden;}
+.thumb-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 30% 40%, rgba(255,255,255,0.1) 0%, transparent 70%);z-index:2;pointer-events:none;}
+.thumb-tv-effect{position:absolute;top:0;left:0;width:100%;height:100%;background:repeating-linear-gradient(0deg, rgba(0,0,0,0.5) 0px, rgba(0,0,0,0.5) 2px, transparent 2px, transparent 6px);z-index:3;pointer-events:none;opacity:0.6;}
+.thumb-scanline{position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(180deg, transparent 0%, rgba(232,255,60,0.08) 50%, transparent 100%);z-index:4;pointer-events:none;animation:scanMove 3s linear infinite;}
+@keyframes scanMove{0%{transform:translateY(-100%);}100%{transform:translateY(100%);}}
+.thumb-glitch{position:absolute;top:0;left:0;width:100%;height:100%;z-index:5;pointer-events:none;mix-blend-mode:overlay;animation:glitchPulse 4s infinite;}
+@keyframes glitchPulse{0%,100%{opacity:0;}10%,20%,30%,40%,50%,60%,70%,80%,90%{opacity:0.1;}15%,25%,35%,45%,55%,65%,75%,85%{opacity:0.25;}}
+.thumb-content{width:100%;height:100%;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;position:relative;z-index:1;}
+.thumb-content h4{color:white;margin-top:12px;font-size:15px;text-shadow:0 0 10px rgba(0,0,0,0.8);}
+.title{padding:12px;text-align:center;}
+.title a{color:var(--text);text-decoration:none;font-weight:600;font-size:14px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;}
+.artist{font-size:12px;color:var(--muted);text-align:center;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.tags{padding:0 12px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:8px;}
+.badge-format{font-size:11px;padding:4px 8px;border-radius:20px;background:rgba(232,255,60,0.15);color:var(--accent);font-weight:600;}
+.btn-download{display:block;background:var(--accent);color:#000;text-align:center;padding:10px;margin:12px;border-radius:8px;text-decoration:none;font-weight:700;font-size:13px;transition:0.2s;}
+.btn-download:hover{background:var(--accent2);transform:scale(1.02);color:#000;}
+.pagination{text-align:center;margin:40px 0;display:flex;justify-content:center;gap:10px;flex-wrap:wrap;}
+.pagination .current,.pagination a{padding:10px 15px;background:var(--surface);border:1px solid var(--border);border-radius:8px;text-decoration:none;color:var(--text);transition:0.2s;cursor:pointer;}
+.pagination .current,.pagination a:hover{background:var(--accent);color:#000;}
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:20000;align-items:center;justify-content:center;backdrop-filter:blur(10px);}
+.modal.open{display:flex;}
+.modal-content{background:var(--surface);max-width:400px;width:90%;border-radius:20px;overflow:hidden;border:1px solid var(--accent);}
+.modal-header{background:var(--accent);padding:20px;text-align:center;color:#000;}
+.modal-body{padding:20px;text-align:center;}
+.modal-body .download-link{background:var(--accent);color:#000;display:block;padding:15px;border-radius:10px;text-decoration:none;font-weight:bold;margin:15px 0;}
+.close-modal{background:var(--bg2);border:1px solid var(--border);padding:10px 20px;border-radius:8px;cursor:pointer;color:var(--text);}
+footer{background:var(--bg2);padding:40px 0 20px;margin-top:50px;border-top:1px solid var(--border);text-align:center;}
+footer .menu ul{display:flex;justify-content:center;gap:20px;list-style:none;margin:20px 0;flex-wrap:wrap;}
+footer .menu ul li a{color:var(--muted);text-decoration:none;font-size:13px;cursor:pointer;}
+.bottom{font-size:12px;color:var(--muted);margin-top:20px;}
+@media (max-width:768px){.row{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:15px;}}
 </style>
-
-<!-- FONTES -->
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-
-<!-- APP -->
-<div id="vinil-app">
-
-  <!-- TOPBAR -->
-  <div id="vinil-topbar">
-    <div style="display:flex;align-items:center;gap:1rem;">
-      <div class="vinil-logo">VINIL<div class="vinil-logo-dot"></div></div>
-      <div class="vinil-online">
-        <div class="vinil-online-dot"></div>
-        <span id="vinil-online-count">87</span> online
-      </div>
-    </div>
-    <div class="vinil-stats">
-      <div class="vinil-stat">
-        <div class="vinil-stat-n" id="vinil-total-albuns">0</div>
-        <div class="vinil-stat-l">Álbuns</div>
-      </div>
-      <div class="vinil-stat">
-        <div class="vinil-stat-n" id="vinil-total-cats">0</div>
-        <div class="vinil-stat-l">Categorias</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SEARCH -->
-  <div id="vinil-search-wrap">
-    <span class="vinil-search-icon">🔍</span>
-    <input id="vinil-search" type="text" placeholder="Buscar álbum, artista..." autocomplete="off"/>
-  </div>
-
-  <!-- CATS BAR -->
-  <div id="vinil-cats-bar"></div>
-
-  <!-- BREADCRUMB -->
-  <div id="vinil-breadcrumb">
-    <span class="vbc-home" onclick="vShowHome()">Início</span>
-  </div>
-
-  <!-- CONTENT -->
-  <div id="vinil-content"></div>
-
+</head>
+<body>
+<div class="meteor-container" id="meteorContainer"></div>
+<div class="music-rain" id="musicRain"></div>
+<div class="theme-toggle" onclick="toggleTheme()">🌓 Tema Claro/Escuro</div>
+<header>
+<div class="container">
+<div class="top"><a href="#" class="to_home" onclick="showHome()">← Voltar</a><nav id="menu"><ul><li><a onclick="showHome()">Início</a></li><li><a onclick="filterCategory('all')">Álbuns</a></li></ul></nav></div>
+<div class="logo"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 550 80'%3E%3Ctext x='15' y='55' font-family='Montserrat' font-size='38' font-weight='900' fill='%23e8ff3c'%3EPLAYLIST%3C/text%3E%3Ctext x='195' y='55' font-family='Montserrat' font-size='32' font-weight='600' fill='%23ffffff'%3EMUSICAL%3C/text%3E%3C/svg%3E" alt="PLAYLIST MUSICAL"></div>
+<form id="search" onsubmit="event.preventDefault();searchMovies()"><input id="searchInput" type="text" placeholder="Buscar álbum, artista..."><button type="submit">🔍</button></form>
 </div>
-
-<!-- MODAL -->
-<div id="vinil-modal-overlay" onclick="vHandleModalClick(event)">
-  <div id="vinil-modal">
-    <div id="vinil-modal-art">
-      <button class="vinil-modal-close" onclick="vCloseModal()">✕</button>
-    </div>
-    <div class="vinil-modal-body">
-      <div id="vinil-modal-cat"></div>
-      <div id="vinil-modal-title"></div>
-      <div id="vinil-modal-artist"></div>
-      <div class="vinil-modal-actions">
-        <a id="vinil-btn-dl" href="#" target="_blank" rel="noopener noreferrer">⬇ BAIXAR AGORA</a>
-        <button id="vinil-btn-copy">🔗 Copiar link</button>
-      </div>
-    </div>
-  </div>
+</header>
+<div class="container">
+<div class="cat-wrapper"><div class="cat-title">Categorias</div><button class="cat-btn prev" onclick="scrollCats(-250)">❮</button><div class="cat-scroll" id="catScroll"></div><button class="cat-btn next" onclick="scrollCats(250)">❯</button></div>
+<div class="post_list"><div class="main_title"><h2>📀 Acervo Musical <b style="color:#e8ff3c">PLAYLIST MUSICAL</b></h2></div><div class="row" id="moviesGrid"></div><div class="pagination" id="pagination"></div></div>
 </div>
-
-<!-- TOASTS -->
-<div id="vinil-toasts"></div>
+<footer><div class="container"><div class="logo"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 50'%3E%3Ctext x='10' y='35' font-family='Montserrat' font-size='24' font-weight='900' fill='%23e8ff3c'%3EPLAYLIST%3C/text%3E%3Ctext x='170' y='35' font-family='Montserrat' font-size='20' font-weight='600' fill='%23ffffff'%3EMUSICAL%3C/text%3E%3C/svg%3E" alt=""></div><nav class="menu"><ul><li><a onclick="showHome()">Início</a></li></ul></nav><div class="bottom">© 2026 PLAYLIST MUSICAL - Acervo completo de músicas</div></footer>
+<div class="modal" id="movieModal"><div class="modal-content"><div class="modal-header"><h3 id="modalTitle">Álbum</h3></div><div class="modal-body"><p id="modalArtist"></p><a href="#" id="modalLink" class="download-link" target="_blank">⬇ BAIXAR AGORA</a><button class="close-modal" onclick="closeModal()">Fechar</button></div></div></div>
 
 <script>
-(function(){
-// ============ DATA ============
-var CATS=[
-  {id:'super',nome:'Super Playlist',icon:'⭐'},
-  {id:'jovempan',nome:'Jovem Pan',icon:'📻'},
-  {id:'sertanejo',nome:'Sertanejo Raiz',icon:'🎸'},
-  {id:'elektrodance',nome:'Dance Elektro',icon:'⚡'},
-  {id:'colhouseflash',nome:'Euro House & Flash',icon:'💿'},
-  {id:'eurodance',nome:'Eurodance 90s',icon:'🎵'},
-  {id:'hardhouse',nome:'Hard House',icon:'🔥'},
-  {id:'hiphop',nome:'Hip Hop',icon:'🎤'},
-  {id:'romantico',nome:'Românticos',icon:'💗'},
-  {id:'supercol',nome:'Super Coleções',icon:'📀'},
-  {id:'gaucho',nome:'Música Gaúcha',icon:'🌾'},
-  {id:'novelas',nome:'Novelas',icon:'📺'},
-  {id:'elektrodance2',nome:'Elektro Dance Vol.',icon:'🎧'},
-  {id:'versoes',nome:'Versões Remix',icon:'🔄'},
-  {id:'tropical',nome:'Tropical Dance',icon:'🌴'},
-  {id:'reggae',nome:'Reggae',icon:'🇯🇲'},
-  {id:'poprock',nome:'Pop Rock',icon:'🎸'},
-  {id:'pop',nome:'Pop',icon:'🌟'},
-  {id:'personalizados',nome:'Personalizados',icon:'🎛️'},
-  {id:'nacionais',nome:'Nacionais',icon:'🇧🇷'},
-  {id:'megamix',nome:'Megamix',icon:'🌀'},
-  {id:'italo',nome:'Ítalo Dance',icon:'🇮🇹'},
-  {id:'ccb',nome:'Hinos CCB',icon:'✝️'},
-  {id:'groove',nome:'Groove Energy',icon:'💥'},
-  {id:'flashback',nome:'Flashback & Ítalo',icon:'🕺'},
-  {id:'colmusical',nome:'Coleções Musicais',icon:'🎼'},
-  {id:'underground',nome:'Underground 90-2000',icon:'🌊'},
-  {id:'rock',nome:'Clássicos do Rock',icon:'🤘'},
-  {id:'infantil',nome:'Infantil',icon:'🎠'},
-  {id:'acapellas',nome:'Acapellas',icon:'🎙️'},
-  {id:'extended',nome:'Extended',icon:'🔊'},
-  {id:'mamonas',nome:'Mamonas Assassinas',icon:'💀'},
+// ==================== TODOS OS ÁLBUNS COM LINKS REAIS ====================
+const CATS = [
+{id:'super',nome:'Super Playlist'},{id:'jovempan',nome:'Jovem Pan'},{id:'sertanejo',nome:'Sertanejo Raiz'},{id:'elektrodance',nome:'Dance Elektro'},{id:'colhouseflash',nome:'Euro House & Flash'},{id:'eurodance',nome:'Eurodance 90s'},{id:'hardhouse',nome:'Hard House'},{id:'hiphop',nome:'Hip Hop'},{id:'romantico',nome:'Românticos'},{id:'supercol',nome:'Super Coleções'},{id:'gaucho',nome:'Música Gaúcha'},{id:'novelas',nome:'Novelas'},{id:'elektrodance2',nome:'Elektro Dance Vol.'},{id:'versoes',nome:'Versões Remix'},{id:'tropical',nome:'Tropical Dance'},{id:'reggae',nome:'Reggae'},{id:'poprock',nome:'Pop Rock'},{id:'pop',nome:'Pop'},{id:'personalizados',nome:'Personalizados'},{id:'nacionais',nome:'Nacionais'},{id:'megamix',nome:'Megamix'},{id:'italo',nome:'Ítalo Dance'},{id:'ccb',nome:'Hinos CCB'},{id:'groove',nome:'Groove Energy'},{id:'flashback',nome:'Flashback & Ítalo'},{id:'colmusical',nome:'Coleções Musicais'},{id:'underground',nome:'Underground 90-2000'},{id:'rock',nome:'Clássicos do Rock'},{id:'infantil',nome:'Infantil'},{id:'acapellas',nome:'Acapellas'},{id:'extended',nome:'Extended'},{id:'mamonas',nome:'Mamonas Assassinas'}
 ];
 
-var ALBUNS=[
-  {id:1,t:"2 Brothers On The 4th Floor - Dreams (2LP)",a:"2 Brothers",cat:"super",link:"https://1024terabox.com/s/1LdDWv-B6isSLa4aDvBz3uw"},
-  {id:2,t:"2 Brothers - The Best Remixes (30th Anniversary)",a:"2 Brothers",cat:"super",link:"https://1024terabox.com/s/1cvDIqaL1VmTvSdfSjLAdiA"},
-  {id:3,t:"2 Unlimited - No Limits 1993",a:"2 Unlimited",cat:"super",link:"https://1024terabox.com/s/10DzAj36DhJDKNSfA3yn3Sg"},
-  {id:4,t:"2 Unlimited - No Limit Complete Best Of",a:"2 Unlimited",cat:"super",link:"https://1024terabox.com/s/1CLulNNvhF33BBb-SRVN2MA"},
-  {id:5,t:"Anos 90 - Vol.1.2.3 - 1998",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/12Lgj7ewTScp69PGqWIgU6w"},
-  {id:6,t:"Back To New Wave - Vol.3 - 1994",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1cf-kLeQTuwDcX5ZJXj4fUQ"},
-  {id:7,t:"Bad Boy Joe - Best Of Freestyle Megamix Vol.5",a:"Bad Boy Joe",cat:"super",link:"https://1024terabox.com/s/1TvIVOxDfB3eMRodFh80ddw"},
-  {id:8,t:"Bolero Mix 17 - 2000",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1qPFWF57-06vT3uyi-Yze_g"},
-  {id:9,t:"Captain Jack",a:"Captain Jack",cat:"super",link:"https://1024terabox.com/s/1F-hisDrHAIgpn5M_9mPy5A"},
-  {id:10,t:"Discoteka The Best - Vol.14 - 2000",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1Es16Pj9QnhNaxDlvJAGbmQ"},
-  {id:11,t:"Dj Sound Club Tracks 3 (1995)",a:"DJ Sound Club",cat:"super",link:"https://1024terabox.com/s/1JtUdwIWsg0BZbGVG6NW_xA"},
-  {id:12,t:"Express Of Sound - Real Vibration (1996) FLAC",a:"Express Of Sound",cat:"super",link:"https://1024terabox.com/s/1pYCfmzqqFA7b1b9mKQ8MuQ"},
-  {id:13,t:"FLASH HOUSE",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1ZwtkMpyUfLbTHpPqOEv8Sw"},
-  {id:14,t:"Festa Da Cidade - 1998",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1q3ifGe8VlrdfzxfWtNKBkw"},
-  {id:15,t:"HITS DANCE - FM 2007",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1HA8ko7JvNx5barZ0D8GQtw"},
-  {id:16,t:"Hard! Euro! Italo! Remix!",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/12EA3ZB6G_z-3PRUAKAtQPg"},
-  {id:17,t:"Hot Dance Hits - 1985",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1OC9cMCjhj5vFaEyIRUYqcw"},
-  {id:18,t:"Ice MC - The Best Of Ice MC",a:"Ice MC",cat:"super",link:"https://1024terabox.com/s/1ZUF2ecSSSgQn0rvRHx59JQ"},
-  {id:19,t:"MC Sar & The Real McCoy - The Real Best",a:"MC Sar",cat:"super",link:"https://1024terabox.com/s/10ZDtqRufDnkoB9OrcgOyGg"},
-  {id:20,t:"N'dance Vol.2 - Mixed By Global Deejays",a:"Global Deejays",cat:"super",link:"https://1024terabox.com/s/1TcjZYSQj4j_pHs6NVH0irg"},
-  {id:21,t:"Nash Beats - Eat This (1998) FLAC",a:"Nash Beats",cat:"super",link:"https://1024terabox.com/s/17YkVsgjrl04ncx2ppqZ6ug"},
-  {id:22,t:"Passion Play - Baby Can't You See (1991)",a:"Passion Play",cat:"super",link:"https://1024terabox.com/s/1w5NVL9AYawJHpVtTRYWSEA"},
-  {id:23,t:"Plastic Age Ft. Sara P. - All Boys (1994) WAV",a:"Plastic Age",cat:"super",link:"https://1024terabox.com/s/1MRy7_f68-vAS_ivFEzWXtQ"},
-  {id:24,t:"Playlist - Vol.1 - 2019",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/154OB0cxasA8RL0D9GHEpcA"},
-  {id:25,t:"Playlist - Vol.2 - 2019",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1PJCpuXfc3ubyKMCMGL-XIQ"},
-  {id:26,t:"Playlist - Vol.4 - 2019",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1gJ7S_LzVEHmd2BhQ9Q3XeA"},
-  {id:27,t:"Playlist - Vol.5 - 2019",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/17VU5ui46g6IeuSAX2pE1ng"},
-  {id:28,t:"Playlist - Vol.6 - 2019",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1HI2kxRzmrNT_9Y3--yKOuA"},
-  {id:29,t:"Playlist - Vol.7 - 2019",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1WGfE_SnPRJGKTYNkk6-5rw"},
-  {id:30,t:"Playlist - Vol.8 - 2019",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1NQVKAvIWORFzpwlHWKKNUA"},
-  {id:31,t:"Playlist - Vol.9 - 2019",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/14KqFyn1Ud0OfGKvg_VmTqg"},
-  {id:32,t:"Playlist A Voz Do Brasil - 2021",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1YRt-uCXzLqqVV3UfqlI8og"},
-  {id:33,t:"Playlist Novos Flash Back - Vol.1 - 2018",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1oKhd_Dv63qD3UgiKGr9weg"},
-  {id:34,t:"Playlist Novos Flash Back - Vol.2 - 2020",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1AvAziUgN4ZDvPui6Ue6IGA"},
-  {id:35,t:"Playlist Novos Flash Back - Vol.3 - 2021",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1Nv3cFQPI_9fYHhta3getXw"},
-  {id:36,t:"Ramirez - Bomba (Helicopter UK Remix) 1994 FLAC",a:"Ramirez",cat:"super",link:"https://1024terabox.com/s/1W94hpFAt3mz-pzAbXlPC9Q"},
-  {id:37,t:"Rednex - Cotton Eye Joe 2002 FLAC",a:"Rednex",cat:"super",link:"https://1024terabox.com/s/16V_X82pGVA-QVfR5DStrpg"},
-  {id:38,t:"Rozalla",a:"Rozalla",cat:"super",link:"https://1024terabox.com/s/1YyDBiaWYKIH23F9vhP1nng"},
-  {id:39,t:"Summer House Hits Vol.2 - 1990",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/144_681VMqJkJVXQkbiq5eg"},
-  {id:40,t:"Super Dance Hits",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1m-CtCEFDgJdyaYZh1qjsRw"},
-  {id:41,t:"Supermix - El Primer Megamix Ilustrado - 2019",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1Blb36VE1DxKM_0TylGdGmw"},
-  {id:42,t:"VA - Dance Chart 3",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/14nNCzeOAU2TLbP9xewbZqw"},
-  {id:43,t:"Vengaboys - The Party Album (1999)",a:"Vengaboys",cat:"super",link:"https://1024terabox.com/s/1Z-VbOHVSap4o3oo4FWNyMg"},
-  {id:44,t:"Whigfield - I Want To Love (1996) FLAC",a:"Whigfield",cat:"super",link:"https://1024terabox.com/s/1bGIxYD8LaBe_P1i-OzRNMw"},
-  {id:45,t:"Yabba Dabba Dance - 1995",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1icTrH-5GwHaIQXnUU7sMSA"},
-  {id:46,t:"74.5 - Uma Onda No Ar - 1994",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/15Btejnggib6kbeaIXJ3FxQ"},
-  {id:47,t:"80s Remix - 12 Inch Dance - 2017",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1G7HorlujYxW8awuO-Gk5TA"},
-  {id:48,t:"Ace Of Base - Happy Nation - 1993",a:"Ace Of Base",cat:"super",link:"https://1024terabox.com/s/1vnkMWZLJKRh4Q7yxdbXqLw"},
-  {id:49,t:"Adrenalina Transamerica FM - 2007",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1eWSCzS2hwwDFTz-JQp7YZw"},
-  {id:50,t:"Back To New Wave - Vol.1 - 1994",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/10bZ_W_tcDp3jvqctRSIbZg"},
-  {id:51,t:"Bombando as Pistas Metropolitana 98.5 FM",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1Eg6grV-MVBCs8U3d2-LoNA"},
-  {id:52,t:"Club Rotation - Vol.6 - 1999",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1oHO2MI9M32d59Ig5J56MjA"},
-  {id:53,t:"Conexao Planeta Mix Studio FM-99.1 - 2001",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1iUk-6eI1O6auLal2oW-LVA"},
-  {id:54,t:"Cyborg - Tecno Dance - 2004",a:"Cyborg",cat:"super",link:"https://1024terabox.com/s/1DSE5B9w49Etf_26bI-AKQQ"},
-  {id:55,t:"Dance Assistence - 1995",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1mQM5Qc-XSq91LcmD5DFgiA"},
-  {id:56,t:"Dance Chart - 3",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/14tBxXrqcrHgDtghhjIVP0g"},
-  {id:57,t:"Dance Factory",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1LiC3DNOPjZQSXWep2SJB_A"},
-  {id:58,t:"Decibel - Vol.1.2 - XTC Beats 1991-1992",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/160F9Ply381-LjPqcYweStQ"},
-  {id:59,t:"Dj Kadoo - Space Mu Ano 5 - 2008",a:"DJ Kadoo",cat:"super",link:"https://1024terabox.com/s/11QMaZ4MV4A5fhgUKL2e0uQ"},
-  {id:60,t:"Dream Dance - Vol.84 - 2018",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1PU8p9MnpZ9tlE6PIlGMDxQ"},
-  {id:61,t:"European Dance Hits vol. 1",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1sMpTl5lHQUjO7nGNjchSTA"},
-  {id:62,t:"FESTA DA SUCESSO 96,9",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/16yU3cJovYqm-yi-U9QEP_w"},
-  {id:63,t:"Future Trance - Vol.6 - 1998",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1CdbaqLlQElaRmN2o76XzaQ"},
-  {id:64,t:"Greatest Hits - Lenny Kravitz - 2000",a:"Lenny Kravitz",cat:"super",link:"https://1024terabox.com/s/15hKKDPalGqvWarlrwSX1vA"},
-  {id:65,t:"HOT SINGLES 5",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/13z3R1HH0MsRtGbjERaVgbw"},
-  {id:66,t:"House Nation - Vol.1.2 - 1994",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1SaVRvksmRsFO1jgqb9AIYQ"},
-  {id:67,t:"House Remix Internacional - 1990",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1GTxzEZ-kPgSJrCt28voSmA"},
-  {id:68,t:"Ice MC - Ice N Green (The Remix Album) 1995",a:"Ice MC",cat:"super",link:"https://1024terabox.com/s/17guoo_THDUtSzBi1FDN4nw"},
-  {id:69,t:"Loving You - 2003",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1N4Q_JHN9LgvwXEkQa6MMiw"},
-  {id:70,t:"Lunch Break - Vol.8 CD 1 - CD 2",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1ln1kqNOYHOAC_Nixjx1UuA"},
-  {id:71,t:"Luv! TVZ - Vol.3 - 2007",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1uy1Wg75vPWcZgf-GkVRvRw"},
-  {id:72,t:"Maxi Dance Hits - 1993",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1n-iqgpc1msAmqORZEfXA2A"},
-  {id:73,t:"Maxi Dance Sensation - Vol.5 - 1991",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1nSD5u_Trw-crrV1rti_h3g"},
-  {id:74,t:"Maxi Disco - Vol.1 - 2008",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1Xpw-AYLgjaHpjG1lktXfnA"},
-  {id:75,t:"Mega Dance - Remixes Nonstop - Vol.1 - 1996",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1g7XTgjf0KoXWdzIB2oNX9g"},
-  {id:76,t:"Megamix 100% Dance Classics",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/15vuLkq_6ayVkljMZ718VLA"},
-  {id:77,t:"Mix Dance So As Balas Volume 4",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1ULAifaqQgqzz-lw3RqMOSw"},
-  {id:78,t:"Moonight - 2000",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/12Mz2Ry_V61EKe_RoOVBALg"},
-  {id:79,t:"More Greatest Hits Of The 80s - 2000",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1gimZsCQNkteo8wsVFfzEiA"},
-  {id:80,t:"Move The House - Vol.1 - 1991",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1RXza70uMO-NUS54K7LQmPw"},
-  {id:81,t:"Original Hits - 80s 12'' - 2009",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1_po4ffvv5Iim3DDqgRYhpA"},
-  {id:82,t:"Planeta Mix 20 Anos - 18 Super Hits - 2018",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/16b_QTLCSmShFDhbXLFHijg"},
-  {id:83,t:"SOM NA CAIXA DJs",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1_YO2Fbm54XL86lTK3xKAAQ"},
-  {id:84,t:"Sonia Davis - 2008",a:"Sonia Davis",cat:"super",link:"https://1024terabox.com/s/1KyaAUy_yVywG6Ue7LMt3LQ"},
-  {id:85,t:"Spotlight - Dance Hits - Vol.2 - 1993",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1fjdUcABkoc2pX84EQTdybg"},
-  {id:86,t:"Stiletto Dance Hits - 1990",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1xkjtfFxKBr0fjncMkvoigQ"},
-  {id:87,t:"Super Dance 2000",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1HoZHSlLcz557PvrCeVQ8PQ"},
-  {id:88,t:"Surf Music - 1998",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1QtqkxRM-JkcjXpP98qqO7A"},
-  {id:89,t:"Techno Cop - The Best And More (1992)",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1PHtpZLYNVNKT4bJ7AN5ulg"},
-  {id:90,t:"Techno Trax Vol. 21 - 1998 (CD 1 & 2)",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1svP5UkePXaYs9NnF4Wn9Mg"},
-  {id:91,t:"Technomania - 1992",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1_O1MNO_CPdA6Pq_SQPT86w"},
-  {id:92,t:"Tenda Eletronica",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1DGd7zoz93WYwx5erRS7QWQ"},
-  {id:93,t:"The Best Of - Ice Mc",a:"Ice MC",cat:"super",link:"https://1024terabox.com/s/1uA8AQ004tTAMfYvSpaZJxA"},
-  {id:94,t:"The Remix Tape - 1985",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1Bh2R3mlbfQ5EdxbcybpOwg"},
-  {id:95,t:"The Underdog Project - Greatest Hits Vol.1 - 2003",a:"The Underdog Project",cat:"super",link:"https://1024terabox.com/s/1RL5nL0aVO_c1tSR6qJDRfw"},
-  {id:96,t:"Top 18 - Paradoxx Music - Vol.2 - 1999",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/176VvlwMYmu4bdB2WhO3r0A"},
-  {id:97,t:"V.A. - Cash Box - O Som Acima Do Normal Vol. 1 (1982)",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1sX1Z7qbA2W_w-MVAXRDOIA"},
-  {id:98,t:"VA - 90's Club Megamix 2CDs - 2011 SYNDIKAT",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1BfVv5XDHlx_saelvTUsW_A"},
-  {id:99,t:"World Of Trance - Vol.10 - 1999",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1vGJjiudAnEX4CLJBMhCUvA"},
-  {id:100,t:"As 7 Melhores Jovem Pan - 2002",a:"Jovem Pan",cat:"jovempan",link:"https://1024terabox.com/s/1kkfNel0kzg5LbH4c24F27A"},
-  {id:101,t:"As 7 Melhores Jovem Pan - 2003",a:"Jovem Pan",cat:"jovempan",link:"https://1024terabox.com/s/1eXvdTSPNHyFzh5KPxFR8lQ"},
-  {id:102,t:"As Melhores das 7 Melhores da Jovem Pan (CD Duplo) 2000",a:"Jovem Pan",cat:"jovempan",link:"https://1024terabox.com/s/1fia8zxLs4Gi9YOnh3B1e-A"},
-  {id:103,t:"Jovem Pan - 40 Graus - 1996",a:"Jovem Pan",cat:"jovempan",link:"https://1024terabox.com/s/1APTc_WUbEDEDBNGEJbj5Vg"},
-  {id:104,t:"Planeta Dj Jovem Pan - Hits 2010",a:"Jovem Pan",cat:"jovempan",link:"https://1024terabox.com/s/1ySNG_e1321IfqNiCgPuAiA"},
-  {id:105,t:"Planeta Dj Jovem Pan - Winter 2012",a:"Jovem Pan",cat:"jovempan",link:"https://1024terabox.com/s/1vt6ri0QR2rcU2zkk-BXv-g"},
-  {id:106,t:"Revista Da Pan (1998) - Especial Mais Bonitos",a:"Jovem Pan",cat:"jovempan",link:"https://1024terabox.com/s/1vBBR8AohqPpzJB-DGvaFuw"},
-  {id:107,t:"Revista Jovem Pan - 1997",a:"Jovem Pan",cat:"jovempan",link:"https://1024terabox.com/s/1FaKFZLUD9X2B5LhonfmXFA"},
-  {id:108,t:"Joao Mineiro e Marciano",a:"Joao Mineiro e Marciano",cat:"sertanejo",link:"https://1024terabox.com/s/1rf0u4lAhDJsc-Uqz8PSX3A"},
-  {id:109,t:"Zeze Di Camargo & Luciano - 1993",a:"Zeze Di Camargo",cat:"sertanejo",link:"https://1024terabox.com/s/1PCceU8eo8T687RqKFXkzfg"},
-  {id:110,t:"Trio Parada Dura",a:"Trio Parada Dura",cat:"sertanejo",link:"https://1024terabox.com/s/1UUyzRkD-F60Z3bYxGm4-wQ"},
-  {id:111,t:"Tiao Carreiro e Pardinho",a:"Tiao Carreiro",cat:"sertanejo",link:"https://1024terabox.com/s/1JUTA-BUFOPDHn4vDXmXpPw"},
-  {id:112,t:"Tiao Carreiro - Os Gigantes - 2002",a:"Tiao Carreiro",cat:"sertanejo",link:"https://1024terabox.com/s/1AvYv-iiOviNImDKtIHvVlg"},
-  {id:113,t:"Chico Rey e Parana",a:"Chico Rey e Parana",cat:"sertanejo",link:"https://1024terabox.com/s/1KCMTMGikLQvb4R05hOPsxw"},
-  {id:114,t:"Gino & Geno - Warner 30 Anos - 2006",a:"Gino & Geno",cat:"sertanejo",link:"https://1024terabox.com/s/1dLKhyNGZ9fmbQBFVuAKsCA"},
-  {id:115,t:"Colecao Trio Parada Dura CDs",a:"Trio Parada Dura",cat:"sertanejo",link:"https://1024terabox.com/s/1DG-RUYap7bS5l48tVlMs_Q"},
-  {id:116,t:"Milionario e Jose Rico",a:"Milionario e Jose Rico",cat:"sertanejo",link:"https://1024terabox.com/s/1flFflUWySyIH-V7Yi-ZOTw"},
-  {id:117,t:"Zeze Di Camargo - 1986",a:"Zeze Di Camargo",cat:"sertanejo",link:"https://1024terabox.com/s/1pzxwZCvIL1HGdUSRhuknqg"},
-  {id:118,t:"Trio Parada Dura - Tapete Colorido - 1999",a:"Trio Parada Dura",cat:"sertanejo",link:"https://1024terabox.com/s/1-QQ1E3Qpj3wra6D27Dp7WQ"},
-  {id:119,t:"Leandro & Leonardo - Explosao De Desejos - 1986",a:"Leandro & Leonardo",cat:"sertanejo",link:"https://1024terabox.com/s/1ZiDFWgcZ4cr-BMTmIhC_vg"},
-  {id:120,t:"As Melhores De Trio Parada Dura",a:"Trio Parada Dura",cat:"sertanejo",link:"https://1024terabox.com/s/1rsmOGAv6h6j5YjKHLE-21A"},
-  {id:121,t:"Lourenco e Lourival",a:"Lourenco e Lourival",cat:"sertanejo",link:"https://1024terabox.com/s/1lLuExDRRBcZlG4sn9K1zdg"},
-  {id:122,t:"Tonico e Tinoco",a:"Tonico e Tinoco",cat:"sertanejo",link:"https://1024terabox.com/s/14h69SJP5TdG2C_Bpix0qAw"},
-  {id:123,t:"Chrystian & Ralf - 1993",a:"Chrystian & Ralf",cat:"sertanejo",link:"https://1024terabox.com/s/14eonismWBjJrXJGEeBPMmQ"},
-  {id:124,t:"Pedro Bento e Ze da Estrada",a:"Pedro Bento",cat:"sertanejo",link:"https://1024terabox.com/s/1ACAxepccu9nsC96kJAGIMw"},
-  {id:125,t:"Zeze Di Camargo & Luciano - 1991",a:"Zeze Di Camargo",cat:"sertanejo",link:"https://1024terabox.com/s/1xoYc03lVh2qZYwgzKE0zPw"},
-  {id:126,t:"Os Filhos de Goias",a:"Os Filhos de Goias",cat:"sertanejo",link:"https://1024terabox.com/s/1zs4bnKDhSa7GLjImYhJIWA"},
-  {id:127,t:"Saudades Do Sertao - Vol.2 - 2005",a:"Various Artists",cat:"sertanejo",link:"https://1024terabox.com/s/1ejt3Ww-PFmv5hOUUDrJcAw"},
-  {id:128,t:"Amor de Verdade - Amado Batista",a:"Amado Batista",cat:"sertanejo",link:"https://1024terabox.com/s/1yUVo0jlAldqfKSXj-1iDwQ"},
-  {id:129,t:"Sertanejo 86 - 1986",a:"Various Artists",cat:"sertanejo",link:"https://1024terabox.com/s/1DPGcekmXBkDFWufFut3QDg"},
-  {id:130,t:"Adrenalina",a:"Elektro",cat:"elektrodance",link:"https://1024terabox.com/s/1PUzoazQxohAgFd6-fOR6UQ"},
-  {id:131,t:"Dance. Elektro",a:"Elektro",cat:"elektrodance",link:"https://1024terabox.com/s/1k1U05Qp-_CYKcyOcY2R_dw"},
-  {id:132,t:"Elektro Dance",a:"Elektro",cat:"elektrodance",link:"https://1024terabox.com/s/1NkGDx8SDU_0U3bgm3eAO5w"},
-  {id:133,t:"Party 2023-2024 Best of Dance EDM House Electro",a:"Various Artists",cat:"elektrodance",link:"https://1024terabox.com/s/1ofZo5CrECOqSzI5ciM80Sg"},
-  {id:134,t:"Pop Dance Mix",a:"Various Artists",cat:"elektrodance",link:"https://1024terabox.com/s/17Xl8Jjm7YmKy2RImqQWjmw"},
-  {id:135,t:"elektro . dance",a:"Various Artists",cat:"elektrodance",link:"https://1024terabox.com/s/15wpbjjWXzyTilES5MwGezQ"},
-  {id:136,t:"Coletanea - Euro, House & Flash",a:"Various Artists",cat:"colhouseflash",link:"https://1024terabox.com/s/176q7iT9Mxmi5WWsg0h6HiQ"},
-  {id:137,t:"90's Eurodance (1)",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1-PlkL65Z7RWuf7uVCVs38A"},
-  {id:138,t:"Aqua - Aquarium (Cd 1997)",a:"Aqua",cat:"eurodance",link:"https://1024terabox.com/s/1aN3UJKhOcNufSpLn5PG2ww"},
-  {id:139,t:"DJ'S PARADE CD 1994 - Radio Dance Anos 90",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1qCUmkTuixgthVjkwFL4yXg"},
-  {id:140,t:"Dance Hits Collection 90s Vol.6 (2019)",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/15N5QOcHrkdDs4vXAuHi5cg"},
-  {id:141,t:"Disco 95",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1BONXGoGwkN4Kbgm6iC4bfg"},
-  {id:142,t:"EURODANCE 90S ALBUM COLLECTION",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1P5qi63Ci7jzG6KXciO0MgA"},
-  {id:143,t:"EURODANCE 90s 1",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/17AEku8Kmm5v5owx5lkKYwg"},
-  {id:144,t:"EURODANCE 90s 2",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1ar_VHy_ltkAW3EItLegWNw"},
-  {id:145,t:"EURODANCE 90s 3",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1UD64-t9bY2YXIsloyW7Fjw"},
-  {id:146,t:"EURODANCE 90s 4",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1_i8IsH1meTDMIVEGP_Sa5g"},
-  {id:147,t:"EURODANCE 90s 5",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1qq09wFKvmWRgscTdz8jySA"},
-  {id:148,t:"EURODANCE 90s 6",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1s7S72pK60BNQi-8ocYA3DQ"},
-  {id:149,t:"EURODANCE 90s 7",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1BuB1-JNssWyJsTmFaezO4w"},
-  {id:150,t:"EURODANCE 90s 8",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1kOCn03eY3z-mKJMQilbVLQ"},
-  {id:151,t:"EURODANCE 90s 9",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1vfZvL3QrrjyykWUUKSM2hw"},
-  {id:152,t:"EURODANCE 90s 10",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1UJUBG1Iw2-NkmZ_mRA2iWw"},
-  {id:153,t:"EURODANCE 90s 11",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1yj-dxrEmyDmKRQx6sGBpqQ"},
-  {id:154,t:"EURODANCE 90s 12",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1BGtENH8g3fApIXMBL6SxdA"},
-  {id:155,t:"EURODANCE 90s 13",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1Jvk-HoHjGcRJRFXY4OEFUQ"},
-  {id:156,t:"EURODANCE 90s COLLECTION",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/11aFIPBtvAtEVolV4dwPiEg"},
-  {id:157,t:"Flash Hits Paradox - 1995",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1g72ahqPuGomZHCw_l_eJrQ"},
-  {id:158,t:"Masterboy",a:"Masterboy",cat:"eurodance",link:"https://1024terabox.com/s/1aY3A_Nnm4nA7O5mQROe5Og"},
-  {id:159,t:"Only Dance - 1995",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/109IIc3sGsM3ZsGugWjcNxg"},
-  {id:160,t:"Radio Dj - Vol.1 - 1998",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/11e5ynRSVYQbNR37CwVQUqQ"},
-  {id:161,t:"Retro 90's Mix",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1F41iw5j04AwoQpNM1GgRaA"},
-  {id:162,t:"Retro Anos 90's",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1dQTUbNNXNokhK_Zimcfjdw"},
-  {id:163,t:"Roller Dance - 1995",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1vO7zMIifcsiyW-seRl0AJQ"},
-  {id:164,t:"SOS Dance - 1995",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1oBojpGCkJSVPW9MOd6l71A"},
-  {id:165,t:"Scatman John (2002) The Best Of",a:"Scatman John",cat:"eurodance",link:"https://1024terabox.com/s/1INGMmnBoqTnMp4b4TVOlng"},
-  {id:166,t:"The Best Of Eurodance - 1990",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1Tbj3tXI-iAFEJcwHmva0OQ"},
-  {id:167,t:"The Euro 90's",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1Br2J1-ROCB8sB04MhSaM2Q"},
-  {id:168,t:"ToCo Hits Vol.1 - 1995",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/17X4eQgzb6vrDZdAPnyp91Q"},
-  {id:169,t:"90's Eurodance",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1DLTd3gpCHkZsn9tI2XxWzg"},
-  {id:170,t:"Classic Dance Remix - 1995",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1HVOgeqt2_VMIJLApI-4A8w"},
-  {id:171,t:"Dance With Me - 1993 DJ Bobo",a:"DJ Bobo",cat:"eurodance",link:"https://1024terabox.com/s/1DOiPWzM9nscVwEvOO5lrTQ"},
-  {id:172,t:"Retro Anos 90",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1yGsZnm39HnoURMRIYT-MHw"},
-  {id:173,t:"Conexao Hard House",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/17ThGo-A-z9yJPJOXxMpQyw"},
-  {id:174,t:"HARD HOUSE - Colection",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/1oZVly3qDTuIVJrJ9NMfOhw"},
-  {id:175,t:"HARD MUSIC",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/1-vUW8r_5SEDF9yIUimY9xA"},
-  {id:176,t:"HARDSTYLE",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/1jyUc1_CO9PbqyFtot_4Zuw"},
-  {id:177,t:"Hard House Mix",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/1jEvhWNCIQXuj-1f_v4B8FA"},
-  {id:178,t:"Hard House U.c",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/1wV29sdsolWU76Hpul0ouJQ"},
-  {id:179,t:"Hard House Uc. x",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/18_b83DkGLhmFwiQLcr59vw"},
-  {id:180,t:"Hard House X",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/19hL3Zwd31pU4kveUtulMNw"},
-  {id:181,t:"Hard House X Uc",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/1_-VtnLnEJ_OtntYmnue6EA"},
-  {id:182,t:"Hard Underground - Coletanea 1",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/1cP-2IaH11NzE8Zglo7OM1Q"},
-  {id:183,t:"Hard Underground - Coletanea 2",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/10fUqpm57HWFvYS09cb3_uw"},
-  {id:184,t:"Hard Underground - Coletanea 3",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/1Gz2IDPeW2mYvCMMsSBKM-g"},
-  {id:185,t:"Hard Underground - Coletanea 4",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/1w2bCTZBkPIOuveoYaEQ-Bg"},
-  {id:186,t:"Hard Underground - Coletanea 5",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/1v5BxK5A4RdNyJNneqfpbhQ"},
-  {id:187,t:"Hard Underground - Coletanea 6",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/17vQ99dDfbcpBWTV_kRZj9A"},
-  {id:188,t:"Hard Underground - Coletanea 7",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/1EK2wD-YWabtC5MaMeQBLjg"},
-  {id:189,t:"Hard Underground - Coletanea 8",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/1msyNj9tk2Ze0awJcHC635A"},
-  {id:190,t:"Hard Underground - Coletanea 9",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/1IgY9Il62dJtgpXW7XjorqA"},
-  {id:191,t:"Hard Underground - Coletanea 10",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/1hVmViqtV4jSTUyLPm9BAkQ"},
-  {id:192,t:"The Hard House Music",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/1g1OzLALId3sW98mXjUUMtg"},
-  {id:193,t:"Hard Music Society",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/1Oou0LghKoeI30x0FWg50eg"},
-  {id:194,t:"LUCIANO SANTOS LDPS HARD HOUSE PLAYLIST",a:"Luciano Santos",cat:"hardhouse",link:"https://1024terabox.com/s/1ZmuMkg72HJ0swZ-xADgkIQ"},
-  {id:195,t:"THE HARD HOUSE & UNDERGROUND 90S COLLECTION",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/1XAL3BS8TiKeH8EkpyLb0hA"},
-  {id:196,t:"1990 - Holocausto Urbano",a:"Racionais MCs",cat:"hiphop",link:"https://1024terabox.com/s/1CV8942KglaGoVvaPlj4i9w"},
-  {id:197,t:"1992 - Escolha Seu Caminho",a:"Racionais MCs",cat:"hiphop",link:"https://1024terabox.com/s/1PibMDzCpZ4XYlwBP0jDjrw"},
-  {id:198,t:"1993 - Raio-x Do Brasil",a:"Racionais MCs",cat:"hiphop",link:"https://1024terabox.com/s/1Ct0MFZH1XViXL-7zi1sRZw"},
-  {id:199,t:"1998 - Sobrevivendo No Inferno",a:"Racionais MCs",cat:"hiphop",link:"https://1024terabox.com/s/1_0i6VESWfU9EPx2qdvrifA"},
-  {id:200,t:"2001 - Ao Vivo",a:"Racionais MCs",cat:"hiphop",link:"https://1024terabox.com/s/1Lwf-VgM-WQgVuCxjiWraKQ"},
-  {id:201,t:"2002 - Nada Como Um Dia Apos o Outro",a:"Racionais MCs",cat:"hiphop",link:"https://1024terabox.com/s/1rF8Btp70YmCH-BWcP8nRpw"},
-  {id:202,t:"509-E - Proverbios 13",a:"509-E",cat:"hiphop",link:"https://1024terabox.com/s/1YYngfbh7B0o5J7qoG76YkQ"},
-  {id:203,t:"Beware Records The Ultimate Collection Vol. 1",a:"Beware Records",cat:"hiphop",link:"https://1024terabox.com/s/1W3t2rjzPAZFvI1qh3hSNSw"},
-  {id:204,t:"Conciencia X Atual",a:"Various Artists",cat:"hiphop",link:"https://1024terabox.com/s/1Z0uX2Guan_cxz8g-qgJ9DQ"},
-  {id:205,t:"Hip Hop Music",a:"Various Artists",cat:"hiphop",link:"https://1024terabox.com/s/1uGDi3NasvLbnKFZz6p3bBQ"},
-  {id:206,t:"Marcelo D2 - A Procura Da Batida Perfeita 2003",a:"Marcelo D2",cat:"hiphop",link:"https://1024terabox.com/s/1g460k-_-eBdirX8ZdXVGpA"},
-  {id:207,t:"Ndee Naldinho - O Povo da Periferia (2002)",a:"Ndee Naldinho",cat:"hiphop",link:"https://1024terabox.com/s/1t40UE4Ig6D40scL_IWyaUA"},
-  {id:208,t:"Playlist A Historia Nao Contada - 2020",a:"Various Artists",cat:"hiphop",link:"https://1024terabox.com/s/1EfAQ5N6XIcJBzWWuLvTYPA"},
-  {id:209,t:"RZO - 1997",a:"RZO",cat:"hiphop",link:"https://1024terabox.com/s/1eIyNW4CrQFHZ6IqGgBPbmA"},
-  {id:210,t:"Racionais MCs - 25 Anos - (2015)",a:"Racionais MCs",cat:"hiphop",link:"https://1024terabox.com/s/1CN8Oo1SosYzvNBm_tAOh-w"},
-  {id:211,t:"Racionais Mcs - Cores e Valores (2014)",a:"Racionais MCs",cat:"hiphop",link:"https://1024terabox.com/s/1-XVgI4roL-1vfGgdjgOmfg"},
-  {id:212,t:"Sabotage - Rap E Compromisso (2001)",a:"Sabotage",cat:"hiphop",link:"https://1024terabox.com/s/1JbnUxFpZxxXgGmq4cpzg0w"},
-  {id:213,t:"Sabotage - Sabotage (2016)",a:"Sabotage",cat:"hiphop",link:"https://1024terabox.com/s/1EPKpV_lbeJneOR5XPIQ-3g"},
-  {id:214,t:"Sabotage - raridades",a:"Sabotage",cat:"hiphop",link:"https://1024terabox.com/s/1el8_U_DBg44U6-Jw5MoTVQ"},
-  {id:215,t:"Eternas Paixoes - Vol.3 - 2017",a:"Various Artists",cat:"romantico",link:"https://1024terabox.com/s/16-YGM48ShMYJLcnHvGCYOQ"},
-  {id:216,t:"Kenny G",a:"Kenny G",cat:"romantico",link:"https://1024terabox.com/s/1ZkTrqqMqEiRdEtsjPReK_g"},
-  {id:217,t:"Love & Mix - 2019",a:"Various Artists",cat:"romantico",link:"https://1024terabox.com/s/13o6k9msTPjBMbH2LWqg-hg"},
-  {id:218,t:"Love Sons",a:"Various Artists",cat:"romantico",link:"https://1024terabox.com/s/1JRTDgTwwDOm4TGcSsi22Ow"},
-  {id:219,t:"Love Sons Collection",a:"Various Artists",cat:"romantico",link:"https://1024terabox.com/s/1fIniIMBOisuppGq3w-i63w"},
-  {id:220,t:"Music Love 80's - 1999",a:"Various Artists",cat:"romantico",link:"https://1024terabox.com/s/1KTpcRVJNDC80vubyRwApOg"},
-  {id:221,t:"Musicas Romanticas Internacional",a:"Various Artists",cat:"romantico",link:"https://1024terabox.com/s/14TeSUAcX1-F8Te9Ww-ucXA"},
-  {id:222,t:"Roupa Nova",a:"Roupa Nova",cat:"romantico",link:"https://1024terabox.com/s/1P5APUqV_iQ8PEalenIYxhA"},
-  {id:223,t:"TV Love Songs - 1983",a:"Various Artists",cat:"romantico",link:"https://1024terabox.com/s/1PSP_CMKwA93qeZ1xnmHDSQ"},
-  {id:224,t:"TV Love Songs - 1988",a:"Various Artists",cat:"romantico",link:"https://1024terabox.com/s/15VOMXpCf1mfitHX29mu4xg"},
-  {id:225,t:"Top 20 Melhores - Romantico Internacional (2019)",a:"Various Artists",cat:"romantico",link:"https://1024terabox.com/s/1Qw76JjPv2uw5mxbdLP7i5g"},
-  {id:226,t:"Set Mix LDPS - MUSIC",a:"LDPS",cat:"supercol",link:"https://1024terabox.com/s/1jqvYgRCWD2X3Zw8ZebKO2w"},
-  {id:227,t:"Alternativo 2000",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1Twr2SvuwIq-JSdZlwLRi4g"},
-  {id:228,t:"Anos 90 Top Music",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1Ou4yGaxbgbJlkR9FbhnqoA"},
-  {id:229,t:"Baladas Dance",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1LwNO_K52I8LEbtwpPdEH4Q"},
-  {id:230,t:"Bee Gees (Ao Vivo)",a:"Bee Gees",cat:"supercol",link:"https://1024terabox.com/s/1ar33FA0qO2beWktQzUlQ1A"},
-  {id:231,t:"Coletanea",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1J_prBctDlx2NOfYCRx1QsA"},
-  {id:232,t:"DANCE FOR DANCE",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1sWd5Ch9-SVlPOFnqjL0kmQ"},
-  {id:233,t:"DJ Helio De Souza 2",a:"DJ Helio",cat:"supercol",link:"https://1024terabox.com/s/1vI9RzXi9rRc4yKPABckRjQ"},
-  {id:234,t:"Dance Hits MP3",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1K4Mc6j7drWGP-5TA-P8ngg"},
-  {id:235,t:"Dance Mix",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1JFZIuaJiZULVdyIUHv-11Q"},
-  {id:236,t:"Dance Mix MP3",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1tZPagX7PbJ8GbsoTW7IhIQ"},
-  {id:237,t:"Dance. MiX",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1HNABetlRfVPisZRV2KM0hg"},
-  {id:238,t:"Dj Helio De Souza",a:"DJ Helio",cat:"supercol",link:"https://1024terabox.com/s/181wj5HQ-qiZu8C-zBv93mQ"},
-  {id:239,t:"Elektro Dance",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1GYHTrl8p8DdaenB6Rc3gyg"},
-  {id:240,t:"Flash Back Baladas",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1LUeVGFhvbFruRPuw_SfIJQ"},
-  {id:241,t:"Flash Back Collection",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1XX2jHeW7hskvtMJC6bT0AQ"},
-  {id:242,t:"Flash Back Especial",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1lqBHfsjWcOwvlVpM-qjcSw"},
-  {id:243,t:"Flash House",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1_l5mBwJpqfocNstsYV0vog"},
-  {id:244,t:"Hit Mix Dj Coletanea",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1dH3X1hqChHh7M2FSKTrBWA"},
-  {id:245,t:"Pagode",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1u9ub7OmK6w1t2CXsKD7vHA"},
-  {id:246,t:"Planeta Ibiza",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1q_0j5a4atN_iJrw4ajBJ-g"},
-  {id:247,t:"Puro Flash House",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1RUJB5-kLVndYs85TwZZkhg"},
-  {id:248,t:"Rave Dance",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/18eZc9wwbJFGsMdCFoDck1Q"},
-  {id:249,t:"So o Ouro Dance",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1BET2D2WsJ0AzcMLeeRuT9g"},
-  {id:250,t:"Summer EletRotHits",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1sAKh-K1PVQeX4g8rw988rg"},
-  {id:251,t:"Underground PLAY",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1LjeYnM7RXJLnFGLx4UG_pQ"},
-  {id:252,t:"Underground playlist",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1YRXftDe3ZhGM1TPAnBtRjg"},
-  {id:253,t:"Albuns Gaucho",a:"Various Artists",cat:"gaucho",link:"https://1024terabox.com/s/13boFcFI3mSZdXiUJsIUFtQ"},
-  {id:254,t:"Os Mirins",a:"Os Mirins",cat:"gaucho",link:"https://1024terabox.com/s/12-7ExuHtevNxkcLSo3vTMA"},
-  {id:255,t:"A Gata Comeu - Internacional - 1985",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1Y7yw5UTmNjHQDHCcHhsaaA"},
-  {id:256,t:"A Viagem - Internacional - 1994",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1a-NxQHm1SzTRkC9wKAqs6g"},
-  {id:257,t:"Avenida Brasil (Internacional)",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1dEOiHnLdZUJpdVYiMscsOQ"},
-  {id:258,t:"Barriga De Aluguel - Nacional - 1990",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1OdNLs_zsnHZTXwORklWhZw"},
-  {id:259,t:"Bebe A Bordo - Nacional - 1988",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/187azaCWLJ06Fb7cz2fwcpA"},
-  {id:260,t:"Brega e Chique - Internacional - 1987",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1P8f3AjD2S33LITVETmz7mw"},
-  {id:261,t:"Cambalacho - Internacional - 1986",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1xAdiH1yb5MRdJ9JMUQhBzg"},
-  {id:262,t:"Cara & Coroa Internacional - 1995",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1V3a0dn8wMcnreUu5Vlq28w"},
-  {id:263,t:"Como Uma Onda - Internacional - 2005",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1_YOmnMcB6jY5bo_iqwZZNQ"},
-  {id:264,t:"Gente Fina - Internacional - 1990",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1DyWz5wd0HgIhyxltfMdj5A"},
-  {id:265,t:"Louco Amor Nacional - 1983",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1p9pnyBLGvB3xKCEtj7E8Ng"},
-  {id:266,t:"Malhacao - Internacional - 2004",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1h8_DcAi3zfOo6iiTrnwRtQ"},
-  {id:267,t:"Mandala - Internacional - 1988",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1Wn8E8kxzmnygPT3VhQgqig"},
-  {id:268,t:"Mulheres De Areia - Nacional - 1993",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1DTh9X1w0SSpj-HqMDp1-zQ"},
-  {id:269,t:"Pantanal - 1990",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1gesKWduEVjVo2C5K8h7lYA"},
-  {id:270,t:"Quatro Por Quatro - 1995",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1ibtw8V1P7MDsbWrwtOg-qg"},
-  {id:271,t:"Rainha Da Sucata - Internacional - 1990",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1VZZ_K7eMJb6QNxzirBX4OA"},
-  {id:272,t:"Roque Santeiro - Internacional - 1985",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1ezWAvLQLuRewp99qXxNxZA"},
-  {id:273,t:"Tieta - Nacional (1989)",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/15YP9ukwJm4K5mWooy8JPCw"},
-  {id:274,t:"Vale Tudo - Nacional - 1988",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1U80S9kHwZeUmHk6GRA5rdA"},
-  {id:275,t:"Vamp Internacional - 1991",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1FaR5GLBBmkBJ3AlloPQE9w"},
-  {id:276,t:"Explode Coracao - Internacional - 1996",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1ITsLUU9mtvWGQx1PTwJSFw"},
-  {id:277,t:"Suave Veneno - Internacional - 1999",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/12REOSafkokbmIn2UBPxBMg"},
-  {id:278,t:"Sonho Meu - Internacional - 1993",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/168UvoZuxiEUoNyYfp6IkEQ"},
-  {id:279,t:"Dance Pancadao Remix 2021",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1kYFeYsCKM-eo4EOdIp0pBA"},
-  {id:280,t:"ELEKTRO DANCE - COLLECTION",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1uP6hFxbZpvGz7hHeVQ86qg"},
-  {id:281,t:"Elektro Dance Music 1",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1k7Lb_W-te2FbDVxr2TfGXw"},
-  {id:282,t:"Elektro Dance Music 2",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1UABiAcgJKGkldal5nZQYjA"},
-  {id:283,t:"Elektro Dance Music 3",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1EEbopwfB0LU-6GfdxcDQeg"},
-  {id:284,t:"Elektro Dance Music 4",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1O-SNJX72wW1IwVfTiGbk6w"},
-  {id:285,t:"Elektro Dance Music 5",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1oGg5FTQ4tZBzhth4LMhhKA"},
-  {id:286,t:"Elektro Dance Music 6",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1uqstZiri4j4Ck48tJ0OfWQ"},
-  {id:287,t:"Elektro Dance Music 7",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1LIO0pLXNArcPzNJbXhM96Q"},
-  {id:288,t:"Elektro Dance Music 8",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1LL192s8YNR19yVBSk5ieAg"},
-  {id:289,t:"Elektro Dance Music 9",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1VT39ZDSuxzDzm3CEDno_wg"},
-  {id:290,t:"Elektro Dance Music 10",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1ekh9Iq5CLzklTdPKSNBIsw"},
-  {id:291,t:"Elektro Dance Music 11",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1I2tFIlVyvqbMtnBnr9ximQ"},
-  {id:292,t:"Elektro Dance Music 12",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1WHH6cCtb26hj86UgNWATFQ"},
-  {id:293,t:"Elektro Dance Music 13",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1nBP_kfjy0H_gyCZWaRVlmg"},
-  {id:294,t:"Elektro Dance Music 14",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1Mm0DAfSLe1ISDDichB3GWw"},
-  {id:295,t:"Elektro Dance Music 15",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1Qbi1mAPs9Z7ntk_UCNJ8bQ"},
-  {id:296,t:"Elektro Dance Music 16",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1WNTO27IqyO21nqncbo1WPA"},
-  {id:297,t:"Elektro Dance Music 17",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1VDq-hY9rDNnwu0ltKDy-Tg"},
-  {id:298,t:"Elektro Dance Music 18",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1GzCpRDiKYgKswipZYVtPXw"},
-  {id:299,t:"Elektro Dance Music 20",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1GgnaKdi15HGgfMAn1rkDdA"},
-  {id:300,t:"Elektro Dance Music 21",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1oFER0-6lYz1zHjd07yt5Jg"},
-  {id:301,t:"Elektro Dance Music",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1YivxyPaDJBvZO_diGE3udQ"},
-  {id:302,t:"Playlist - Vol. 49",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1SgdOrTCIchH2xAcH7YnpqQ"},
-  {id:303,t:"Playlist - Vol. 50",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1WCHTG60rhzkHdKWEbYbF-Q"},
-  {id:304,t:"Playlist - Vol. 51",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1YYd_-UMduWaRi6MHJSyN-w"},
-  {id:305,t:"Playlist - Vol. 52",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1l7Y_dhBYP9UDd4ZsyUXHjw"},
-  {id:306,t:"Summer Eletrohits 2020",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1ha9dd48qeYDYzXQhgkkdkA"},
-  {id:307,t:"Austro House Hits 2016",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1sc00peD53s-moJ5m0GsPkw"},
-  {id:308,t:"Curitiba Dance - 2014",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1erhWZScFV419-x2tj3mx4A"},
-  {id:309,t:"Top Dance Versoes Remix",a:"Various Artists",cat:"versoes",link:"https://1024terabox.com/s/14Q80Jfi5tu0N790skqHKng"},
-  {id:310,t:"REMIX NOW X",a:"Various Artists",cat:"versoes",link:"https://1024terabox.com/s/11S0lW_uKvgFnAQEnFdCirA"},
-  {id:311,t:"Dj Cleber Mix",a:"DJ Cleber Mix",cat:"versoes",link:"https://1024terabox.com/s/1YUb0cwy_hHkf6O6voBjirQ"},
-  {id:312,t:"TROPICAL DANCE 1",a:"Various Artists",cat:"tropical",link:"https://1024terabox.com/s/1YmmXbY-STNy5CfO3eTG2sg"},
-  {id:313,t:"TROPICAL DANCE 2",a:"Various Artists",cat:"tropical",link:"https://1024terabox.com/s/1hVTynf5XA0g38ezmQ2S6Lg"},
-  {id:314,t:"TROPICAL DANCE 3",a:"Various Artists",cat:"tropical",link:"https://1024terabox.com/s/1M4eLmcXSKQNbSPUGqdddKg"},
-  {id:315,t:"TROPICAL DANCE 4",a:"Various Artists",cat:"tropical",link:"https://1024terabox.com/s/16d1I3W9RawyNjUaDiiJG0Q"},
-  {id:316,t:"TROPICAL DANCE 5",a:"Various Artists",cat:"tropical",link:"https://1024terabox.com/s/1JJ9qKNP1REv48MN-7p156Q"},
-  {id:317,t:"TROPICAL DANCE - COLLECTION",a:"Various Artists",cat:"tropical",link:"https://1024terabox.com/s/1w156cdp8dtgfvRqNfnxLTg"},
-  {id:318,t:"TROPICAL DANCE",a:"Various Artists",cat:"tropical",link:"https://1024terabox.com/s/1-X7QVZrQs5Ch_yQOh88N-A"},
-  {id:319,t:"REGGAE VOL. 01",a:"Various Artists",cat:"reggae",link:"https://1024terabox.com/s/1qSHxm1_lH6V670XKK9CphQ"},
-  {id:320,t:"100% REGGAE VOL. 02",a:"Various Artists",cat:"reggae",link:"https://1024terabox.com/s/1FmrY1PhjGWv4BHh6HXui-A"},
-  {id:321,t:"100% REGGAE VOL. 03",a:"Various Artists",cat:"reggae",link:"https://1024terabox.com/s/1xI6Bf4p_x8l1wv5ffH3q3g"},
-  {id:322,t:"REGGAE VOL. 04",a:"Various Artists",cat:"reggae",link:"https://1024terabox.com/s/1HfZdOh7gSjrX_wMZRuqx2g"},
-  {id:323,t:"REGGAE VOL. 05",a:"Various Artists",cat:"reggae",link:"https://1024terabox.com/s/13EAGnegPhOBO4_lMyt0zIg"},
-  {id:324,t:"REGGAE VOL. 06",a:"Various Artists",cat:"reggae",link:"https://1024terabox.com/s/1X_oCz0WIivFVRw8tIR86Tw"},
-  {id:325,t:"100% REGGAE VOL. 07",a:"Various Artists",cat:"reggae",link:"https://1024terabox.com/s/1HQ1vJ7w_0VV2hRVqoTQy2g"},
-  {id:326,t:"100% REGGAE VOL. 08",a:"Various Artists",cat:"reggae",link:"https://1024terabox.com/s/16o0RiLR_DeHyMaN_SAnafA"},
-  {id:327,t:"100% REGGAE VOL. 09",a:"Various Artists",cat:"reggae",link:"https://1024terabox.com/s/1WUIXSJwaV4JHNoZQsGbJlA"},
-  {id:328,t:"100% REGGAE VOL. 10",a:"Various Artists",cat:"reggae",link:"https://1024terabox.com/s/1yCd4GSAICqZXukD4tjfCAw"},
-  {id:329,t:"Raggae Music",a:"Various Artists",cat:"reggae",link:"https://1024terabox.com/s/1SOcrcmaS0cQMzi-hHdvlTw"},
-  {id:330,t:"KuschelRock - Vol. 19 (CD 1)",a:"Various Artists",cat:"poprock",link:"https://1024terabox.com/s/12eEa5iHLTKtVhaLvlOKFqg"},
-  {id:331,t:"KuschelRock - Vol. 19 (CD 2)",a:"Various Artists",cat:"poprock",link:"https://1024terabox.com/s/1_GBxHn3jiZXzJiZP-VFB3w"},
-  {id:332,t:"Spice Girls",a:"Spice Girls",cat:"pop",link:"https://1024terabox.com/s/1fpeJNwZXiwjfJdwPk8wwIw"},
-  {id:333,t:"POP MUSIC",a:"Various Artists",cat:"pop",link:"https://1024terabox.com/s/1fv2youPq3WlwivAkBiOc2g"},
-  {id:334,t:"Planet Pop - Vol.4 - 2005",a:"Various Artists",cat:"pop",link:"https://1024terabox.com/s/10gTpNsMBGboLoQ2MqPsEtQ"},
-  {id:335,t:"MY MUSIC ELETRONIC",a:"Various Artists",cat:"personalizados",link:"https://1024terabox.com/s/1Jygl3QhLCDrUiMN5_UObfQ"},
-  {id:336,t:"Pure Hard Dance",a:"Various Artists",cat:"personalizados",link:"https://1024terabox.com/s/1xXgXFJ5i2mdDlx2BHH7zCA"},
-  {id:337,t:"Hard Dance Music Sound",a:"Various Artists",cat:"personalizados",link:"https://1024terabox.com/s/18rpuRMld1tHRlt1psAigLg"},
-  {id:338,t:"TOP MUSICAS BRASILEIRAS",a:"Various Artists",cat:"nacionais",link:"https://1024terabox.com/s/1Cz6brLLZgw8FA5BU8DWKhw"},
-  {id:339,t:"Titas (Acustico)",a:"Titas",cat:"nacionais",link:"https://1024terabox.com/s/10xEIYgqUkyl_qDgrBXtzXA"},
-  {id:340,t:"Roupa Nova",a:"Roupa Nova",cat:"nacionais",link:"https://1024terabox.com/s/1vUaefjycsf7YPaN2xzB8UQ"},
-  {id:341,t:"Raul Seixas",a:"Raul Seixas",cat:"nacionais",link:"https://1024terabox.com/s/1pi9BVuNi09LLfV9JmCobBA"},
-  {id:342,t:"Pop Rock - Colecao Som Do Brasil",a:"Various Artists",cat:"nacionais",link:"https://1024terabox.com/s/18YOnAFGc9mRqnVqXF4Og7Q"},
-  {id:343,t:"O Melhor De Pop Rock Nacional - 1998",a:"Various Artists",cat:"nacionais",link:"https://1024terabox.com/s/1ZjeBl6Xju8YuLDPbpeWfaQ"},
-  {id:344,t:"Nacao Zumbi",a:"Nacao Zumbi",cat:"nacionais",link:"https://1024terabox.com/s/1w0TQ_cg9z30xjpbz_ggjMg"},
-  {id:345,t:"Lulu Santos",a:"Lulu Santos",cat:"nacionais",link:"https://1024terabox.com/s/1q4cd6DllE6VwuSw9M8YUhg"},
-  {id:346,t:"Legiao Urbana - Uma Outra Estacao",a:"Legiao Urbana",cat:"nacionais",link:"https://1024terabox.com/s/1dPfUfNXGsC4gebTuSyFWFQ"},
-  {id:347,t:"Legiao Urbana - Mais Do Mesmo",a:"Legiao Urbana",cat:"nacionais",link:"https://1024terabox.com/s/19YBQ5rAJ2IYWDMlubgQ6yg"},
-  {id:348,t:"CPM 22",a:"CPM 22",cat:"nacionais",link:"https://1024terabox.com/s/1FojeAcC_96Uoa0Bxugso8Q"},
-  {id:349,t:"Capital Inicial",a:"Capital Inicial",cat:"nacionais",link:"https://1024terabox.com/s/1AinQEJ_q0055cySq9jjUCQ"},
-  {id:350,t:"Titas",a:"Titas",cat:"nacionais",link:"https://1024terabox.com/s/1aDHKhVvMZQ_KrjNWgB9wlA"},
-  {id:351,t:"Skank",a:"Skank",cat:"nacionais",link:"https://1024terabox.com/s/1oQA3XXHeBurGThfma-KCYA"},
-  {id:352,t:"RPM",a:"RPM",cat:"nacionais",link:"https://1024terabox.com/s/13S_jV34siG6i9HVTP0tabA"},
-  {id:353,t:"Os Paralamas",a:"Os Paralamas",cat:"nacionais",link:"https://1024terabox.com/s/19wZM71VR5vlzLnezo-DM2g"},
-  {id:354,t:"Cassia Eller",a:"Cassia Eller",cat:"nacionais",link:"https://1024terabox.com/s/1IhdDe6FtLKUQMqEYFiKLbw"},
-  {id:355,t:"Barao Vermelho",a:"Barao Vermelho",cat:"nacionais",link:"https://1024terabox.com/s/15MHIyUqndjZsSnJaIjtAqw"},
-  {id:356,t:"100% Raul Seixas",a:"Raul Seixas",cat:"nacionais",link:"https://1024terabox.com/s/15EzH5dQqlZWmQkaqtkJDEg"},
-  {id:357,t:"Megamix Dance Underground",a:"Various Artists",cat:"megamix",link:"https://1024terabox.com/s/1E1zjUO5LqWyMs8tWEH6m-A"},
-  {id:358,t:"MEGAMIX - DjS x",a:"Various Artists",cat:"megamix",link:"https://1024terabox.com/s/19sT0NUu7wZdSDMZ5lJcx4g"},
-  {id:359,t:"ITALO DANCE",a:"Various Artists",cat:"italo",link:"https://1024terabox.com/s/1aNPrcHZAiU7Y4NV5M__DHw"},
-  {id:360,t:"ITALO DANCE 1",a:"Various Artists",cat:"italo",link:"https://1024terabox.com/s/1AYKcqMcXO6un38FMl_krNQ"},
-  {id:361,t:"ITALO DANCE 2",a:"Various Artists",cat:"italo",link:"https://1024terabox.com/s/1-Jc6hGODsbtVQrJGPH7sdQ"},
-  {id:362,t:"ITALO DANCE - COLLECTION",a:"Various Artists",cat:"italo",link:"https://1024terabox.com/s/1tqGK37dfMwJDkVG1B89CSg"},
-  {id:363,t:"Orquestra CCB",a:"CCB",cat:"ccb",link:"https://1024terabox.com/s/1SDcwb4kCsp5eJhi6NHbKPQ"},
-  {id:364,t:"Orgao Orquestrado CCB",a:"CCB",cat:"ccb",link:"https://1024terabox.com/s/1i-IJ4qwlk7CjjpzpkRTaGg"},
-  {id:365,t:"CCB Orquestrados e Cantados",a:"CCB",cat:"ccb",link:"https://1024terabox.com/s/1VAfUvBr0rfo7JPc8WLhLZA"},
-  {id:366,t:"GROOVE ENERGY",a:"Various Artists",cat:"groove",link:"https://1024terabox.com/s/1W30X2gQQ2ADHKp1SRYSqWA"},
-  {id:367,t:"Snap (Attack) - The Remixes - 1996",a:"Snap",cat:"flashback",link:"https://1024terabox.com/s/1-1vk9BmRf4IbDUcNrdBSkw"},
-  {id:368,t:"Simply The Best - 1991 Tina Turner",a:"Tina Turner",cat:"flashback",link:"https://1024terabox.com/s/10KKfWwJcw0PBCreTZrwowA"},
-  {id:369,t:"She's So Unusual - 1983 Cindy Lauper",a:"Cyndi Lauper",cat:"flashback",link:"https://1024terabox.com/s/141qJ8w0I0wx1SHDqi455cA"},
-  {id:370,t:"Puro Flash House 3 - 1995",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1zyhKdXORdMirmqC5r5P4MQ"},
-  {id:371,t:"Over Night Remixes Vol. 5 (1997)",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1gBmyObWTwXx86n_MOJwqLg"},
-  {id:372,t:"Over Night Remixes Vol. 3 (1994)",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1y3Fvcjzf3KhUk2-9_5LlyA"},
-  {id:373,t:"Over Night Remixes Vol. 2 (1992)",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/10ex8l5bFiXV9919J1q0_jA"},
-  {id:374,t:"Over Night Remixes Vol. 1 (1990)",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1breC104MoJ1b3P8qVBFCTw"},
-  {id:375,t:"Modern Talking",a:"Modern Talking",cat:"flashback",link:"https://1024terabox.com/s/10quOcVAe0GfitWiZMY4uPA"},
-  {id:376,t:"Ken Laszlo",a:"Ken Laszlo",cat:"flashback",link:"https://1024terabox.com/s/1vHZQHn9i4aequOXwVZtrrg"},
-  {id:377,t:"Italo.Classics (CD 1 & 2) 1998",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1xQiJxnLJ6gPHueu8WfZe5Q"},
-  {id:378,t:"Italo Fresh Hits - vol.3 - CD 1 & 2",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1r90-hmocbRwYVweLnCdfvQ"},
-  {id:379,t:"ITALO DISCO HITs",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1uOFf9fRz5yIsUbPcd7wJHA"},
-  {id:380,t:"ITALO DISCO 1",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1SeYrdF0W21QaQOyTDbWgEQ"},
-  {id:381,t:"ITALO DISCO 2",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1RW6r87vsmwuMvZFhTcaZng"},
-  {id:382,t:"ITALO DISCO",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1TWTRYOXICfkykaF1fEqnzw"},
-  {id:383,t:"I Love Disco Vol. 1 - 2007",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1ynqlAwKnihjlwpSqREO3eQ"},
-  {id:384,t:"I Love Disco - Vol. 4 - 2007",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1SFcp6Ih5f168KVeGGZG9BA"},
-  {id:385,t:"I Love Disco - Vol. 5 - 2007",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1vpsLjN6-Apg6UsQ4CqgABg"},
-  {id:386,t:"I Love Disco - Vol. 6 - 2007",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1hoVffkhyjvXAm9KMPZPgmw"},
-  {id:387,t:"Forever Young - 1984 Alphaville",a:"Alphaville",cat:"flashback",link:"https://1024terabox.com/s/1_cZ320lBbFD29CZkQgAbfA"},
-  {id:388,t:"FLASH MUSIC",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1vJirtskPQ0XJmYJO6D2a5Q"},
-  {id:389,t:"Flash Back News",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1yy0pZDTwJGA-cx20HI-4sQ"},
-  {id:390,t:"Flash Back 1",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1dtEfy5DAdGOsM4V-j5HAxA"},
-  {id:391,t:"Flash Back 2",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/19Bbmnq69QXs5UeNtxMwkKg"},
-  {id:392,t:"AS MELHORES DO FLASHBACK",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/11MdXxBRR8v59BIhr50ynmQ"},
-  {id:393,t:"80's Flashback & Italo Disco",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1k46N6_8EqKU1UVdVLKtQIw"},
-  {id:394,t:"Boney M Coletanea",a:"Boney M",cat:"flashback",link:"https://1024terabox.com/s/10bgk4WlDHN-0IgcJZK3QYQ"},
-  {id:395,t:"Bad Boys Blue - Greatest Hits - 2009",a:"Bad Boys Blue",cat:"flashback",link:"https://1024terabox.com/s/1Cma_R_YfsjUYX4FYi2f0Rg"},
-  {id:396,t:"Essential 80's - Vol.1 - 2007",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1vSc7MW5d7BZdzm_bu5JXvQ"},
-  {id:397,t:"Roxette - Colecao",a:"Roxette",cat:"colmusical",link:"https://1024terabox.com/s/1iOIIQv0LZdOCneWORrzc8g"},
-  {id:398,t:"Roxette - 1987 - Dance Passion",a:"Roxette",cat:"colmusical",link:"https://1024terabox.com/s/1znadY-QQEOnf-8V-qPOz1g"},
-  {id:399,t:"Roxette - 1988 - Look Sharp",a:"Roxette",cat:"colmusical",link:"https://1024terabox.com/s/1m87uhUiww6jJZCJpXYraXA"},
-  {id:400,t:"Roxette - 1994 - Crash Boom Bang",a:"Roxette",cat:"colmusical",link:"https://1024terabox.com/s/1YMPksVdcJi76fUuvzXZ1hA"},
-  {id:401,t:"Roxette - 1999 - Have a Nice Day",a:"Roxette",cat:"colmusical",link:"https://1024terabox.com/s/1lBla0m_OtLT24BwyaYcO2w"},
-  {id:402,t:"Backstreet Boys - COLLECTION",a:"Backstreet Boys",cat:"colmusical",link:"https://1024terabox.com/s/1nA4BRDVgk7FsziErJL9CQw"},
-  {id:403,t:"Backstreet Boys - 1996",a:"Backstreet Boys",cat:"colmusical",link:"https://1024terabox.com/s/1CnJ9gYICtQn-Ubjy4_6WSA"},
-  {id:404,t:"Backstreet Boys - 1999 - Millennium",a:"Backstreet Boys",cat:"colmusical",link:"https://1024terabox.com/s/1MZc4v3i8so224H3TyMV2GA"},
-  {id:405,t:"Backstreet Boys - 2000 - Black & Blue",a:"Backstreet Boys",cat:"colmusical",link:"https://1024terabox.com/s/1QufUYQsfUHqBt8bzGqTVjA"},
-  {id:406,t:"Maquina Total - Colecao",a:"Various Artists",cat:"colmusical",link:"https://1024terabox.com/s/13DUDgWbHOtLXPczR7TBnpg"},
-  {id:407,t:"90S SUPER DANCE HITS 1.2.3.4.5",a:"Various Artists",cat:"colmusical",link:"https://1024terabox.com/s/1EjWwHTcz3rYzrN4fLPqdoQ"},
-  {id:408,t:"Colecao The Sweet - Classicos Do Rock",a:"The Sweet",cat:"colmusical",link:"https://1024terabox.com/s/1aYmois3uM7Z7gBeswtAuFQ"},
-  {id:409,t:"Lasgo",a:"Lasgo",cat:"colmusical",link:"https://1024terabox.com/s/1ej0YPuH5ZkwyReJqgEn_dg"},
-  {id:410,t:"VA - Mega Dance Into The 90's (1994)",a:"Various Artists",cat:"colmusical",link:"https://1024terabox.com/s/1OuZq3NazssBpOLiZr0hqXQ"},
-  {id:411,t:"UNDERGROUND REMIX",a:"Various Artists",cat:"colmusical",link:"https://1024terabox.com/s/1jppoT6u21hn-MPqtsVKNLA"},
-  {id:412,t:"Underground 1998 - Vol.1",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1UXCP5rw-w5fKMd5Dvbp1dQ"},
-  {id:413,t:"Underground 1998 - Vol.2",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1F03ZciCh518XbxD0DofLUg"},
-  {id:414,t:"Underground 1998 - Vol.3",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1LJKA9QBRAuV6D1fJ5JfRfw"},
-  {id:415,t:"Underground 1998 - Vol.4",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1GN5ajavwXXogIeocdBGf7Q"},
-  {id:416,t:"Underground 1998 - Vol.5",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1lfS-WjN__D5jgPBtMtd9Kw"},
-  {id:417,t:"Underground 1998 - Vol.6",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1uGYjZkPyyb7R168xW894lQ"},
-  {id:418,t:"Underground 1998 - Vol.7",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1TTiMnOOMvcVFTBevuWE28g"},
-  {id:419,t:"Underground 1998 - Vol.8",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1JCyUFIK7mhD3XTreyjkVjw"},
-  {id:420,t:"Underground 1999 - Vol.1",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1AD3CKTZnfV_SpGSesgNbMw"},
-  {id:421,t:"Underground 1999 - Vol.2",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1wjKRYA88skVWTdmfatXZtA"},
-  {id:422,t:"Underground 1999 - Vol.3",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1ysDdkf6kGmluoozUwOCXcQ"},
-  {id:423,t:"Underground 1999 - Vol.4",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1OudRyE_oK-5SdR10x8MWfg"},
-  {id:424,t:"Underground 1999 - Vol.5",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1LBSo-5F7zg34dowdXlpN4Q"},
-  {id:425,t:"Underground 1999 - Vol.6",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1TqBPpIaypP8YV2BWtM-uig"},
-  {id:426,t:"Underground 2000 - Vol.1",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1TNrEMmiLys0mK6Hsxm0M1Q"},
-  {id:427,t:"Underground 2000 - Vol.2",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/11BejZXjKZ4XjOwM1JYeejg"},
-  {id:428,t:"Underground 2000 - Vol.3",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1I9Z1yW9lI7GalT8DIBekuA"},
-  {id:429,t:"Underground 2000 - Vol.4",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1QE6cJDnb0LegEmsl27onQg"},
-  {id:430,t:"Underground Storm - Vol.1 - 2001",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1D-WTE9SwOgjcjNVXNfPBiA"},
-  {id:431,t:"The Best Of Underground - 1995",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1vHNEuuEDTIkHMYkPKoHG3A"},
-  {id:432,t:"UNDERGROUND 1",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1j4D1MYi02tLo5YnfSzh1oA"},
-  {id:433,t:"UNDERGROUND 2",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/14AdHg61GvbLnzVUFnBkhDw"},
-  {id:434,t:"UNDERGROUND 3",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1OTHF4px4A2NWULQbyUcvng"},
-  {id:435,t:"UNDERGROUND 4",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1om9mzuwRbxkBUutrE_anAg"},
-  {id:436,t:"UNDERGROUND 5",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/12_FusK9G-yXbpaZW3ygFng"},
-  {id:437,t:"Underground Reconstruction - 2014",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1eN0Eomu4IN248-IbW8EnSg"},
-  {id:438,t:"VAN HALEN",a:"Van Halen",cat:"rock",link:"https://1024terabox.com/s/16PbgAEW1wo0IqqMCi38UoQ"},
-  {id:439,t:"The Very Best Of Dire Straits - 1995",a:"Dire Straits",cat:"rock",link:"https://1024terabox.com/s/1DCXYQBITGZS9DUfVhLK_0Q"},
-  {id:440,t:"THE BEST PINK FLOYD",a:"Pink Floyd",cat:"rock",link:"https://1024terabox.com/s/1zFmu5Q4HV8Si3cw1iVylUg"},
-  {id:441,t:"Scorpions",a:"Scorpions",cat:"rock",link:"https://1024terabox.com/s/1rCr2y3o8m2O3I4CJKqphdQ"},
-  {id:442,t:"SECULO DO ROCK",a:"Various Artists",cat:"rock",link:"https://1024terabox.com/s/1To19svFTFXP4ctxz7W71Ug"},
-  {id:443,t:"Rock Collection",a:"Various Artists",cat:"rock",link:"https://1024terabox.com/s/1xykvCxg12GR5oKobxs0dMQ"},
-  {id:444,t:"ROCK CLASSICOS - COLLECTION",a:"Various Artists",cat:"rock",link:"https://1024terabox.com/s/1d7kMKoTtaOndbHioBuhfHg"},
-  {id:445,t:"NAZARETH",a:"Nazareth",cat:"rock",link:"https://1024terabox.com/s/1seUR-Yhl8YKI3FeQ1eMvGQ"},
-  {id:446,t:"Metallica",a:"Metallica",cat:"rock",link:"https://1024terabox.com/s/1fTlzPnGsGtnYWW2fU3ZebQ"},
-  {id:447,t:"Led Zeppelin",a:"Led Zeppelin",cat:"rock",link:"https://1024terabox.com/s/1HYXK5FlKcoYGeTYXzT08nQ"},
-  {id:448,t:"Kiss (Live)",a:"Kiss",cat:"rock",link:"https://1024terabox.com/s/1SDQMmRf4VesMs9rI7xQo6Q"},
-  {id:449,t:"Deep Purple",a:"Deep Purple",cat:"rock",link:"https://1024terabox.com/s/1RAiow1hH2JGqUJEtiPAsuA"},
-  {id:450,t:"Creedence Clearwater Revival",a:"Creedence",cat:"rock",link:"https://1024terabox.com/s/1qv970GDFJ9VtQAFjtwIqkg"},
-  {id:451,t:"Colecao AC DC",a:"AC/DC",cat:"rock",link:"https://1024terabox.com/s/1ffUkA01xJfc5l-ou1BgsoQ"},
-  {id:452,t:"Bon Jovi",a:"Bon Jovi",cat:"rock",link:"https://1024terabox.com/s/1PkWTANBKopiNK1aOQQ4Tfw"},
-  {id:453,t:"Black Sabbath CDs",a:"Black Sabbath",cat:"rock",link:"https://1024terabox.com/s/1mxbViPxaUsSmhpsWfm8goQ"},
-  {id:454,t:"Aerosmith",a:"Aerosmith",cat:"rock",link:"https://1024terabox.com/s/1AhO8UUC5Tch03ZRcOjgtHw"},
-  {id:455,t:"AC DC - Back In Black (1980)",a:"AC/DC",cat:"rock",link:"https://1024terabox.com/s/19Hsy240nMaC0jOe6mb26Xg"},
-  {id:456,t:"AC DC - Highway To Hell (1979)",a:"AC/DC",cat:"rock",link:"https://1024terabox.com/s/1_0gOEo7Bkmr5Qs2RiWC7IA"},
-  {id:457,t:"Metallica - Hardwired To Self Destruct CD1",a:"Metallica",cat:"rock",link:"https://1024terabox.com/s/1wn7rjHTZ0VHjUklgDFbWuw"},
-  {id:458,t:"Guns n Roses - Chinese Democracy",a:"Guns N Roses",cat:"rock",link:"https://1024terabox.com/s/1D-82O-fteyilxwjtQJKFYQ"},
-  {id:459,t:"Green Day Playlist",a:"Green Day",cat:"rock",link:"https://1024terabox.com/s/1dhMvRe6w0WZAfRz2GjGX7Q"},
-  {id:460,t:"Bryan Adams - So Far So Good - 1993",a:"Bryan Adams",cat:"rock",link:"https://1024terabox.com/s/1-92IzJ-cR35n5VRWhQOGpA"},
-  {id:461,t:"Paul McCartney - Pipes Of Peace (1983)",a:"Paul McCartney",cat:"rock",link:"https://1024terabox.com/s/11DeAoOwwRooW1b0idkCtoQ"},
-  {id:462,t:"Avril Lavigne",a:"Avril Lavigne",cat:"rock",link:"https://1024terabox.com/s/1VWeHO5tU3ziCPCC_EyGPtA"},
-  {id:463,t:"classicos rock coletanea 1",a:"Various Artists",cat:"rock",link:"https://1024terabox.com/s/1cH-jHvwyQC9d7U2o1SmR2g"},
-  {id:464,t:"classicos rock coletanea 2",a:"Various Artists",cat:"rock",link:"https://1024terabox.com/s/1mzom_EqU7poz67W7SR2mnQ"},
-  {id:465,t:"classicos rock coletanea 3",a:"Various Artists",cat:"rock",link:"https://1024terabox.com/s/1xPqvkslhxAxUBz4nJ3PTpQ"},
-  {id:466,t:"classicos rock coletanea 10",a:"Various Artists",cat:"rock",link:"https://1024terabox.com/s/1XYZqckElCpz7PiuD-HwGGg"},
-  {id:467,t:"classicos rock coletanea 20",a:"Various Artists",cat:"rock",link:"https://1024terabox.com/s/199B9mYWO3k0lq18jobqZGg"},
-  {id:468,t:"classicos rock coletanea 30",a:"Various Artists",cat:"rock",link:"https://1024terabox.com/s/1dZqxKHGc056ueU4aAR56Zw"},
-  {id:469,t:"classicos rock coletanea 32",a:"Various Artists",cat:"rock",link:"https://1024terabox.com/s/1shu2gXdW73r7Yu79jPEukQ"},
-  {id:470,t:"Xuxa E Seus Amigos - 1985",a:"Xuxa",cat:"infantil",link:"https://1024terabox.com/s/1kk6ZxvnzbaTEA48Vcq6sAA"},
-  {id:471,t:"TV Colosso - 1993",a:"TV Colosso",cat:"infantil",link:"https://1024terabox.com/s/15nLBSQ8REYEEUXX5jMzNTQ"},
-  {id:472,t:"Trem Da Alegria - 1988",a:"Trem Da Alegria",cat:"infantil",link:"https://1024terabox.com/s/1EMPFMdKf3LdEy7BBB0QctQ"},
-  {id:473,t:"Sitio Do Picapau Amarelo - 2001",a:"Sitio Do Picapau",cat:"infantil",link:"https://1024terabox.com/s/14svCQD-8V_uxMeRY5cEjxQ"},
-  {id:474,t:"Show Da Xuxa - 1988",a:"Xuxa",cat:"infantil",link:"https://1024terabox.com/s/19peViBy3X42mHxOOIm7pTQ"},
-  {id:475,t:"Sandy & Junior - Aniversario Do Tatu - 1991",a:"Sandy & Junior",cat:"infantil",link:"https://1024terabox.com/s/1TBb3DA72lw9urqVMz8z0ww"},
-  {id:476,t:"Os Sucessos Do Trem Da Alegria - 2017",a:"Trem Da Alegria",cat:"infantil",link:"https://1024terabox.com/s/1MRjZSIRb3MtpZYe-OoFwYg"},
-  {id:477,t:"Os Sucessos do Balao Magico - 2017",a:"Balao Magico",cat:"infantil",link:"https://1024terabox.com/s/1Kmo-Hg3um48RSMWw0_UCVA"},
-  {id:478,t:"Mara Maravilha - 1987",a:"Mara Maravilha",cat:"infantil",link:"https://1024terabox.com/s/16sNpfJ521pCkQENbcZWbcQ"},
-  {id:479,t:"Fofao Forever - 2015",a:"Fofao",cat:"infantil",link:"https://1024terabox.com/s/1fTakZ60GiaS8KcTFJi-pVg"},
-  {id:480,t:"Fofao - 1990",a:"Fofao",cat:"infantil",link:"https://1024terabox.com/s/1Bf2ONrkZ2fmJj2Yj1-KmVg"},
-  {id:481,t:"Eliana - Os Dedinhos - 1993",a:"Eliana",cat:"infantil",link:"https://1024terabox.com/s/1QLLYXdHEDbhVVYOrZ4oGKQ"},
-  {id:482,t:"Eliana - 1994",a:"Eliana",cat:"infantil",link:"https://1024terabox.com/s/1rxo69NbPkRxSojhNnMNqJw"},
-  {id:483,t:"Disco Do Fofao - Vol.1 - 1984",a:"Fofao",cat:"infantil",link:"https://1024terabox.com/s/1zRvHl9wYeknBvTNFhjyU9w"},
-  {id:484,t:"Chiquititas - Vol.2 - 1998",a:"Chiquititas",cat:"infantil",link:"https://1024terabox.com/s/1VUKPs6ici9txCk28LaCZgg"},
-  {id:485,t:"Chiquititas - Vol.3 - 1999",a:"Chiquititas",cat:"infantil",link:"https://1024terabox.com/s/1LNlMyptld8kMBl4OHvTq9Q"},
-  {id:486,t:"A Turma Do Balao Magico - 1982",a:"Balao Magico",cat:"infantil",link:"https://1024terabox.com/s/1JM0-NtbC6SXs4nABTdbfZg"},
-  {id:487,t:"Carrossel - Vol.3 - 1995",a:"Carrossel",cat:"infantil",link:"https://1024terabox.com/s/1snxVCeLd3jZvoMn-KAuVag"},
-  {id:488,t:"Acapellas",a:"Various Artists",cat:"acapellas",link:"https://1024terabox.com/s/1bG6wBJEGbYAEWN2XwayIfQ"},
-  {id:489,t:"Top 2 - Eurodance 90s Hits (Extended)",a:"Various Artists",cat:"extended",link:"https://1024terabox.com/s/1SfM5s8ZsRzeUVbIUcbtTcA"},
-  {id:490,t:"Top 1 - Eurodance 90s Hits (Extended)",a:"Various Artists",cat:"extended",link:"https://1024terabox.com/s/1FNcfLrB5eho2VCJCklKXDA"},
-  {id:491,t:"Techno Trax Classics - 2014",a:"Various Artists",cat:"extended",link:"https://1024terabox.com/s/1vtxhQknu38yrzAjKnfChAA"},
-  {id:492,t:"EURO 90s EXTENDED",a:"Various Artists",cat:"extended",link:"https://1024terabox.com/s/1won3CEofj7Yx7JYXJvtvrg"},
-  {id:493,t:"Dance Floor Corporation - 2011",a:"Various Artists",cat:"extended",link:"https://1024terabox.com/s/1WQ6Ck4VhX48pEnvg_vX4dw"},
-  {id:494,t:"90's Eurodance Extended",a:"Various Artists",cat:"extended",link:"https://1024terabox.com/s/1OukgFXvyk1gYqhUiwI30XQ"},
-  {id:495,t:"12'' Inch Dance - 2014",a:"Various Artists",cat:"extended",link:"https://1024terabox.com/s/1UhNiYA0xlP0KOQ9hovjSfQ"},
-  {id:496,t:"Mamonas Assassinas",a:"Mamonas Assassinas",cat:"mamonas",link:"https://1024terabox.com/s/1IIfylzD5kyRbgc8wcix5IA"},
+const ALBUNS = [
+{id:1,t:"2 Brothers On The 4th Floor - Dreams (2LP)",a:"2 Brothers",cat:"super",link:"https://1024terabox.com/s/1LdDWv-B6isSLa4aDvBz3uw"},
+{id:2,t:"2 Brothers - The Best Remixes (30th Anniversary)",a:"2 Brothers",cat:"super",link:"https://1024terabox.com/s/1cvDIqaL1VmTvSdfSjLAdiA"},
+{id:3,t:"2 Unlimited - No Limits 1993",a:"2 Unlimited",cat:"super",link:"https://1024terabox.com/s/10DzAj36DhJDKNSfA3yn3Sg"},
+{id:4,t:"2 Unlimited - No Limit Complete Best Of",a:"2 Unlimited",cat:"super",link:"https://1024terabox.com/s/1CLulNNvhF33BBb-SRVN2MA"},
+{id:5,t:"Anos 90 - Vol.1.2.3 - 1998",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/12Lgj7ewTScp69PGqWIgU6w"},
+{id:6,t:"Back To New Wave - Vol.3 - 1994",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1cf-kLeQTuwDcX5ZJXj4fUQ"},
+{id:7,t:"Bad Boy Joe - Best Of Freestyle Megamix Vol.5",a:"Bad Boy Joe",cat:"super",link:"https://1024terabox.com/s/1TvIVOxDfB3eMRodFh80ddw"},
+{id:8,t:"Bolero Mix 17 - 2000",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1qPFWF57-06vT3uyi-Yze_g"},
+{id:9,t:"Captain Jack",a:"Captain Jack",cat:"super",link:"https://1024terabox.com/s/1F-hisDrHAIgpn5M_9mPy5A"},
+{id:10,t:"Discoteka The Best - Vol.14 - 2000",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1Es16Pj9QnhNaxDlvJAGbmQ"},
+{id:11,t:"Dj Sound Club Tracks 3 (1995)",a:"DJ Sound Club",cat:"super",link:"https://1024terabox.com/s/1JtUdwIWsg0BZbGVG6NW_xA"},
+{id:12,t:"Express Of Sound - Real Vibration (1996) FLAC",a:"Express Of Sound",cat:"super",link:"https://1024terabox.com/s/1pYCfmzqqFA7b1b9mKQ8MuQ"},
+{id:13,t:"FLASH HOUSE",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1ZwtkMpyUfLbTHpPqOEv8Sw"},
+{id:14,t:"Festa Da Cidade - 1998",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1q3ifGe8VlrdfzxfWtNKBkw"},
+{id:15,t:"HITS DANCE - FM 2007",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1HA8ko7JvNx5barZ0D8GQtw"},
+{id:16,t:"Hard! Euro! Italo! Remix!",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/12EA3ZB6G_z-3PRUAKAtQPg"},
+{id:17,t:"Hot Dance Hits - 1985",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1OC9cMCjhj5vFaEyIRUYqcw"},
+{id:18,t:"Ice MC - The Best Of Ice MC",a:"Ice MC",cat:"super",link:"https://1024terabox.com/s/1ZUF2ecSSSgQn0rvRHx59JQ"},
+{id:19,t:"MC Sar & The Real McCoy - The Real Best",a:"MC Sar",cat:"super",link:"https://1024terabox.com/s/10ZDtqRufDnkoB9OrcgOyGg"},
+{id:20,t:"N'dance Vol.2 - Mixed By Global Deejays",a:"Global Deejays",cat:"super",link:"https://1024terabox.com/s/1TcjZYSQj4j_pHs6NVH0irg"},
+{id:21,t:"Nash Beats - Eat This (1998) FLAC",a:"Nash Beats",cat:"super",link:"https://1024terabox.com/s/17YkVsgjrl04ncx2ppqZ6ug"},
+{id:22,t:"Passion Play - Baby Can't You See (1991)",a:"Passion Play",cat:"super",link:"https://1024terabox.com/s/1w5NVL9AYawJHpVtTRYWSEA"},
+{id:23,t:"Plastic Age Ft. Sara P. - All Boys (1994) WAV",a:"Plastic Age",cat:"super",link:"https://1024terabox.com/s/1MRy7_f68-vAS_ivFEzWXtQ"},
+{id:24,t:"Playlist - Vol.1 - 2019",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/154OB0cxasA8RL0D9GHEpcA"},
+{id:25,t:"Playlist - Vol.2 - 2019",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1PJCpuXfc3ubyKMCMGL-XIQ"},
+{id:26,t:"Playlist - Vol.4 - 2019",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1gJ7S_LzVEHmd2BhQ9Q3XeA"},
+{id:27,t:"Playlist - Vol.5 - 2019",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/17VU5ui46g6IeuSAX2pE1ng"},
+{id:28,t:"Playlist - Vol.6 - 2019",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1HI2kxRzmrNT_9Y3--yKOuA"},
+{id:29,t:"Playlist - Vol.7 - 2019",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1WGfE_SnPRJGKTYNkk6-5rw"},
+{id:30,t:"Playlist - Vol.8 - 2019",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1NQVKAvIWORFzpwlHWKKNUA"},
+{id:31,t:"Playlist - Vol.9 - 2019",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/14KqFyn1Ud0OfGKvg_VmTqg"},
+{id:32,t:"Playlist A Voz Do Brasil - 2021",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1YRt-uCXzLqqVV3UfqlI8og"},
+{id:33,t:"Playlist Novos Flash Back - Vol.1 - 2018",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1oKhd_Dv63qD3UgiKGr9weg"},
+{id:34,t:"Playlist Novos Flash Back - Vol.2 - 2020",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1AvAziUgN4ZDvPui6Ue6IGA"},
+{id:35,t:"Playlist Novos Flash Back - Vol.3 - 2021",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1Nv3cFQPI_9fYHhta3getXw"},
+{id:36,t:"Ramirez - Bomba (Helicopter UK Remix) 1994 FLAC",a:"Ramirez",cat:"super",link:"https://1024terabox.com/s/1W94hpFAt3mz-pzAbXlPC9Q"},
+{id:37,t:"Rednex - Cotton Eye Joe 2002 FLAC",a:"Rednex",cat:"super",link:"https://1024terabox.com/s/16V_X82pGVA-QVfR5DStrpg"},
+{id:38,t:"Rozalla",a:"Rozalla",cat:"super",link:"https://1024terabox.com/s/1YyDBiaWYKIH23F9vhP1nng"},
+{id:39,t:"Summer House Hits Vol.2 - 1990",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/144_681VMqJkJVXQkbiq5eg"},
+{id:40,t:"Super Dance Hits",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1m-CtCEFDgJdyaYZh1qjsRw"},
+{id:41,t:"Supermix - El Primer Megamix Ilustrado - 2019",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1Blb36VE1DxKM_0TylGdGmw"},
+{id:42,t:"VA - Dance Chart 3",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/14nNCzeOAU2TLbP9xewbZqw"},
+{id:43,t:"Vengaboys - The Party Album (1999)",a:"Vengaboys",cat:"super",link:"https://1024terabox.com/s/1Z-VbOHVSap4o3oo4FWNyMg"},
+{id:44,t:"Whigfield - I Want To Love (1996) FLAC",a:"Whigfield",cat:"super",link:"https://1024terabox.com/s/1bGIxYD8LaBe_P1i-OzRNMw"},
+{id:45,t:"Yabba Dabba Dance - 1995",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1icTrH-5GwHaIQXnUU7sMSA"},
+{id:46,t:"74.5 - Uma Onda No Ar - 1994",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/15Btejnggib6kbeaIXJ3FxQ"},
+{id:47,t:"80s Remix - 12 Inch Dance - 2017",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1G7HorlujYxW8awuO-Gk5TA"},
+{id:48,t:"Ace Of Base - Happy Nation - 1993",a:"Ace Of Base",cat:"super",link:"https://1024terabox.com/s/1vnkMWZLJKRh4Q7yxdbXqLw"},
+{id:49,t:"Adrenalina Transamerica FM - 2007",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1eWSCzS2hwwDFTz-JQp7YZw"},
+{id:50,t:"Back To New Wave - Vol.1 - 1994",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/10bZ_W_tcDp3jvqctRSIbZg"},
+{id:51,t:"Bombando as Pistas Metropolitana 98.5 FM",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1Eg6grV-MVBCs8U3d2-LoNA"},
+{id:52,t:"Club Rotation - Vol.6 - 1999",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1oHO2MI9M32d59Ig5J56MjA"},
+{id:53,t:"Conexao Planeta Mix Studio FM-99.1 - 2001",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1iUk-6eI1O6auLal2oW-LVA"},
+{id:54,t:"Cyborg - Tecno Dance - 2004",a:"Cyborg",cat:"super",link:"https://1024terabox.com/s/1DSE5B9w49Etf_26bI-AKQQ"},
+{id:55,t:"Dance Assistence - 1995",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1mQM5Qc-XSq91LcmD5DFgiA"},
+{id:56,t:"Dance Chart - 3",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/14tBxXrqcrHgDtghhjIVP0g"},
+{id:57,t:"Dance Factory",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1LiC3DNOPjZQSXWep2SJB_A"},
+{id:58,t:"Decibel - Vol.1.2 - XTC Beats 1991-1992",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/160F9Ply381-LjPqcYweStQ"},
+{id:59,t:"Dj Kadoo - Space Mu Ano 5 - 2008",a:"DJ Kadoo",cat:"super",link:"https://1024terabox.com/s/11QMaZ4MV4A5fhgUKL2e0uQ"},
+{id:60,t:"Dream Dance - Vol.84 - 2018",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1PU8p9MnpZ9tlE6PIlGMDxQ"},
+{id:61,t:"European Dance Hits vol. 1",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1sMpTl5lHQUjO7nGNjchSTA"},
+{id:62,t:"FESTA DA SUCESSO 96,9",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/16yU3cJovYqm-yi-U9QEP_w"},
+{id:63,t:"Future Trance - Vol.6 - 1998",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1CdbaqLlQElaRmN2o76XzaQ"},
+{id:64,t:"Greatest Hits - Lenny Kravitz - 2000",a:"Lenny Kravitz",cat:"super",link:"https://1024terabox.com/s/15hKKDPalGqvWarlrwSX1vA"},
+{id:65,t:"HOT SINGLES 5",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/13z3R1HH0MsRtGbjERaVgbw"},
+{id:66,t:"House Nation - Vol.1.2 - 1994",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1SaVRvksmRsFO1jgqb9AIYQ"},
+{id:67,t:"House Remix Internacional - 1990",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1GTxzEZ-kPgSJrCt28voSmA"},
+{id:68,t:"Ice MC - Ice N Green (The Remix Album) 1995",a:"Ice MC",cat:"super",link:"https://1024terabox.com/s/17guoo_THDUtSzBi1FDN4nw"},
+{id:69,t:"Loving You - 2003",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1N4Q_JHN9LgvwXEkQa6MMiw"},
+{id:70,t:"Lunch Break - Vol.8 CD 1 - CD 2",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1ln1kqNOYHOAC_Nixjx1UuA"},
+{id:71,t:"Luv! TVZ - Vol.3 - 2007",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1uy1Wg75vPWcZgf-GkVRvRw"},
+{id:72,t:"Maxi Dance Hits - 1993",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1n-iqgpc1msAmqORZEfXA2A"},
+{id:73,t:"Maxi Dance Sensation - Vol.5 - 1991",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1nSD5u_Trw-crrV1rti_h3g"},
+{id:74,t:"Maxi Disco - Vol.1 - 2008",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1Xpw-AYLgjaHpjG1lktXfnA"},
+{id:75,t:"Mega Dance - Remixes Nonstop - Vol.1 - 1996",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1g7XTgjf0KoXWdzIB2oNX9g"},
+{id:76,t:"Megamix 100% Dance Classics",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/15vuLkq_6ayVkljMZ718VLA"},
+{id:77,t:"Mix Dance So As Balas Volume 4",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1ULAifaqQgqzz-lw3RqMOSw"},
+{id:78,t:"Moonight - 2000",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/12Mz2Ry_V61EKe_RoOVBALg"},
+{id:79,t:"More Greatest Hits Of The 80s - 2000",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1gimZsCQNkteo8wsVFfzEiA"},
+{id:80,t:"Move The House - Vol.1 - 1991",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1RXza70uMO-NUS54K7LQmPw"},
+{id:81,t:"Original Hits - 80s 12'' - 2009",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1_po4ffvv5Iim3DDqgRYhpA"},
+{id:82,t:"Planeta Mix 20 Anos - 18 Super Hits - 2018",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/16b_QTLCSmShFDhbXLFHijg"},
+{id:83,t:"SOM NA CAIXA DJs",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1_YO2Fbm54XL86lTK3xKAAQ"},
+{id:84,t:"Sonia Davis - 2008",a:"Sonia Davis",cat:"super",link:"https://1024terabox.com/s/1KyaAUy_yVywG6Ue7LMt3LQ"},
+{id:85,t:"Spotlight - Dance Hits - Vol.2 - 1993",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1fjdUcABkoc2pX84EQTdybg"},
+{id:86,t:"Stiletto Dance Hits - 1990",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1xkjtfFxKBr0fjncMkvoigQ"},
+{id:87,t:"Super Dance 2000",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1HoZHSlLcz557PvrCeVQ8PQ"},
+{id:88,t:"Surf Music - 1998",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1QtqkxRM-JkcjXpP98qqO7A"},
+{id:89,t:"Techno Cop - The Best And More (1992)",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1PHtpZLYNVNKT4bJ7AN5ulg"},
+{id:90,t:"Techno Trax Vol. 21 - 1998 (CD 1 & 2)",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1svP5UkePXaYs9NnF4Wn9Mg"},
+{id:91,t:"Technomania - 1992",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1_O1MNO_CPdA6Pq_SQPT86w"},
+{id:92,t:"Tenda Eletronica",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1DGd7zoz93WYwx5erRS7QWQ"},
+{id:93,t:"The Best Of - Ice Mc",a:"Ice MC",cat:"super",link:"https://1024terabox.com/s/1uA8AQ004tTAMfYvSpaZJxA"},
+{id:94,t:"The Remix Tape - 1985",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1Bh2R3mlbfQ5EdxbcybpOwg"},
+{id:95,t:"The Underdog Project - Greatest Hits Vol.1 - 2003",a:"The Underdog Project",cat:"super",link:"https://1024terabox.com/s/1RL5nL0aVO_c1tSR6qJDRfw"},
+{id:96,t:"Top 18 - Paradoxx Music - Vol.2 - 1999",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/176VvlwMYmu4bdB2WhO3r0A"},
+{id:97,t:"V.A. - Cash Box - O Som Acima Do Normal Vol. 1 (1982)",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1sX1Z7qbA2W_w-MVAXRDOIA"},
+{id:98,t:"VA - 90's Club Megamix 2CDs - 2011 SYNDIKAT",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1BfVv5XDHlx_saelvTUsW_A"},
+{id:99,t:"World Of Trance - Vol.10 - 1999",a:"Various Artists",cat:"super",link:"https://1024terabox.com/s/1vGJjiudAnEX4CLJBMhCUvA"},
+{id:100,t:"As 7 Melhores Jovem Pan - 2002",a:"Jovem Pan",cat:"jovempan",link:"https://1024terabox.com/s/1kkfNel0kzg5LbH4c24F27A"},
+{id:101,t:"As 7 Melhores Jovem Pan - 2003",a:"Jovem Pan",cat:"jovempan",link:"https://1024terabox.com/s/1eXvdTSPNHyFzh5KPxFR8lQ"},
+{id:102,t:"As Melhores das 7 Melhores da Jovem Pan (CD Duplo) 2000",a:"Jovem Pan",cat:"jovempan",link:"https://1024terabox.com/s/1fia8zxLs4Gi9YOnh3B1e-A"},
+{id:103,t:"Jovem Pan - 40 Graus - 1996",a:"Jovem Pan",cat:"jovempan",link:"https://1024terabox.com/s/1APTc_WUbEDEDBNGEJbj5Vg"},
+{id:104,t:"Planeta Dj Jovem Pan - Hits 2010",a:"Jovem Pan",cat:"jovempan",link:"https://1024terabox.com/s/1ySNG_e1321IfqNiCgPuAiA"},
+{id:105,t:"Planeta Dj Jovem Pan - Winter 2012",a:"Jovem Pan",cat:"jovempan",link:"https://1024terabox.com/s/1vt6ri0QR2rcU2zkk-BXv-g"},
+{id:106,t:"Revista Da Pan (1998) - Especial Mais Bonitos",a:"Jovem Pan",cat:"jovempan",link:"https://1024terabox.com/s/1vBBR8AohqPpzJB-DGvaFuw"},
+{id:107,t:"Revista Jovem Pan - 1997",a:"Jovem Pan",cat:"jovempan",link:"https://1024terabox.com/s/1FaKFZLUD9X2B5LhonfmXFA"},
+{id:108,t:"Joao Mineiro e Marciano",a:"Joao Mineiro e Marciano",cat:"sertanejo",link:"https://1024terabox.com/s/1rf0u4lAhDJsc-Uqz8PSX3A"},
+{id:109,t:"Zeze Di Camargo & Luciano - 1993",a:"Zeze Di Camargo",cat:"sertanejo",link:"https://1024terabox.com/s/1PCceU8eo8T687RqKFXkzfg"},
+{id:110,t:"Trio Parada Dura",a:"Trio Parada Dura",cat:"sertanejo",link:"https://1024terabox.com/s/1UUyzRkD-F60Z3bYxGm4-wQ"},
+{id:111,t:"Tiao Carreiro e Pardinho",a:"Tiao Carreiro",cat:"sertanejo",link:"https://1024terabox.com/s/1JUTA-BUFOPDHn4vDXmXpPw"},
+{id:112,t:"Tiao Carreiro - Os Gigantes - 2002",a:"Tiao Carreiro",cat:"sertanejo",link:"https://1024terabox.com/s/1AvYv-iiOviNImDKtIHvVlg"},
+{id:113,t:"Chico Rey e Parana",a:"Chico Rey e Parana",cat:"sertanejo",link:"https://1024terabox.com/s/1KCMTMGikLQvb4R05hOPsxw"},
+{id:114,t:"Gino & Geno - Warner 30 Anos - 2006",a:"Gino & Geno",cat:"sertanejo",link:"https://1024terabox.com/s/1dLKhyNGZ9fmbQBFVuAKsCA"},
+{id:115,t:"Colecao Trio Parada Dura CDs",a:"Trio Parada Dura",cat:"sertanejo",link:"https://1024terabox.com/s/1DG-RUYap7bS5l48tVlMs_Q"},
+{id:116,t:"Milionario e Jose Rico",a:"Milionario e Jose Rico",cat:"sertanejo",link:"https://1024terabox.com/s/1flFflUWySyIH-V7Yi-ZOTw"},
+{id:117,t:"Zeze Di Camargo - 1986",a:"Zeze Di Camargo",cat:"sertanejo",link:"https://1024terabox.com/s/1pzxwZCvIL1HGdUSRhuknqg"},
+{id:118,t:"Trio Parada Dura - Tapete Colorido - 1999",a:"Trio Parada Dura",cat:"sertanejo",link:"https://1024terabox.com/s/1-QQ1E3Qpj3wra6D27Dp7WQ"},
+{id:119,t:"Leandro & Leonardo - Explosao De Desejos - 1986",a:"Leandro & Leonardo",cat:"sertanejo",link:"https://1024terabox.com/s/1ZiDFWgcZ4cr-BMTmIhC_vg"},
+{id:120,t:"As Melhores De Trio Parada Dura",a:"Trio Parada Dura",cat:"sertanejo",link:"https://1024terabox.com/s/1rsmOGAv6h6j5YjKHLE-21A"},
+{id:121,t:"Lourenco e Lourival",a:"Lourenco e Lourival",cat:"sertanejo",link:"https://1024terabox.com/s/1lLuExDRRBcZlG4sn9K1zdg"},
+{id:122,t:"Tonico e Tinoco",a:"Tonico e Tinoco",cat:"sertanejo",link:"https://1024terabox.com/s/14h69SJP5TdG2C_Bpix0qAw"},
+{id:123,t:"Chrystian & Ralf - 1993",a:"Chrystian & Ralf",cat:"sertanejo",link:"https://1024terabox.com/s/14eonismWBjJrXJGEeBPMmQ"},
+{id:124,t:"Pedro Bento e Ze da Estrada",a:"Pedro Bento",cat:"sertanejo",link:"https://1024terabox.com/s/1ACAxepccu9nsC96kJAGIMw"},
+{id:125,t:"Zeze Di Camargo & Luciano - 1991",a:"Zeze Di Camargo",cat:"sertanejo",link:"https://1024terabox.com/s/1xoYc03lVh2qZYwgzKE0zPw"},
+{id:126,t:"Os Filhos de Goias",a:"Os Filhos de Goias",cat:"sertanejo",link:"https://1024terabox.com/s/1zs4bnKDhSa7GLjImYhJIWA"},
+{id:127,t:"Saudades Do Sertao - Vol.2 - 2005",a:"Various Artists",cat:"sertanejo",link:"https://1024terabox.com/s/1ejt3Ww-PFmv5hOUUDrJcAw"},
+{id:128,t:"Amor de Verdade - Amado Batista",a:"Amado Batista",cat:"sertanejo",link:"https://1024terabox.com/s/1yUVo0jlAldqfKSXj-1iDwQ"},
+{id:129,t:"Sertanejo 86 - 1986",a:"Various Artists",cat:"sertanejo",link:"https://1024terabox.com/s/1DPGcekmXBkDFWufFut3QDg"},
+{id:130,t:"Adrenalina",a:"Elektro",cat:"elektrodance",link:"https://1024terabox.com/s/1PUzoazQxohAgFd6-fOR6UQ"},
+{id:131,t:"Dance. Elektro",a:"Elektro",cat:"elektrodance",link:"https://1024terabox.com/s/1k1U05Qp-_CYKcyOcY2R_dw"},
+{id:132,t:"Elektro Dance",a:"Elektro",cat:"elektrodance",link:"https://1024terabox.com/s/1NkGDx8SDU_0U3bgm3eAO5w"},
+{id:133,t:"Party 2023-2024 Best of Dance EDM House Electro",a:"Various Artists",cat:"elektrodance",link:"https://1024terabox.com/s/1ofZo5CrECOqSzI5ciM80Sg"},
+{id:134,t:"Pop Dance Mix",a:"Various Artists",cat:"elektrodance",link:"https://1024terabox.com/s/17Xl8Jjm7YmKy2RImqQWjmw"},
+{id:135,t:"elektro . dance",a:"Various Artists",cat:"elektrodance",link:"https://1024terabox.com/s/15wpbjjWXzyTilES5MwGezQ"},
+{id:136,t:"Coletanea - Euro, House & Flash",a:"Various Artists",cat:"colhouseflash",link:"https://1024terabox.com/s/176q7iT9Mxmi5WWsg0h6HiQ"},
+{id:137,t:"90's Eurodance (1)",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1-PlkL65Z7RWuf7uVCVs38A"},
+{id:138,t:"Aqua - Aquarium (Cd 1997)",a:"Aqua",cat:"eurodance",link:"https://1024terabox.com/s/1aN3UJKhOcNufSpLn5PG2ww"},
+{id:139,t:"DJ'S PARADE CD 1994 - Radio Dance Anos 90",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1qCUmkTuixgthVjkwFL4yXg"},
+{id:140,t:"Dance Hits Collection 90s Vol.6 (2019)",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/15N5QOcHrkdDs4vXAuHi5cg"},
+{id:141,t:"Disco 95",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1BONXGoGwkN4Kbgm6iC4bfg"},
+{id:142,t:"EURODANCE 90S ALBUM COLLECTION",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1P5qi63Ci7jzG6KXciO0MgA"},
+{id:143,t:"EURODANCE 90s 1",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/17AEku8Kmm5v5owx5lkKYwg"},
+{id:144,t:"EURODANCE 90s 2",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1ar_VHy_ltkAW3EItLegWNw"},
+{id:145,t:"EURODANCE 90s 3",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1UD64-t9bY2YXIsloyW7Fjw"},
+{id:146,t:"EURODANCE 90s 4",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1_i8IsH1meTDMIVEGP_Sa5g"},
+{id:147,t:"EURODANCE 90s 5",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1qq09wFKvmWRgscTdz8jySA"},
+{id:148,t:"EURODANCE 90s 6",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1s7S72pK60BNQi-8ocYA3DQ"},
+{id:149,t:"EURODANCE 90s 7",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1BuB1-JNssWyJsTmFaezO4w"},
+{id:150,t:"EURODANCE 90s 8",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1kOCn03eY3z-mKJMQilbVLQ"},
+{id:151,t:"EURODANCE 90s 9",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1vfZvL3QrrjyykWUUKSM2hw"},
+{id:152,t:"EURODANCE 90s 10",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1UJUBG1Iw2-NkmZ_mRA2iWw"},
+{id:153,t:"EURODANCE 90s 11",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1yj-dxrEmyDmKRQx6sGBpqQ"},
+{id:154,t:"EURODANCE 90s 12",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1BGtENH8g3fApIXMBL6SxdA"},
+{id:155,t:"EURODANCE 90s 13",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1Jvk-HoHjGcRJRFXY4OEFUQ"},
+{id:156,t:"EURODANCE 90s COLLECTION",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/11aFIPBtvAtEVolV4dwPiEg"},
+{id:157,t:"Flash Hits Paradox - 1995",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1g72ahqPuGomZHCw_l_eJrQ"},
+{id:158,t:"Masterboy",a:"Masterboy",cat:"eurodance",link:"https://1024terabox.com/s/1aY3A_Nnm4nA7O5mQROe5Og"},
+{id:159,t:"Only Dance - 1995",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/109IIc3sGsM3ZsGugWjcNxg"},
+{id:160,t:"Radio Dj - Vol.1 - 1998",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/11e5ynRSVYQbNR37CwVQUqQ"},
+{id:161,t:"Retro 90's Mix",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1F41iw5j04AwoQpNM1GgRaA"},
+{id:162,t:"Retro Anos 90's",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1dQTUbNNXNokhK_Zimcfjdw"},
+{id:163,t:"Roller Dance - 1995",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1vO7zMIifcsiyW-seRl0AJQ"},
+{id:164,t:"SOS Dance - 1995",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1oBojpGCkJSVPW9MOd6l71A"},
+{id:165,t:"Scatman John (2002) The Best Of",a:"Scatman John",cat:"eurodance",link:"https://1024terabox.com/s/1INGMmnBoqTnMp4b4TVOlng"},
+{id:166,t:"The Best Of Eurodance - 1990",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1Tbj3tXI-iAFEJcwHmva0OQ"},
+{id:167,t:"The Euro 90's",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1Br2J1-ROCB8sB04MhSaM2Q"},
+{id:168,t:"ToCo Hits Vol.1 - 1995",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/17X4eQgzb6vrDZdAPnyp91Q"},
+{id:169,t:"90's Eurodance",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1DLTd3gpCHkZsn9tI2XxWzg"},
+{id:170,t:"Classic Dance Remix - 1995",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1HVOgeqt2_VMIJLApI-4A8w"},
+{id:171,t:"Dance With Me - 1993 DJ Bobo",a:"DJ Bobo",cat:"eurodance",link:"https://1024terabox.com/s/1DOiPWzM9nscVwEvOO5lrTQ"},
+{id:172,t:"Retro Anos 90",a:"Various Artists",cat:"eurodance",link:"https://1024terabox.com/s/1yGsZnm39HnoURMRIYT-MHw"},
+{id:173,t:"Conexao Hard House",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/17ThGo-A-z9yJPJOXxMpQyw"},
+{id:174,t:"HARD HOUSE - Colection",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/1oZVly3qDTuIVJrJ9NMfOhw"},
+{id:175,t:"HARD MUSIC",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/1-vUW8r_5SEDF9yIUimY9xA"},
+{id:176,t:"HARDSTYLE",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/1jyUc1_CO9PbqyFtot_4Zuw"},
+{id:177,t:"Hard House Mix",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/1jEvhWNCIQXuj-1f_v4B8FA"},
+{id:178,t:"Hard House U.c",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/1wV29sdsolWU76Hpul0ouJQ"},
+{id:179,t:"Hard House Uc. x",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/18_b83DkGLhmFwiQLcr59vw"},
+{id:180,t:"Hard House X",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/19hL3Zwd31pU4kveUtulMNw"},
+{id:181,t:"Hard House X Uc",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/1_-VtnLnEJ_OtntYmnue6EA"},
+{id:182,t:"Hard Underground - Coletanea 1",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/1cP-2IaH11NzE8Zglo7OM1Q"},
+{id:183,t:"Hard Underground - Coletanea 2",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/10fUqpm57HWFvYS09cb3_uw"},
+{id:184,t:"Hard Underground - Coletanea 3",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/1Gz2IDPeW2mYvCMMsSBKM-g"},
+{id:185,t:"Hard Underground - Coletanea 4",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/1w2bCTZBkPIOuveoYaEQ-Bg"},
+{id:186,t:"Hard Underground - Coletanea 5",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/1v5BxK5A4RdNyJNneqfpbhQ"},
+{id:187,t:"Hard Underground - Coletanea 6",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/17vQ99dDfbcpBWTV_kRZj9A"},
+{id:188,t:"Hard Underground - Coletanea 7",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/1EK2wD-YWabtC5MaMeQBLjg"},
+{id:189,t:"Hard Underground - Coletanea 8",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/1msyNj9tk2Ze0awJcHC635A"},
+{id:190,t:"Hard Underground - Coletanea 9",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/1IgY9Il62dJtgpXW7XjorqA"},
+{id:191,t:"Hard Underground - Coletanea 10",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/1hVmViqtV4jSTUyLPm9BAkQ"},
+{id:192,t:"The Hard House Music",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/1g1OzLALId3sW98mXjUUMtg"},
+{id:193,t:"Hard Music Society",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/1Oou0LghKoeI30x0FWg50eg"},
+{id:194,t:"LUCIANO SANTOS LDPS HARD HOUSE PLAYLIST",a:"Luciano Santos",cat:"hardhouse",link:"https://1024terabox.com/s/1ZmuMkg72HJ0swZ-xADgkIQ"},
+{id:195,t:"THE HARD HOUSE & UNDERGROUND 90S COLLECTION",a:"Various Artists",cat:"hardhouse",link:"https://1024terabox.com/s/1XAL3BS8TiKeH8EkpyLb0hA"},
+{id:196,t:"1990 - Holocausto Urbano",a:"Racionais MCs",cat:"hiphop",link:"https://1024terabox.com/s/1CV8942KglaGoVvaPlj4i9w"},
+{id:197,t:"1992 - Escolha Seu Caminho",a:"Racionais MCs",cat:"hiphop",link:"https://1024terabox.com/s/1PibMDzCpZ4XYlwBP0jDjrw"},
+{id:198,t:"1993 - Raio-x Do Brasil",a:"Racionais MCs",cat:"hiphop",link:"https://1024terabox.com/s/1Ct0MFZH1XViXL-7zi1sRZw"},
+{id:199,t:"1998 - Sobrevivendo No Inferno",a:"Racionais MCs",cat:"hiphop",link:"https://1024terabox.com/s/1_0i6VESWfU9EPx2qdvrifA"},
+{id:200,t:"2001 - Ao Vivo",a:"Racionais MCs",cat:"hiphop",link:"https://1024terabox.com/s/1Lwf-VgM-WQgVuCxjiWraKQ"},
+{id:201,t:"2002 - Nada Como Um Dia Apos o Outro",a:"Racionais MCs",cat:"hiphop",link:"https://1024terabox.com/s/1rF8Btp70YmCH-BWcP8nRpw"},
+{id:202,t:"509-E - Proverbios 13",a:"509-E",cat:"hiphop",link:"https://1024terabox.com/s/1YYngfbh7B0o5J7qoG76YkQ"},
+{id:203,t:"Beware Records The Ultimate Collection Vol. 1",a:"Beware Records",cat:"hiphop",link:"https://1024terabox.com/s/1W3t2rjzPAZFvI1qh3hSNSw"},
+{id:204,t:"Conciencia X Atual",a:"Various Artists",cat:"hiphop",link:"https://1024terabox.com/s/1Z0uX2Guan_cxz8g-qgJ9DQ"},
+{id:205,t:"Hip Hop Music",a:"Various Artists",cat:"hiphop",link:"https://1024terabox.com/s/1uGDi3NasvLbnKFZz6p3bBQ"},
+{id:206,t:"Marcelo D2 - A Procura Da Batida Perfeita 2003",a:"Marcelo D2",cat:"hiphop",link:"https://1024terabox.com/s/1g460k-_-eBdirX8ZdXVGpA"},
+{id:207,t:"Ndee Naldinho - O Povo da Periferia (2002)",a:"Ndee Naldinho",cat:"hiphop",link:"https://1024terabox.com/s/1t40UE4Ig6D40scL_IWyaUA"},
+{id:208,t:"Playlist A Historia Nao Contada - 2020",a:"Various Artists",cat:"hiphop",link:"https://1024terabox.com/s/1EfAQ5N6XIcJBzWWuLvTYPA"},
+{id:209,t:"RZO - 1997",a:"RZO",cat:"hiphop",link:"https://1024terabox.com/s/1eIyNW4CrQFHZ6IqGgBPbmA"},
+{id:210,t:"Racionais MCs - 25 Anos - (2015)",a:"Racionais MCs",cat:"hiphop",link:"https://1024terabox.com/s/1CN8Oo1SosYzvNBm_tAOh-w"},
+{id:211,t:"Racionais Mcs - Cores e Valores (2014)",a:"Racionais MCs",cat:"hiphop",link:"https://1024terabox.com/s/1-XVgI4roL-1vfGgdjgOmfg"},
+{id:212,t:"Sabotage - Rap E Compromisso (2001)",a:"Sabotage",cat:"hiphop",link:"https://1024terabox.com/s/1JbnUxFpZxxXgGmq4cpzg0w"},
+{id:213,t:"Sabotage - Sabotage (2016)",a:"Sabotage",cat:"hiphop",link:"https://1024terabox.com/s/1EPKpV_lbeJneOR5XPIQ-3g"},
+{id:214,t:"Sabotage - raridades",a:"Sabotage",cat:"hiphop",link:"https://1024terabox.com/s/1el8_U_DBg44U6-Jw5MoTVQ"},
+{id:215,t:"Eternas Paixoes - Vol.3 - 2017",a:"Various Artists",cat:"romantico",link:"https://1024terabox.com/s/16-YGM48ShMYJLcnHvGCYOQ"},
+{id:216,t:"Kenny G",a:"Kenny G",cat:"romantico",link:"https://1024terabox.com/s/1ZkTrqqMqEiRdEtsjPReK_g"},
+{id:217,t:"Love & Mix - 2019",a:"Various Artists",cat:"romantico",link:"https://1024terabox.com/s/13o6k9msTPjBMbH2LWqg-hg"},
+{id:218,t:"Love Sons",a:"Various Artists",cat:"romantico",link:"https://1024terabox.com/s/1JRTDgTwwDOm4TGcSsi22Ow"},
+{id:219,t:"Love Sons Collection",a:"Various Artists",cat:"romantico",link:"https://1024terabox.com/s/1fIniIMBOisuppGq3w-i63w"},
+{id:220,t:"Music Love 80's - 1999",a:"Various Artists",cat:"romantico",link:"https://1024terabox.com/s/1KTpcRVJNDC80vubyRwApOg"},
+{id:221,t:"Musicas Romanticas Internacional",a:"Various Artists",cat:"romantico",link:"https://1024terabox.com/s/14TeSUAcX1-F8Te9Ww-ucXA"},
+{id:222,t:"Roupa Nova",a:"Roupa Nova",cat:"romantico",link:"https://1024terabox.com/s/1P5APUqV_iQ8PEalenIYxhA"},
+{id:223,t:"TV Love Songs - 1983",a:"Various Artists",cat:"romantico",link:"https://1024terabox.com/s/1PSP_CMKwA93qeZ1xnmHDSQ"},
+{id:224,t:"TV Love Songs - 1988",a:"Various Artists",cat:"romantico",link:"https://1024terabox.com/s/15VOMXpCf1mfitHX29mu4xg"},
+{id:225,t:"Top 20 Melhores - Romantico Internacional (2019)",a:"Various Artists",cat:"romantico",link:"https://1024terabox.com/s/1Qw76JjPv2uw5mxbdLP7i5g"},
+{id:226,t:"Set Mix LDPS - MUSIC",a:"LDPS",cat:"supercol",link:"https://1024terabox.com/s/1jqvYgRCWD2X3Zw8ZebKO2w"},
+{id:227,t:"Alternativo 2000",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1Twr2SvuwIq-JSdZlwLRi4g"},
+{id:228,t:"Anos 90 Top Music",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1Ou4yGaxbgbJlkR9FbhnqoA"},
+{id:229,t:"Baladas Dance",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1LwNO_K52I8LEbtwpPdEH4Q"},
+{id:230,t:"Bee Gees (Ao Vivo)",a:"Bee Gees",cat:"supercol",link:"https://1024terabox.com/s/1ar33FA0qO2beWktQzUlQ1A"},
+{id:231,t:"Coletanea",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1J_prBctDlx2NOfYCRx1QsA"},
+{id:232,t:"DANCE FOR DANCE",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1sWd5Ch9-SVlPOFnqjL0kmQ"},
+{id:233,t:"DJ Helio De Souza 2",a:"DJ Helio",cat:"supercol",link:"https://1024terabox.com/s/1vI9RzXi9rRc4yKPABckRjQ"},
+{id:234,t:"Dance Hits MP3",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1K4Mc6j7drWGP-5TA-P8ngg"},
+{id:235,t:"Dance Mix",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1JFZIuaJiZULVdyIUHv-11Q"},
+{id:236,t:"Dance Mix MP3",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1tZPagX7PbJ8GbsoTW7IhIQ"},
+{id:237,t:"Dance. MiX",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1HNABetlRfVPisZRV2KM0hg"},
+{id:238,t:"Dj Helio De Souza",a:"DJ Helio",cat:"supercol",link:"https://1024terabox.com/s/181wj5HQ-qiZu8C-zBv93mQ"},
+{id:239,t:"Elektro Dance",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1GYHTrl8p8DdaenB6Rc3gyg"},
+{id:240,t:"Flash Back Baladas",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1LUeVGFhvbFruRPuw_SfIJQ"},
+{id:241,t:"Flash Back Collection",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1XX2jHeW7hskvtMJC6bT0AQ"},
+{id:242,t:"Flash Back Especial",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1lqBHfsjWcOwvlVpM-qjcSw"},
+{id:243,t:"Flash House",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1_l5mBwJpqfocNstsYV0vog"},
+{id:244,t:"Hit Mix Dj Coletanea",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1dH3X1hqChHh7M2FSKTrBWA"},
+{id:245,t:"Pagode",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1u9ub7OmK6w1t2CXsKD7vHA"},
+{id:246,t:"Planeta Ibiza",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1q_0j5a4atN_iJrw4ajBJ-g"},
+{id:247,t:"Puro Flash House",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1RUJB5-kLVndYs85TwZZkhg"},
+{id:248,t:"Rave Dance",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/18eZc9wwbJFGsMdCFoDck1Q"},
+{id:249,t:"So o Ouro Dance",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1BET2D2WsJ0AzcMLeeRuT9g"},
+{id:250,t:"Summer EletRotHits",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1sAKh-K1PVQeX4g8rw988rg"},
+{id:251,t:"Underground PLAY",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1LjeYnM7RXJLnFGLx4UG_pQ"},
+{id:252,t:"Underground playlist",a:"Various Artists",cat:"supercol",link:"https://1024terabox.com/s/1YRXftDe3ZhGM1TPAnBtRjg"},
+{id:253,t:"Albuns Gaucho",a:"Various Artists",cat:"gaucho",link:"https://1024terabox.com/s/13boFcFI3mSZdXiUJsIUFtQ"},
+{id:254,t:"Os Mirins",a:"Os Mirins",cat:"gaucho",link:"https://1024terabox.com/s/12-7ExuHtevNxkcLSo3vTMA"},
+{id:255,t:"A Gata Comeu - Internacional - 1985",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1Y7yw5UTmNjHQDHCcHhsaaA"},
+{id:256,t:"A Viagem - Internacional - 1994",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1a-NxQHm1SzTRkC9wKAqs6g"},
+{id:257,t:"Avenida Brasil (Internacional)",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1dEOiHnLdZUJpdVYiMscsOQ"},
+{id:258,t:"Barriga De Aluguel - Nacional - 1990",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1OdNLs_zsnHZTXwORklWhZw"},
+{id:259,t:"Bebe A Bordo - Nacional - 1988",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/187azaCWLJ06Fb7cz2fwcpA"},
+{id:260,t:"Brega e Chique - Internacional - 1987",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1P8f3AjD2S33LITVETmz7mw"},
+{id:261,t:"Cambalacho - Internacional - 1986",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1xAdiH1yb5MRdJ9JMUQhBzg"},
+{id:262,t:"Cara & Coroa Internacional - 1995",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1V3a0dn8wMcnreUu5Vlq28w"},
+{id:263,t:"Como Uma Onda - Internacional - 2005",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1_YOmnMcB6jY5bo_iqwZZNQ"},
+{id:264,t:"Gente Fina - Internacional - 1990",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1DyWz5wd0HgIhyxltfMdj5A"},
+{id:265,t:"Louco Amor Nacional - 1983",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1p9pnyBLGvB3xKCEtj7E8Ng"},
+{id:266,t:"Malhacao - Internacional - 2004",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1h8_DcAi3zfOo6iiTrnwRtQ"},
+{id:267,t:"Mandala - Internacional - 1988",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1Wn8E8kxzmnygPT3VhQgqig"},
+{id:268,t:"Mulheres De Areia - Nacional - 1993",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1DTh9X1w0SSpj-HqMDp1-zQ"},
+{id:269,t:"Pantanal - 1990",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1gesKWduEVjVo2C5K8h7lYA"},
+{id:270,t:"Quatro Por Quatro - 1995",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1ibtw8V1P7MDsbWrwtOg-qg"},
+{id:271,t:"Rainha Da Sucata - Internacional - 1990",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1VZZ_K7eMJb6QNxzirBX4OA"},
+{id:272,t:"Roque Santeiro - Internacional - 1985",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1ezWAvLQLuRewp99qXxNxZA"},
+{id:273,t:"Tieta - Nacional (1989)",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/15YP9ukwJm4K5mWooy8JPCw"},
+{id:274,t:"Vale Tudo - Nacional - 1988",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1U80S9kHwZeUmHk6GRA5rdA"},
+{id:275,t:"Vamp Internacional - 1991",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1FaR5GLBBmkBJ3AlloPQE9w"},
+{id:276,t:"Explode Coracao - Internacional - 1996",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/1ITsLUU9mtvWGQx1PTwJSFw"},
+{id:277,t:"Suave Veneno - Internacional - 1999",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/12REOSafkokbmIn2UBPxBMg"},
+{id:278,t:"Sonho Meu - Internacional - 1993",a:"Trilha Sonora",cat:"novelas",link:"https://1024terabox.com/s/168UvoZuxiEUoNyYfp6IkEQ"},
+{id:279,t:"Dance Pancadao Remix 2021",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1kYFeYsCKM-eo4EOdIp0pBA"},
+{id:280,t:"ELEKTRO DANCE - COLLECTION",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1uP6hFxbZpvGz7hHeVQ86qg"},
+{id:281,t:"Elektro Dance Music 1",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1k7Lb_W-te2FbDVxr2TfGXw"},
+{id:282,t:"Elektro Dance Music 2",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1UABiAcgJKGkldal5nZQYjA"},
+{id:283,t:"Elektro Dance Music 3",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1EEbopwfB0LU-6GfdxcDQeg"},
+{id:284,t:"Elektro Dance Music 4",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1O-SNJX72wW1IwVfTiGbk6w"},
+{id:285,t:"Elektro Dance Music 5",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1oGg5FTQ4tZBzhth4LMhhKA"},
+{id:286,t:"Elektro Dance Music 6",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1uqstZiri4j4Ck48tJ0OfWQ"},
+{id:287,t:"Elektro Dance Music 7",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1LIO0pLXNArcPzNJbXhM96Q"},
+{id:288,t:"Elektro Dance Music 8",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1LL192s8YNR19yVBSk5ieAg"},
+{id:289,t:"Elektro Dance Music 9",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1VT39ZDSuxzDzm3CEDno_wg"},
+{id:290,t:"Elektro Dance Music 10",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1ekh9Iq5CLzklTdPKSNBIsw"},
+{id:291,t:"Elektro Dance Music 11",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1I2tFIlVyvqbMtnBnr9ximQ"},
+{id:292,t:"Elektro Dance Music 12",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1WHH6cCtb26hj86UgNWATFQ"},
+{id:293,t:"Elektro Dance Music 13",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1nBP_kfjy0H_gyCZWaRVlmg"},
+{id:294,t:"Elektro Dance Music 14",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1Mm0DAfSLe1ISDDichB3GWw"},
+{id:295,t:"Elektro Dance Music 15",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1Qbi1mAPs9Z7ntk_UCNJ8bQ"},
+{id:296,t:"Elektro Dance Music 16",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1WNTO27IqyO21nqncbo1WPA"},
+{id:297,t:"Elektro Dance Music 17",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1VDq-hY9rDNnwu0ltKDy-Tg"},
+{id:298,t:"Elektro Dance Music 18",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1GzCpRDiKYgKswipZYVtPXw"},
+{id:299,t:"Elektro Dance Music 20",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1GgnaKdi15HGgfMAn1rkDdA"},
+{id:300,t:"Elektro Dance Music 21",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1oFER0-6lYz1zHjd07yt5Jg"},
+{id:301,t:"Elektro Dance Music",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1YivxyPaDJBvZO_diGE3udQ"},
+{id:302,t:"Playlist - Vol. 49",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1SgdOrTCIchH2xAcH7YnpqQ"},
+{id:303,t:"Playlist - Vol. 50",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1WCHTG60rhzkHdKWEbYbF-Q"},
+{id:304,t:"Playlist - Vol. 51",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1YYd_-UMduWaRi6MHJSyN-w"},
+{id:305,t:"Playlist - Vol. 52",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1l7Y_dhBYP9UDd4ZsyUXHjw"},
+{id:306,t:"Summer Eletrohits 2020",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1ha9dd48qeYDYzXQhgkkdkA"},
+{id:307,t:"Austro House Hits 2016",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1sc00peD53s-moJ5m0GsPkw"},
+{id:308,t:"Curitiba Dance - 2014",a:"Various Artists",cat:"elektrodance2",link:"https://1024terabox.com/s/1erhWZScFV419-x2tj3mx4A"},
+{id:309,t:"Top Dance Versoes Remix",a:"Various Artists",cat:"versoes",link:"https://1024terabox.com/s/14Q80Jfi5tu0N790skqHKng"},
+{id:310,t:"REMIX NOW X",a:"Various Artists",cat:"versoes",link:"https://1024terabox.com/s/11S0lW_uKvgFnAQEnFdCirA"},
+{id:311,t:"Dj Cleber Mix",a:"DJ Cleber Mix",cat:"versoes",link:"https://1024terabox.com/s/1YUb0cwy_hHkf6O6voBjirQ"},
+{id:312,t:"TROPICAL DANCE 1",a:"Various Artists",cat:"tropical",link:"https://1024terabox.com/s/1YmmXbY-STNy5CfO3eTG2sg"},
+{id:313,t:"TROPICAL DANCE 2",a:"Various Artists",cat:"tropical",link:"https://1024terabox.com/s/1hVTynf5XA0g38ezmQ2S6Lg"},
+{id:314,t:"TROPICAL DANCE 3",a:"Various Artists",cat:"tropical",link:"https://1024terabox.com/s/1M4eLmcXSKQNbSPUGqdddKg"},
+{id:315,t:"TROPICAL DANCE 4",a:"Various Artists",cat:"tropical",link:"https://1024terabox.com/s/16d1I3W9RawyNjUaDiiJG0Q"},
+{id:316,t:"TROPICAL DANCE 5",a:"Various Artists",cat:"tropical",link:"https://1024terabox.com/s/1JJ9qKNP1REv48MN-7p156Q"},
+{id:317,t:"TROPICAL DANCE - COLLECTION",a:"Various Artists",cat:"tropical",link:"https://1024terabox.com/s/1w156cdp8dtgfvRqNfnxLTg"},
+{id:318,t:"TROPICAL DANCE",a:"Various Artists",cat:"tropical",link:"https://1024terabox.com/s/1-X7QVZrQs5Ch_yQOh88N-A"},
+{id:319,t:"REGGAE VOL. 01",a:"Various Artists",cat:"reggae",link:"https://1024terabox.com/s/1qSHxm1_lH6V670XKK9CphQ"},
+{id:320,t:"100% REGGAE VOL. 02",a:"Various Artists",cat:"reggae",link:"https://1024terabox.com/s/1FmrY1PhjGWv4BHh6HXui-A"},
+{id:321,t:"100% REGGAE VOL. 03",a:"Various Artists",cat:"reggae",link:"https://1024terabox.com/s/1xI6Bf4p_x8l1wv5ffH3q3g"},
+{id:322,t:"REGGAE VOL. 04",a:"Various Artists",cat:"reggae",link:"https://1024terabox.com/s/1HfZdOh7gSjrX_wMZRuqx2g"},
+{id:323,t:"REGGAE VOL. 05",a:"Various Artists",cat:"reggae",link:"https://1024terabox.com/s/13EAGnegPhOBO4_lMyt0zIg"},
+{id:324,t:"REGGAE VOL. 06",a:"Various Artists",cat:"reggae",link:"https://1024terabox.com/s/1X_oCz0WIivFVRw8tIR86Tw"},
+{id:325,t:"100% REGGAE VOL. 07",a:"Various Artists",cat:"reggae",link:"https://1024terabox.com/s/1HQ1vJ7w_0VV2hRVqoTQy2g"},
+{id:326,t:"100% REGGAE VOL. 08",a:"Various Artists",cat:"reggae",link:"https://1024terabox.com/s/16o0RiLR_DeHyMaN_SAnafA"},
+{id:327,t:"100% REGGAE VOL. 09",a:"Various Artists",cat:"reggae",link:"https://1024terabox.com/s/1WUIXSJwaV4JHNoZQsGbJlA"},
+{id:328,t:"100% REGGAE VOL. 10",a:"Various Artists",cat:"reggae",link:"https://1024terabox.com/s/1yCd4GSAICqZXukD4tjfCAw"},
+{id:329,t:"Raggae Music",a:"Various Artists",cat:"reggae",link:"https://1024terabox.com/s/1SOcrcmaS0cQMzi-hHdvlTw"},
+{id:330,t:"KuschelRock - Vol. 19 (CD 1)",a:"Various Artists",cat:"poprock",link:"https://1024terabox.com/s/12eEa5iHLTKtVhaLvlOKFqg"},
+{id:331,t:"KuschelRock - Vol. 19 (CD 2)",a:"Various Artists",cat:"poprock",link:"https://1024terabox.com/s/1_GBxHn3jiZXzJiZP-VFB3w"},
+{id:332,t:"Spice Girls",a:"Spice Girls",cat:"pop",link:"https://1024terabox.com/s/1fpeJNwZXiwjfJdwPk8wwIw"},
+{id:333,t:"POP MUSIC",a:"Various Artists",cat:"pop",link:"https://1024terabox.com/s/1fv2youPq3WlwivAkBiOc2g"},
+{id:334,t:"Planet Pop - Vol.4 - 2005",a:"Various Artists",cat:"pop",link:"https://1024terabox.com/s/10gTpNsMBGboLoQ2MqPsEtQ"},
+{id:335,t:"MY MUSIC ELETRONIC",a:"Various Artists",cat:"personalizados",link:"https://1024terabox.com/s/1Jygl3QhLCDrUiMN5_UObfQ"},
+{id:336,t:"Pure Hard Dance",a:"Various Artists",cat:"personalizados",link:"https://1024terabox.com/s/1xXgXFJ5i2mdDlx2BHH7zCA"},
+{id:337,t:"Hard Dance Music Sound",a:"Various Artists",cat:"personalizados",link:"https://1024terabox.com/s/18rpuRMld1tHRlt1psAigLg"},
+{id:338,t:"TOP MUSICAS BRASILEIRAS",a:"Various Artists",cat:"nacionais",link:"https://1024terabox.com/s/1Cz6brLLZgw8FA5BU8DWKhw"},
+{id:339,t:"Titas (Acustico)",a:"Titas",cat:"nacionais",link:"https://1024terabox.com/s/10xEIYgqUkyl_qDgrBXtzXA"},
+{id:340,t:"Roupa Nova",a:"Roupa Nova",cat:"nacionais",link:"https://1024terabox.com/s/1vUaefjycsf7YPaN2xzB8UQ"},
+{id:341,t:"Raul Seixas",a:"Raul Seixas",cat:"nacionais",link:"https://1024terabox.com/s/1pi9BVuNi09LLfV9JmCobBA"},
+{id:342,t:"Pop Rock - Colecao Som Do Brasil",a:"Various Artists",cat:"nacionais",link:"https://1024terabox.com/s/18YOnAFGc9mRqnVqXF4Og7Q"},
+{id:343,t:"O Melhor De Pop Rock Nacional - 1998",a:"Various Artists",cat:"nacionais",link:"https://1024terabox.com/s/1ZjeBl6Xju8YuLDPbpeWfaQ"},
+{id:344,t:"Nacao Zumbi",a:"Nacao Zumbi",cat:"nacionais",link:"https://1024terabox.com/s/1w0TQ_cg9z30xjpbz_ggjMg"},
+{id:345,t:"Lulu Santos",a:"Lulu Santos",cat:"nacionais",link:"https://1024terabox.com/s/1q4cd6DllE6VwuSw9M8YUhg"},
+{id:346,t:"Legiao Urbana - Uma Outra Estacao",a:"Legiao Urbana",cat:"nacionais",link:"https://1024terabox.com/s/1dPfUfNXGsC4gebTuSyFWFQ"},
+{id:347,t:"Legiao Urbana - Mais Do Mesmo",a:"Legiao Urbana",cat:"nacionais",link:"https://1024terabox.com/s/19YBQ5rAJ2IYWDMlubgQ6yg"},
+{id:348,t:"CPM 22",a:"CPM 22",cat:"nacionais",link:"https://1024terabox.com/s/1FojeAcC_96Uoa0Bxugso8Q"},
+{id:349,t:"Capital Inicial",a:"Capital Inicial",cat:"nacionais",link:"https://1024terabox.com/s/1AinQEJ_q0055cySq9jjUCQ"},
+{id:350,t:"Titas",a:"Titas",cat:"nacionais",link:"https://1024terabox.com/s/1aDHKhVvMZQ_KrjNWgB9wlA"},
+{id:351,t:"Skank",a:"Skank",cat:"nacionais",link:"https://1024terabox.com/s/1oQA3XXHeBurGThfma-KCYA"},
+{id:352,t:"RPM",a:"RPM",cat:"nacionais",link:"https://1024terabox.com/s/13S_jV34siG6i9HVTP0tabA"},
+{id:353,t:"Os Paralamas",a:"Os Paralamas",cat:"nacionais",link:"https://1024terabox.com/s/19wZM71VR5vlzLnezo-DM2g"},
+{id:354,t:"Cassia Eller",a:"Cassia Eller",cat:"nacionais",link:"https://1024terabox.com/s/1IhdDe6FtLKUQMqEYFiKLbw"},
+{id:355,t:"Barao Vermelho",a:"Barao Vermelho",cat:"nacionais",link:"https://1024terabox.com/s/15MHIyUqndjZsSnJaIjtAqw"},
+{id:356,t:"100% Raul Seixas",a:"Raul Seixas",cat:"nacionais",link:"https://1024terabox.com/s/15EzH5dQqlZWmQkaqtkJDEg"},
+{id:357,t:"Megamix Dance Underground",a:"Various Artists",cat:"megamix",link:"https://1024terabox.com/s/1E1zjUO5LqWyMs8tWEH6m-A"},
+{id:358,t:"MEGAMIX - DjS x",a:"Various Artists",cat:"megamix",link:"https://1024terabox.com/s/19sT0NUu7wZdSDMZ5lJcx4g"},
+{id:359,t:"ITALO DANCE",a:"Various Artists",cat:"italo",link:"https://1024terabox.com/s/1aNPrcHZAiU7Y4NV5M__DHw"},
+{id:360,t:"ITALO DANCE 1",a:"Various Artists",cat:"italo",link:"https://1024terabox.com/s/1AYKcqMcXO6un38FMl_krNQ"},
+{id:361,t:"ITALO DANCE 2",a:"Various Artists",cat:"italo",link:"https://1024terabox.com/s/1-Jc6hGODsbtVQrJGPH7sdQ"},
+{id:362,t:"ITALO DANCE - COLLECTION",a:"Various Artists",cat:"italo",link:"https://1024terabox.com/s/1tqGK37dfMwJDkVG1B89CSg"},
+{id:363,t:"Orquestra CCB",a:"CCB",cat:"ccb",link:"https://1024terabox.com/s/1SDcwb4kCsp5eJhi6NHbKPQ"},
+{id:364,t:"Orgao Orquestrado CCB",a:"CCB",cat:"ccb",link:"https://1024terabox.com/s/1i-IJ4qwlk7CjjpzpkRTaGg"},
+{id:365,t:"CCB Orquestrados e Cantados",a:"CCB",cat:"ccb",link:"https://1024terabox.com/s/1VAfUvBr0rfo7JPc8WLhLZA"},
+{id:366,t:"GROOVE ENERGY",a:"Various Artists",cat:"groove",link:"https://1024terabox.com/s/1W30X2gQQ2ADHKp1SRYSqWA"},
+{id:367,t:"Snap (Attack) - The Remixes - 1996",a:"Snap",cat:"flashback",link:"https://1024terabox.com/s/1-1vk9BmRf4IbDUcNrdBSkw"},
+{id:368,t:"Simply The Best - 1991 Tina Turner",a:"Tina Turner",cat:"flashback",link:"https://1024terabox.com/s/10KKfWwJcw0PBCreTZrwowA"},
+{id:369,t:"She's So Unusual - 1983 Cindy Lauper",a:"Cyndi Lauper",cat:"flashback",link:"https://1024terabox.com/s/141qJ8w0I0wx1SHDqi455cA"},
+{id:370,t:"Puro Flash House 3 - 1995",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1zyhKdXORdMirmqC5r5P4MQ"},
+{id:371,t:"Over Night Remixes Vol. 5 (1997)",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1gBmyObWTwXx86n_MOJwqLg"},
+{id:372,t:"Over Night Remixes Vol. 3 (1994)",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1y3Fvcjzf3KhUk2-9_5LlyA"},
+{id:373,t:"Over Night Remixes Vol. 2 (1992)",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/10ex8l5bFiXV9919J1q0_jA"},
+{id:374,t:"Over Night Remixes Vol. 1 (1990)",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1breC104MoJ1b3P8qVBFCTw"},
+{id:375,t:"Modern Talking",a:"Modern Talking",cat:"flashback",link:"https://1024terabox.com/s/10quOcVAe0GfitWiZMY4uPA"},
+{id:376,t:"Ken Laszlo",a:"Ken Laszlo",cat:"flashback",link:"https://1024terabox.com/s/1vHZQHn9i4aequOXwVZtrrg"},
+{id:377,t:"Italo.Classics (CD 1 & 2) 1998",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1xQiJxnLJ6gPHueu8WfZe5Q"},
+{id:378,t:"Italo Fresh Hits - vol.3 - CD 1 & 2",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1r90-hmocbRwYVweLnCdfvQ"},
+{id:379,t:"ITALO DISCO HITs",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1uOFf9fRz5yIsUbPcd7wJHA"},
+{id:380,t:"ITALO DISCO 1",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1SeYrdF0W21QaQOyTDbWgEQ"},
+{id:381,t:"ITALO DISCO 2",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1RW6r87vsmwuMvZFhTcaZng"},
+{id:382,t:"ITALO DISCO",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1TWTRYOXICfkykaF1fEqnzw"},
+{id:383,t:"I Love Disco Vol. 1 - 2007",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1ynqlAwKnihjlwpSqREO3eQ"},
+{id:384,t:"I Love Disco - Vol. 4 - 2007",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1SFcp6Ih5f168KVeGGZG9BA"},
+{id:385,t:"I Love Disco - Vol. 5 - 2007",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1vpsLjN6-Apg6UsQ4CqgABg"},
+{id:386,t:"I Love Disco - Vol. 6 - 2007",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1hoVffkhyjvXAm9KMPZPgmw"},
+{id:387,t:"Forever Young - 1984 Alphaville",a:"Alphaville",cat:"flashback",link:"https://1024terabox.com/s/1_cZ320lBbFD29CZkQgAbfA"},
+{id:388,t:"FLASH MUSIC",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1vJirtskPQ0XJmYJO6D2a5Q"},
+{id:389,t:"Flash Back News",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1yy0pZDTwJGA-cx20HI-4sQ"},
+{id:390,t:"Flash Back 1",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1dtEfy5DAdGOsM4V-j5HAxA"},
+{id:391,t:"Flash Back 2",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/19Bbmnq69QXs5UeNtxMwkKg"},
+{id:392,t:"AS MELHORES DO FLASHBACK",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/11MdXxBRR8v59BIhr50ynmQ"},
+{id:393,t:"80's Flashback & Italo Disco",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1k46N6_8EqKU1UVdVLKtQIw"},
+{id:394,t:"Boney M Coletanea",a:"Boney M",cat:"flashback",link:"https://1024terabox.com/s/10bgk4WlDHN-0IgcJZK3QYQ"},
+{id:395,t:"Bad Boys Blue - Greatest Hits - 2009",a:"Bad Boys Blue",cat:"flashback",link:"https://1024terabox.com/s/1Cma_R_YfsjUYX4FYi2f0Rg"},
+{id:396,t:"Essential 80's - Vol.1 - 2007",a:"Various Artists",cat:"flashback",link:"https://1024terabox.com/s/1vSc7MW5d7BZdzm_bu5JXvQ"},
+{id:397,t:"Roxette - Colecao",a:"Roxette",cat:"colmusical",link:"https://1024terabox.com/s/1iOIIQv0LZdOCneWORrzc8g"},
+{id:398,t:"Roxette - 1987 - Dance Passion",a:"Roxette",cat:"colmusical",link:"https://1024terabox.com/s/1znadY-QQEOnf-8V-qPOz1g"},
+{id:399,t:"Roxette - 1988 - Look Sharp",a:"Roxette",cat:"colmusical",link:"https://1024terabox.com/s/1m87uhUiww6jJZCJpXYraXA"},
+{id:400,t:"Roxette - 1994 - Crash Boom Bang",a:"Roxette",cat:"colmusical",link:"https://1024terabox.com/s/1YMPksVdcJi76fUuvzXZ1hA"},
+{id:401,t:"Roxette - 1999 - Have a Nice Day",a:"Roxette",cat:"colmusical",link:"https://1024terabox.com/s/1lBla0m_OtLT24BwyaYcO2w"},
+{id:402,t:"Backstreet Boys - COLLECTION",a:"Backstreet Boys",cat:"colmusical",link:"https://1024terabox.com/s/1nA4BRDVgk7FsziErJL9CQw"},
+{id:403,t:"Backstreet Boys - 1996",a:"Backstreet Boys",cat:"colmusical",link:"https://1024terabox.com/s/1CnJ9gYICtQn-Ubjy4_6WSA"},
+{id:404,t:"Backstreet Boys - 1999 - Millennium",a:"Backstreet Boys",cat:"colmusical",link:"https://1024terabox.com/s/1MZc4v3i8so224H3TyMV2GA"},
+{id:405,t:"Backstreet Boys - 2000 - Black & Blue",a:"Backstreet Boys",cat:"colmusical",link:"https://1024terabox.com/s/1QufUYQsfUHqBt8bzGqTVjA"},
+{id:406,t:"Maquina Total - Colecao",a:"Various Artists",cat:"colmusical",link:"https://1024terabox.com/s/13DUDgWbHOtLXPczR7TBnpg"},
+{id:407,t:"90S SUPER DANCE HITS 1.2.3.4.5",a:"Various Artists",cat:"colmusical",link:"https://1024terabox.com/s/1EjWwHTcz3rYzrN4fLPqdoQ"},
+{id:408,t:"Colecao The Sweet - Classicos Do Rock",a:"The Sweet",cat:"colmusical",link:"https://1024terabox.com/s/1aYmois3uM7Z7gBeswtAuFQ"},
+{id:409,t:"Lasgo",a:"Lasgo",cat:"colmusical",link:"https://1024terabox.com/s/1ej0YPuH5ZkwyReJqgEn_dg"},
+{id:410,t:"VA - Mega Dance Into The 90's (1994)",a:"Various Artists",cat:"colmusical",link:"https://1024terabox.com/s/1OuZq3NazssBpOLiZr0hqXQ"},
+{id:411,t:"UNDERGROUND REMIX",a:"Various Artists",cat:"colmusical",link:"https://1024terabox.com/s/1jppoT6u21hn-MPqtsVKNLA"},
+{id:412,t:"Underground 1998 - Vol.1",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1UXCP5rw-w5fKMd5Dvbp1dQ"},
+{id:413,t:"Underground 1998 - Vol.2",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1F03ZciCh518XbxD0DofLUg"},
+{id:414,t:"Underground 1998 - Vol.3",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1LJKA9QBRAuV6D1fJ5JfRfw"},
+{id:415,t:"Underground 1998 - Vol.4",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1GN5ajavwXXogIeocdBGf7Q"},
+{id:416,t:"Underground 1998 - Vol.5",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1lfS-WjN__D5jgPBtMtd9Kw"},
+{id:417,t:"Underground 1998 - Vol.6",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1uGYjZkPyyb7R168xW894lQ"},
+{id:418,t:"Underground 1998 - Vol.7",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1TTiMnOOMvcVFTBevuWE28g"},
+{id:419,t:"Underground 1998 - Vol.8",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1JCyUFIK7mhD3XTreyjkVjw"},
+{id:420,t:"Underground 1999 - Vol.1",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1AD3CKTZnfV_SpGSesgNbMw"},
+{id:421,t:"Underground 1999 - Vol.2",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1wjKRYA88skVWTdmfatXZtA"},
+{id:422,t:"Underground 1999 - Vol.3",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1ysDdkf6kGmluoozUwOCXcQ"},
+{id:423,t:"Underground 1999 - Vol.4",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1OudRyE_oK-5SdR10x8MWfg"},
+{id:424,t:"Underground 1999 - Vol.5",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1LBSo-5F7zg34dowdXlpN4Q"},
+{id:425,t:"Underground 1999 - Vol.6",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1TqBPpIaypP8YV2BWtM-uig"},
+{id:426,t:"Underground 2000 - Vol.1",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1TNrEMmiLys0mK6Hsxm0M1Q"},
+{id:427,t:"Underground 2000 - Vol.2",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/11BejZXjKZ4XjOwM1JYeejg"},
+{id:428,t:"Underground 2000 - Vol.3",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1I9Z1yW9lI7GalT8DIBekuA"},
+{id:429,t:"Underground 2000 - Vol.4",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1QE6cJDnb0LegEmsl27onQg"},
+{id:430,t:"Underground Storm - Vol.1 - 2001",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1D-WTE9SwOgjcjNVXNfPBiA"},
+{id:431,t:"The Best Of Underground - 1995",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1vHNEuuEDTIkHMYkPKoHG3A"},
+{id:432,t:"UNDERGROUND 1",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1j4D1MYi02tLo5YnfSzh1oA"},
+{id:433,t:"UNDERGROUND 2",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/14AdHg61GvbLnzVUFnBkhDw"},
+{id:434,t:"UNDERGROUND 3",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1OTHF4px4A2NWULQbyUcvng"},
+{id:435,t:"UNDERGROUND 4",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1om9mzuwRbxkBUutrE_anAg"},
+{id:436,t:"UNDERGROUND 5",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/12_FusK9G-yXbpaZW3ygFng"},
+{id:437,t:"Underground Reconstruction - 2014",a:"Various Artists",cat:"underground",link:"https://1024terabox.com/s/1eN0Eomu4IN248-IbW8EnSg"},
+{id:438,t:"VAN HALEN",a:"Van Halen",cat:"rock",link:"https://1024terabox.com/s/16PbgAEW1wo0IqqMCi38UoQ"},
+{id:439,t:"The Very Best Of Dire Straits - 1995",a:"Dire Straits",cat:"rock",link:"https://1024terabox.com/s/1DCXYQBITGZS9DUfVhLK_0Q"},
+{id:440,t:"THE BEST PINK FLOYD",a:"Pink Floyd",cat:"rock",link:"https://1024terabox.com/s/1zFmu5Q4HV8Si3cw1iVylUg"},
+{id:441,t:"Scorpions",a:"Scorpions",cat:"rock",link:"https://1024terabox.com/s/1rCr2y3o8m2O3I4CJKqphdQ"},
+{id:442,t:"SECULO DO ROCK",a:"Various Artists",cat:"rock",link:"https://1024terabox.com/s/1To19svFTFXP4ctxz7W71Ug"},
+{id:443,t:"Rock Collection",a:"Various Artists",cat:"rock",link:"https://1024terabox.com/s/1xykvCxg12GR5oKobxs0dMQ"},
+{id:444,t:"ROCK CLASSICOS - COLLECTION",a:"Various Artists",cat:"rock",link:"https://1024terabox.com/s/1d7kMKoTtaOndbHioBuhfHg"},
+{id:445,t:"NAZARETH",a:"Nazareth",cat:"rock",link:"https://1024terabox.com/s/1seUR-Yhl8YKI3FeQ1eMvGQ"},
+{id:446,t:"Metallica",a:"Metallica",cat:"rock",link:"https://1024terabox.com/s/1fTlzPnGsGtnYWW2fU3ZebQ"},
+{id:447,t:"Led Zeppelin",a:"Led Zeppelin",cat:"rock",link:"https://1024terabox.com/s/1HYXK5FlKcoYGeTYXzT08nQ"},
+{id:448,t:"Kiss (Live)",a:"Kiss",cat:"rock",link:"https://1024terabox.com/s/1SDQMmRf4VesMs9rI7xQo6Q"},
+{id:449,t:"Deep Purple",a:"Deep Purple",cat:"rock",link:"https://1024terabox.com/s/1RAiow1hH2JGqUJEtiPAsuA"},
+{id:450,t:"Creedence Clearwater Revival",a:"Creedence",cat:"rock",link:"https://1024terabox.com/s/1qv970GDFJ9VtQAFjtwIqkg"},
+{id:451,t:"Colecao AC DC",a:"AC/DC",cat:"rock",link:"https://1024terabox.com/s/1ffUkA01xJfc5l-ou1BgsoQ"},
+{id:452,t:"Bon Jovi",a:"Bon Jovi",cat:"rock",link:"https://1024terabox.com/s/1PkWTANBKopiNK1aOQQ4Tfw"},
+{id:453,t:"Black Sabbath CDs",a:"Black Sabbath",cat:"rock",link:"https://1024terabox.com/s/1mxbViPxaUsSmhpsWfm8goQ"},
+{id:454,t:"Aerosmith",a:"Aerosmith",cat:"rock",link:"https://1024terabox.com/s/1AhO8UUC5Tch03ZRcOjgtHw"},
+{id:455,t:"AC DC - Back In Black (1980)",a:"AC/DC",cat:"rock",link:"https://1024terabox.com/s/19Hsy240nMaC0jOe6mb26Xg"},
+{id:456,t:"AC DC - Highway To Hell (1979)",a:"AC/DC",cat:"rock",link:"https://1024terabox.com/s/1_0gOEo7Bkmr5Qs2RiWC7IA"},
+{id:457,t:"Metallica - Hardwired To Self Destruct CD1",a:"Metallica",cat:"rock",link:"https://1024terabox.com/s/1wn7rjHTZ0VHjUklgDFbWuw"},
+{id:458,t:"Guns n Roses - Chinese Democracy",a:"Guns N Roses",cat:"rock",link:"https://1024terabox.com/s/1D-82O-fteyilxwjtQJKFYQ"},
+{id:459,t:"Green Day Playlist",a:"Green Day",cat:"rock",link:"https://1024terabox.com/s/1dhMvRe6w0WZAfRz2GjGX7Q"},
+{id:460,t:"Bryan Adams - So Far So Good - 1993",a:"Bryan Adams",cat:"rock",link:"https://1024terabox.com/s/1-92IzJ-cR35n5VRWhQOGpA"},
+{id:461,t:"Paul McCartney - Pipes Of Peace (1983)",a:"Paul McCartney",cat:"rock",link:"https://1024terabox.com/s/11DeAoOwwRooW1b0idkCtoQ"},
+{id:462,t:"Avril Lavigne",a:"Avril Lavigne",cat:"rock",link:"https://1024terabox.com/s/1VWeHO5tU3ziCPCC_EyGPtA"},
+{id:463,t:"classicos rock coletanea 1",a:"Various Artists",cat:"rock",link:"https://1024terabox.com/s/1cH-jHvwyQC9d7U2o1SmR2g"},
+{id:464,t:"classicos rock coletanea 2",a:"Various Artists",cat:"rock",link:"https://1024terabox.com/s/1mzom_EqU7poz67W7SR2mnQ"},
+{id:465,t:"classicos rock coletanea 3",a:"Various Artists",cat:"rock",link:"https://1024terabox.com/s/1xPqvkslhxAxUBz4nJ3PTpQ"},
+{id:466,t:"classicos rock coletanea 10",a:"Various Artists",cat:"rock",link:"https://1024terabox.com/s/1XYZqckElCpz7PiuD-HwGGg"},
+{id:467,t:"classicos rock coletanea 20",a:"Various Artists",cat:"rock",link:"https://1024terabox.com/s/199B9mYWO3k0lq18jobqZGg"},
+{id:468,t:"classicos rock coletanea 30",a:"Various Artists",cat:"rock",link:"https://1024terabox.com/s/1dZqxKHGc056ueU4aAR56Zw"},
+{id:469,t:"classicos rock coletanea 32",a:"Various Artists",cat:"rock",link:"https://1024terabox.com/s/1shu2gXdW73r7Yu79jPEukQ"},
+{id:470,t:"Xuxa E Seus Amigos - 1985",a:"Xuxa",cat:"infantil",link:"https://1024terabox.com/s/1kk6ZxvnzbaTEA48Vcq6sAA"},
+{id:471,t:"TV Colosso - 1993",a:"TV Colosso",cat:"infantil",link:"https://1024terabox.com/s/15nLBSQ8REYEEUXX5jMzNTQ"},
+{id:472,t:"Trem Da Alegria - 1988",a:"Trem Da Alegria",cat:"infantil",link:"https://1024terabox.com/s/1EMPFMdKf3LdEy7BBB0QctQ"},
+{id:473,t:"Sitio Do Picapau Amarelo - 2001",a:"Sitio Do Picapau",cat:"infantil",link:"https://1024terabox.com/s/14svCQD-8V_uxMeRY5cEjxQ"},
+{id:474,t:"Show Da Xuxa - 1988",a:"Xuxa",cat:"infantil",link:"https://1024terabox.com/s/19peViBy3X42mHxOOIm7pTQ"},
+{id:475,t:"Sandy & Junior - Aniversario Do Tatu - 1991",a:"Sandy & Junior",cat:"infantil",link:"https://1024terabox.com/s/1TBb3DA72lw9urqVMz8z0ww"},
+{id:476,t:"Os Sucessos Do Trem Da Alegria - 2017",a:"Trem Da Alegria",cat:"infantil",link:"https://1024terabox.com/s/1MRjZSIRb3MtpZYe-OoFwYg"},
+{id:477,t:"Os Sucessos do Balao Magico - 2017",a:"Balao Magico",cat:"infantil",link:"https://1024terabox.com/s/1Kmo-Hg3um48RSMWw0_UCVA"},
+{id:478,t:"Mara Maravilha - 1987",a:"Mara Maravilha",cat:"infantil",link:"https://1024terabox.com/s/16sNpfJ521pCkQENbcZWbcQ"},
+{id:479,t:"Fofao Forever - 2015",a:"Fofao",cat:"infantil",link:"https://1024terabox.com/s/1fTakZ60GiaS8KcTFJi-pVg"},
+{id:480,t:"Fofao - 1990",a:"Fofao",cat:"infantil",link:"https://1024terabox.com/s/1Bf2ONrkZ2fmJj2Yj1-KmVg"},
+{id:481,t:"Eliana - Os Dedinhos - 1993",a:"Eliana",cat:"infantil",link:"https://1024terabox.com/s/1QLLYXdHEDbhVVYOrZ4oGKQ"},
+{id:482,t:"Eliana - 1994",a:"Eliana",cat:"infantil",link:"https://1024terabox.com/s/1rxo69NbPkRxSojhNnMNqJw"},
+{id:483,t:"Disco Do Fofao - Vol.1 - 1984",a:"Fofao",cat:"infantil",link:"https://1024terabox.com/s/1zRvHl9wYeknBvTNFhjyU9w"},
+{id:484,t:"Chiquititas - Vol.2 - 1998",a:"Chiquititas",cat:"infantil",link:"https://1024terabox.com/s/1VUKPs6ici9txCk28LaCZgg"},
+{id:485,t:"Chiquititas - Vol.3 - 1999",a:"Chiquititas",cat:"infantil",link:"https://1024terabox.com/s/1LNlMyptld8kMBl4OHvTq9Q"},
+{id:486,t:"A Turma Do Balao Magico - 1982",a:"Balao Magico",cat:"infantil",link:"https://1024terabox.com/s/1JM0-NtbC6SXs4nABTdbfZg"},
+{id:487,t:"Carrossel - Vol.3 - 1995",a:"Carrossel",cat:"infantil",link:"https://1024terabox.com/s/1snxVCeLd3jZvoMn-KAuVag"},
+{id:488,t:"Acapellas",a:"Various Artists",cat:"acapellas",link:"https://1024terabox.com/s/1bG6wBJEGbYAEWN2XwayIfQ"},
+{id:489,t:"Top 2 - Eurodance 90s Hits (Extended)",a:"Various Artists",cat:"extended",link:"https://1024terabox.com/s/1SfM5s8ZsRzeUVbIUcbtTcA"},
+{id:490,t:"Top 1 - Eurodance 90s Hits (Extended)",a:"Various Artists",cat:"extended",link:"https://1024terabox.com/s/1FNcfLrB5eho2VCJCklKXDA"},
+{id:491,t:"Techno Trax Classics - 2014",a:"Various Artists",cat:"extended",link:"https://1024terabox.com/s/1vtxhQknu38yrzAjKnfChAA"},
+{id:492,t:"EURO 90s EXTENDED",a:"Various Artists",cat:"extended",link:"https://1024terabox.com/s/1won3CEofj7Yx7JYXJvtvrg"},
+{id:493,t:"Dance Floor Corporation - 2011",a:"Various Artists",cat:"extended",link:"https://1024terabox.com/s/1WQ6Ck4VhX48pEnvg_vX4dw"},
+{id:494,t:"90's Eurodance Extended",a:"Various Artists",cat:"extended",link:"https://1024terabox.com/s/1OukgFXvyk1gYqhUiwI30XQ"},
+{id:495,t:"12'' Inch Dance - 2014",a:"Various Artists",cat:"extended",link:"https://1024terabox.com/s/1UhNiYA0xlP0KOQ9hovjSfQ"},
+{id:496,t:"Mamonas Assassinas",a:"Mamonas Assassinas",cat:"mamonas",link:"https://1024terabox.com/s/1IIfylzD5kyRbgc8wcix5IA"},
 ];
 
-// ============ PALETTES ============
-var PAL=[
-  ['#1a0533','#6b21a8'],['#0f172a','#1d4ed8'],['#0c1a0c','#15803d'],
-  ['#1a0a00','#c2410c'],['#1a0a1a','#be185d'],['#0a1a1a','#0891b2'],
-  ['#1a1500','#ca8a04'],['#0d0d0d','#525252'],['#1a0518','#9333ea'],
-  ['#001a10','#059669'],['#1a0000','#dc2626'],['#000e1a','#0284c7'],
+// ==================== SISTEMA ====================
+const PAL = [
+['#1a0533','#6b21a8'],['#0f172a','#1d4ed8'],['#0c1a0c','#15803d'],['#1a0a00','#c2410c'],
+['#1a0a1a','#be185d'],['#0a1a1a','#0891b2'],['#1a1500','#ca8a04'],['#0d0d0d','#525252'],
+['#1a0518','#9333ea'],['#001a10','#059669'],['#1a0000','#dc2626'],['#000e1a','#0284c7']
 ];
-var SHAPES=['◆','●','▲','■','★','✦','◉','⬡'];
 
-function vCoverBg(id){
-  var p=PAL[id%PAL.length];
-  var a=(id*37)%360;
-  return 'linear-gradient('+a+'deg,'+p[0]+' 0%,'+p[1]+' 100%)';
+function getCoverBg(id){
+    let p = PAL[id % PAL.length];
+    let a = (id * 37) % 360;
+    return `linear-gradient(${a}deg, ${p[0]} 0%, ${p[1]} 100%)`;
 }
 
-function vCoverHTML(id,title,small){
-  var bg=vCoverBg(id);
-  var shape=SHAPES[id%SHAPES.length];
-  var short=title.length>20?title.substring(0,18)+'...':title;
-  var sz=small?'0.7rem':'0.78rem';
-  return '<div class="vinil-cover-gen" style="background:'+bg+';">'
-    +'<div class="vinil-cover-shape">'+shape+'</div>'
-    +'<div class="vinil-cover-text" style="font-size:'+sz+'">'+short+'</div>'
-    +'</div>';
+function getTVEffectHTML(cat, id, title){
+    let bg = getCoverBg(id);
+    return `<div class="thumb">
+                <div class="thumb-content" style="background:${bg};">
+                    <h4>🎵<br>${title.substring(0,25)}</h4>
+                </div>
+                <div class="thumb-overlay"></div>
+                <div class="thumb-tv-effect"></div>
+                <div class="thumb-scanline"></div>
+                <div class="thumb-glitch"></div>
+            </div>`;
 }
 
-// ============ STATE ============
-var vCurrentCat=null;
+let currentCategory = "all", currentPage = 1;
+const itemsPerPage = 24;
 
-// ============ INIT ============
-document.getElementById('vinil-total-albuns').textContent=ALBUNS.length;
-document.getElementById('vinil-total-cats').textContent=CATS.length;
-
-// Build cats bar
-var catsBar=document.getElementById('vinil-cats-bar');
-// Add "Todos" pill
-var allPill=document.createElement('div');
-allPill.className='vinil-cat-pill active';
-allPill.id='vpill-all';
-allPill.innerHTML='🎵 Todos <span class="vinil-cat-count">'+ALBUNS.length+'</span>';
-allPill.onclick=function(){vShowHome();};
-catsBar.appendChild(allPill);
-
-CATS.forEach(function(cat){
-  var cnt=ALBUNS.filter(function(a){return a.cat===cat.id;}).length;
-  var pill=document.createElement('div');
-  pill.className='vinil-cat-pill';
-  pill.id='vpill-'+cat.id;
-  pill.innerHTML=cat.icon+' '+cat.nome+' <span class="vinil-cat-count">'+cnt+'</span>';
-  pill.onclick=function(){vSelectCat(cat.id);};
-  catsBar.appendChild(pill);
-});
-
-// ============ HOME ============
-function vShowHome(){
-  vCurrentCat=null;
-  document.getElementById('vinil-search').value='';
-  document.querySelectorAll('.vinil-cat-pill').forEach(function(p){p.classList.remove('active');});
-  document.getElementById('vpill-all').classList.add('active');
-  document.getElementById('vinil-breadcrumb').innerHTML='<span>Inicio</span>';
-
-  var topAlbuns=[].concat(ALBUNS).sort(function(){return Math.random()-0.5;}).slice(0,5);
-  var content=document.getElementById('vinil-content');
-
-  // Hero
-  var heroHTML='<div style="background:linear-gradient(135deg,#0f0f1e,#1a0a2e 40%,#0a1a1a);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:2rem;margin-bottom:1.5rem;position:relative;overflow:hidden;">'
-    +'<div style="position:absolute;right:-0.5rem;top:-1rem;font-size:10rem;color:rgba(255,255,255,0.02);font-weight:900;pointer-events:none;line-height:1;">VINIL</div>'
-    +'<div style="display:inline-block;background:rgba(232,255,60,0.1);border:1px solid rgba(232,255,60,0.25);color:#e8ff3c;padding:0.25rem 0.7rem;border-radius:20px;font-size:0.68rem;font-family:monospace;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.8rem;">⬇ Download Direto · Terabox</div>'
-    +'<h2 style="font-family:Georgia,serif;font-size:2rem;font-weight:700;margin-bottom:0.5rem;">Biblioteca <span style="color:#ff3c8e;">Musical</span></h2>'
-    +'<p style="color:#6b6b8a;font-size:0.9rem;line-height:1.5;">'+ALBUNS.length+' albuns · '+CATS.length+' categorias · MP3 · FLAC · WAV</p>'
-    +'</div>';
-
-  // Top destaque
-  var topHTML='<div class="vinil-section-header"><span class="vinil-section-title">🔥 Destaque</span><span class="vinil-section-badge">'+topAlbuns.length+' albuns</span><div class="vinil-section-line"></div></div>';
-  topHTML+='<div class="vinil-top-list" id="vtop-list"></div>';
-
-  // Categorias
-  var catHTML='<div class="vinil-section-header"><span class="vinil-section-title">📂 Categorias</span><span class="vinil-section-badge">'+CATS.length+'</span><div class="vinil-section-line"></div></div>';
-  catHTML+='<div class="vinil-cat-grid-home" id="vcat-home-grid"></div>';
-
-  content.innerHTML=heroHTML+topHTML+catHTML;
-
-  // Top list
-  var topList=document.getElementById('vtop-list');
-  topAlbuns.forEach(function(a,idx){
-    var cat=CATS.find(function(c){return c.id===a.cat;});
-    var div=document.createElement('div');
-    div.className='vinil-top-item';
-    div.innerHTML='<div class="vinil-top-rank">0'+(idx+1)+'</div>'
-      +'<div class="vinil-top-mini-cover">'+vCoverHTML(a.id,a.t,true)+'</div>'
-      +'<div class="vinil-top-info"><div class="vinil-top-title">'+a.t+'</div><div class="vinil-top-artist">'+a.a+' · '+(cat?cat.icon+' '+cat.nome:'')+'</div></div>'
-      +'<a class="vinil-top-dl" href="'+a.link+'" target="_blank" rel="noopener noreferrer" onclick="vShowToast(\'⬇ Baixando...\',\'green\')">⬇ Baixar</a>';
-    topList.appendChild(div);
-  });
-
-  // Cat grid
-  var catGrid=document.getElementById('vcat-home-grid');
-  CATS.forEach(function(cat){
-    var cnt=ALBUNS.filter(function(a){return a.cat===cat.id;}).length;
-    var div=document.createElement('div');
-    div.className='vinil-cat-card-home';
-    div.innerHTML='<div class="vinil-cat-emoji">'+cat.icon+'</div><div class="vinil-cat-name">'+cat.nome+'</div><div class="vinil-cat-cnt">'+cnt+' albuns</div>';
-    div.onclick=function(){vSelectCat(cat.id);};
-    catGrid.appendChild(div);
-  });
+function getFiltered(){
+    let f = currentCategory === "all" ? ALBUNS : ALBUNS.filter(a => a.cat === currentCategory);
+    let s = document.getElementById("searchInput").value.toLowerCase();
+    if(s.length >= 2) f = f.filter(a => a.t.toLowerCase().includes(s) || a.a.toLowerCase().includes(s));
+    return f;
 }
 
-// ============ SELECT CAT ============
-function vSelectCat(catId){
-  vCurrentCat=catId;
-  document.getElementById('vinil-search').value='';
-  document.querySelectorAll('.vinil-cat-pill').forEach(function(p){p.classList.remove('active');});
-  var pill=document.getElementById('vpill-'+catId);
-  if(pill) pill.classList.add('active');
-
-  var cat=CATS.find(function(c){return c.id===catId;});
-  var lista=ALBUNS.filter(function(a){return a.cat===catId;});
-
-  document.getElementById('vinil-breadcrumb').innerHTML=
-    '<span class="vbc-home" onclick="vShowHome()">Inicio</span>'
-    +' <span style="color:rgba(255,255,255,0.15)">›</span> '
-    +'<span class="vbc-current">'+(cat?cat.icon+' '+cat.nome:catId)+'</span>';
-
-  var html='<div style="margin-bottom:1.5rem;">'
-    +'<div style="font-size:2.5rem;margin-bottom:0.4rem;">'+(cat?cat.icon:'📁')+'</div>'
-    +'<h2 style="font-family:Georgia,serif;font-size:2rem;font-weight:700;margin-bottom:0.2rem;">'+(cat?cat.nome:catId)+'</h2>'
-    +'<p style="color:#6b6b8a;font-size:0.85rem;">'+lista.length+' albuns disponíveis</p>'
-    +'</div>'
-    +'<div class="vinil-grid" id="vinil-main-grid"></div>';
-
-  document.getElementById('vinil-content').innerHTML=html;
-  var grid=document.getElementById('vinil-main-grid');
-  lista.forEach(function(a){grid.appendChild(vCreateCard(a));});
-}
-
-// ============ SEARCH ============
-document.getElementById('vinil-search').addEventListener('input',function(){
-  var term=this.value.trim().toLowerCase();
-  if(term.length<2){
-    if(vCurrentCat) vSelectCat(vCurrentCat);
-    else vShowHome();
-    return;
-  }
-  var res=ALBUNS.filter(function(a){
-    return a.t.toLowerCase().indexOf(term)>-1||a.a.toLowerCase().indexOf(term)>-1;
-  });
-  document.getElementById('vinil-breadcrumb').innerHTML=
-    '<span class="vbc-home" onclick="vShowHome()">Inicio</span>'
-    +' <span style="color:rgba(255,255,255,0.15)">›</span> '
-    +'<span class="vbc-current">🔍 "'+this.value+'"</span>';
-
-  var html='<div style="margin-bottom:1.5rem;">'
-    +'<h2 style="font-family:Georgia,serif;font-size:2rem;font-weight:700;margin-bottom:0.2rem;">🔍 Resultados</h2>'
-    +'<p style="color:#6b6b8a;font-size:0.85rem;">'+res.length+' albuns encontrados</p>'
-    +'</div>'
-    +'<div class="vinil-grid" id="vinil-main-grid"></div>';
-
-  document.getElementById('vinil-content').innerHTML=html;
-  var grid=document.getElementById('vinil-main-grid');
-  if(res.length===0){
-    grid.innerHTML='<div class="vinil-empty"><div class="vinil-empty-icon">🎵</div><p>Nenhum resultado.</p></div>';
-  } else {
-    res.forEach(function(a){grid.appendChild(vCreateCard(a));});
-  }
-});
-
-// ============ CREATE CARD ============
-function vCreateCard(album){
-  var div=document.createElement('div');
-  div.className='vinil-card';
-  div.innerHTML='<div class="vinil-card-cover">'
-    +vCoverHTML(album.id,album.t,false)
-    +'<div class="vinil-card-overlay">'
-    +'<a class="vinil-dl-btn-small" href="'+album.link+'" target="_blank" rel="noopener noreferrer" onclick="vShowToast(\'⬇ Baixando...\',\'green\')">⬇ BAIXAR</a>'
-    +'</div>'
-    +'</div>'
-    +'<div class="vinil-card-info">'
-    +'<div class="vinil-card-title" title="'+album.t+'" onclick="vOpenModal('+album.id+')" style="cursor:pointer;">'+album.t+'</div>'
-    +'<div class="vinil-card-artist">'+album.a+'</div>'
-    +'<div class="vinil-card-foot"><span class="vinil-badge-mp3">MP3</span><a class="vinil-card-dl-direct" href="'+album.link+'" target="_blank" rel="noopener noreferrer" onclick="vShowToast(\'⬇ Baixando...\',\'green\')">⬇ Baixar</a></div>'
-    +'</div>';
-  return div;
-}
-
-// ============ MODAL ============
-function vOpenModal(id){
-  var album=ALBUNS.find(function(a){return a.id===id;});
-  if(!album) return;
-  var cat=CATS.find(function(c){return c.id===album.cat;});
-  document.getElementById('vinil-modal-cat').textContent=cat?cat.icon+' '+cat.nome:'';
-  document.getElementById('vinil-modal-title').textContent=album.t;
-  document.getElementById('vinil-modal-artist').textContent=album.a;
-
-  var bg=vCoverBg(album.id);
-  var shape=SHAPES[album.id%SHAPES.length];
-  document.getElementById('vinil-modal-art').innerHTML=
-    '<button class="vinil-modal-close" onclick="vCloseModal()">✕</button>'
-    +'<div style="width:100%;height:100%;background:'+bg+';display:flex;align-items:center;justify-content:center;font-size:5rem;opacity:0.15;">'+shape+'</div>'
-    +'<div style="position:absolute;inset:0;background:linear-gradient(to top,#0f0f1a,transparent 55%);"></div>'
-    +'<div style="position:absolute;bottom:0;left:0;right:0;padding:1rem;">'
-    +'<div style="font-family:Georgia,serif;font-size:1.1rem;font-weight:700;color:white;text-shadow:0 2px 8px rgba(0,0,0,0.8);">'+album.t.substring(0,40)+'</div>'
-    +'</div>';
-
-  // Update the download anchor href directly - no window.open needed
-  var dlBtn=document.getElementById('vinil-btn-dl');
-  dlBtn.href=album.link;
-  dlBtn.onclick=function(){
-    vShowToast('⬇ Download iniciado!','green');
-    setTimeout(function(){vCloseModal();},400);
-    return true; // allow the href to work
-  };
-  document.getElementById('vinil-btn-copy').onclick=function(){
-    if(navigator.clipboard){
-      navigator.clipboard.writeText(album.link).then(function(){vShowToast('🔗 Link copiado!','yellow');});
-    } else {
-      var el=document.createElement('textarea');
-      el.value=album.link;
-      document.body.appendChild(el);
-      el.select();
-      document.execCommand('copy');
-      document.body.removeChild(el);
-      vShowToast('🔗 Link copiado!','yellow');
+function renderMovies(){
+    let f = getFiltered();
+    let total = Math.ceil(f.length / itemsPerPage);
+    let start = (currentPage-1) * itemsPerPage;
+    let pag = f.slice(start, start+itemsPerPage);
+    let grid = document.getElementById("moviesGrid");
+    grid.innerHTML = "";
+    pag.forEach(m => {
+        grid.innerHTML += `<div class="post"><div class="inner">
+            ${getTVEffectHTML(m.cat, m.id, m.t)}
+            <div class="title"><a onclick="openModal(${m.id})">${m.t}</a></div>
+            <div class="artist">${m.a}</div>
+            <div class="tags"><span class="badge-format">🎵 MP3/FLAC</span></div>
+            <a href="${m.link}" target="_blank" class="btn-download">⬇ DOWNLOAD</a>
+        </div></div>`;
+    });
+    let pagHtml = `<span class="current">Pág ${currentPage}</span>`;
+    for(let i=1; i<=Math.min(total,12); i++){
+        if(i !== currentPage) pagHtml += `<a onclick="changePage(${i})">${i}</a>`;
     }
-  };
-  document.getElementById('vinil-modal-overlay').classList.add('open');
+    document.getElementById("pagination").innerHTML = pagHtml;
 }
 
-function vCloseModal(){document.getElementById('vinil-modal-overlay').classList.remove('open');}
-function vHandleModalClick(e){if(e.target===document.getElementById('vinil-modal-overlay')) vCloseModal();}
-document.addEventListener('keydown',function(e){if(e.key==='Escape') vCloseModal();});
-
-// ============ TOAST ============
-function vShowToast(msg,type){
-  var stack=document.getElementById('vinil-toasts');
-  var t=document.createElement('div');
-  t.className='vinil-toast'+(type==='pink'?' pink':type==='green'?' green':'');
-  t.textContent=msg;
-  stack.appendChild(t);
-  setTimeout(function(){t.remove();},3500);
+function changePage(p){ currentPage = p; renderMovies(); window.scrollTo({top:400}); }
+function filterCategory(cat){ currentCategory = cat; currentPage = 1; renderMovies(); updateActiveCat(cat); }
+function searchMovies(){ currentPage = 1; renderMovies(); }
+function showHome(){ currentCategory = "all"; document.getElementById("searchInput").value = ""; currentPage = 1; renderMovies(); updateActiveCat("all"); }
+function updateActiveCat(cat){ document.querySelectorAll(".cat-scroll a").forEach(a => a.classList.remove("active")); if(cat==="all") document.querySelector(".cat-scroll a:first-child")?.classList.add("active"); else document.querySelector(`.cat-scroll a[data-cat="${cat}"]`)?.classList.add("active"); }
+function openModal(id){ let m = ALBUNS.find(a => a.id === id); if(m){ document.getElementById("modalTitle").innerText = m.t; document.getElementById("modalArtist").innerHTML = `🎤 ${m.a}`; document.getElementById("modalLink").href = m.link; document.getElementById("movieModal").classList.add("open"); } }
+function closeModal(){ document.getElementById("movieModal").classList.remove("open"); }
+function scrollCats(px){ document.getElementById("catScroll").scrollBy({left:px, behavior:"smooth"}); }
+function toggleTheme(){ document.body.classList.toggle("light"); }
+function renderCats(){
+    let bar = document.getElementById("catScroll");
+    bar.innerHTML = `<a data-cat="all" onclick="filterCategory('all')" class="active">🎵 Todos (${ALBUNS.length})</a>`;
+    CATS.forEach(c => {
+        let count = ALBUNS.filter(a => a.cat === c.id).length;
+        bar.innerHTML += `<a data-cat="${c.id}" onclick="filterCategory('${c.id}')">${c.nome} (${count})</a>`;
+    });
 }
+// Meteoros
+setInterval(()=>{let m=document.createElement("div"); m.className="meteor"; m.style.left=Math.random()*innerWidth+"px"; m.style.top=Math.random()*innerHeight*0.5+"px"; m.style.animationDuration=0.7+Math.random()*1+"s"; document.getElementById("meteorContainer").appendChild(m); setTimeout(()=>m.remove(),1500);},900);
+// Notas musicais caindo
+setInterval(()=>{
+    let notes = ["♪", "♫", "🎵", "🎶", "🎸", "🎹", "🎧", "🎤", "♩", "🎼"];
+    let note = document.createElement("div");
+    note.className = "music-note";
+    note.innerHTML = notes[Math.floor(Math.random() * notes.length)];
+    note.style.left = Math.random() * innerWidth + "px";
+    note.style.animationDuration = 3 + Math.random() * 4 + "s";
+    note.style.fontSize = (20 + Math.random() * 30) + "px";
+    note.style.color = `hsl(${Math.random() * 360}, 100%, 60%)`;
+    document.getElementById("musicRain").appendChild(note);
+    setTimeout(()=>note.remove(), 6000);
+}, 800);
 
-// ============ FAKE ACTIVITY ============
-var VNOMES=['Carlos (SP)','Ana (RJ)','Marcos (MG)','Joao (PR)','Fernanda (RS)','Lucas (BA)','Pedro (CE)','Juliana (GO)','Rafael (SC)'];
-setInterval(function(){
-  var nome=VNOMES[Math.floor(Math.random()*VNOMES.length)];
-  var album=ALBUNS[Math.floor(Math.random()*ALBUNS.length)];
-  var short=album.t.length>25?album.t.substring(0,23)+'...':album.t;
-  vShowToast('🎵 '+nome+' baixou "'+short+'"','pink');
-},10000);
-
-// ============ ONLINE COUNTER ============
-setInterval(function(){
-  document.getElementById('vinil-online-count').textContent=Math.floor(Math.random()*130+50);
-},5000);
-
-// ============ START ============
-vShowHome();
-})();
+renderCats(); renderMovies();
 </script>
+</body>
+</html>
