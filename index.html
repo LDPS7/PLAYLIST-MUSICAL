@@ -18,6 +18,7 @@
 :root{--bg:#07070d;--bg2:#0f0f1a;--bg3:#151525;--surface:#1a1a2e;--border:rgba(255,255,255,0.06);--accent:#e8ff3c;--accent2:#ff3c8e;--accent3:#3cffb8;--text:#f0f0f8;--muted:#6b6b8a;}
 body.light{--bg:#f5f5f5;--bg2:#fff;--bg3:#e0e0e0;--surface:#ffffff;--border:#cccccc;--text:#1a1a1a;--muted:#555555;}
 body{font-family:'DM Sans','Segoe UI',sans-serif;background:var(--bg);color:var(--text);transition:all 0.3s;overflow-x:hidden;}
+#bg-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;}
 .meteor-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9998;overflow:hidden;}
 .meteor{position:absolute;width:2px;height:70px;background:linear-gradient(to bottom,var(--accent),transparent);opacity:0;animation:meteorFall 1.2s ease-out forwards;}
 @keyframes meteorFall{0%{transform:translateX(0) translateY(0) rotate(45deg);opacity:1;}100%{transform:translateX(250px) translateY(250px) rotate(45deg);opacity:0;}}
@@ -55,7 +56,7 @@ header{padding:20px 0;}
 .row{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:25px;}
 .post{transition:transform 0.3s;}
 .post:hover{transform:translateY(-8px);}
-.inner{background:var(--surface);border-radius:12px;overflow:hidden;border:1px solid var(--border);}
+.inner{background:rgba(26,26,46,0.35);border-radius:12px;overflow:hidden;border:1px solid var(--border);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
 .thumb{aspect-ratio:1;position:relative;overflow:hidden;}
 .thumb-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 30% 40%, rgba(255,255,255,0.1) 0%, transparent 70%);z-index:2;pointer-events:none;}
 .thumb-tv-effect{position:absolute;top:0;left:0;width:100%;height:100%;background:repeating-linear-gradient(0deg, rgba(0,0,0,0.5) 0px, rgba(0,0,0,0.5) 2px, transparent 2px, transparent 6px);z-index:3;pointer-events:none;opacity:0.6;}
@@ -73,7 +74,7 @@ header{padding:20px 0;}
 .btn-download{display:block;background:var(--accent);color:#000;text-align:center;padding:10px;margin:12px;border-radius:8px;text-decoration:none;font-weight:700;font-size:13px;transition:0.2s;}
 .btn-download:hover{background:var(--accent2);transform:scale(1.02);color:#000;}
 .pagination{text-align:center;margin:40px 0;display:flex;justify-content:center;gap:10px;flex-wrap:wrap;}
-.pagination .current,.pagination a{padding:10px 15px;background:var(--surface);border:1px solid var(--border);border-radius:8px;text-decoration:none;color:var(--text);transition:0.2s;cursor:pointer;}
+.pagination .current,.pagination a{padding:10px 15px;background:rgba(26,26,46,0.35);border:1px solid var(--border);border-radius:8px;text-decoration:none;color:var(--text);transition:0.2s;cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
 .pagination .current,.pagination a:hover{background:var(--accent);color:#000;}
 .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:20000;align-items:center;justify-content:center;backdrop-filter:blur(10px);}
 .modal.open{display:flex;}
@@ -82,7 +83,7 @@ header{padding:20px 0;}
 .modal-body{padding:20px;text-align:center; color: var(--text);}
 .modal-body .download-link{background:var(--accent);color:#000;display:block;padding:15px;border-radius:10px;text-decoration:none;font-weight:bold;margin:15px 0;}
 .close-modal{background:var(--bg2);border:1px solid var(--border);padding:10px 20px;border-radius:8px;cursor:pointer;color:var(--text);}
-footer{background:var(--bg2);padding:40px 0 20px;margin-top:50px;border-top:1px solid var(--border);text-align:center;}
+footer{background:rgba(15,15,26,0.5);padding:40px 0 20px;margin-top:50px;border-top:1px solid var(--border);text-align:center;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
 footer .menu ul{display:flex;justify-content:center;gap:20px;list-style:none;margin:20px 0;flex-wrap:wrap;}
 footer .menu ul li a{color:var(--muted);text-decoration:none;font-size:13px;cursor:pointer;}
 .bottom{font-size:12px;color:var(--muted);margin-top:20px;}
@@ -90,6 +91,7 @@ footer .menu ul li a{color:var(--muted);text-decoration:none;font-size:13px;curs
 </style>
 </head>
 <body>
+<canvas id="bg-canvas"></canvas>
 <div class="meteor-container" id="meteorContainer"></div>
 <div class="music-rain" id="musicRain"></div>
 <div class="theme-toggle" onclick="toggleTheme()">🌓 Tema Claro/Escuro</div>
@@ -242,6 +244,78 @@ setInterval(()=>{
     document.getElementById("musicRain").appendChild(note);
     setTimeout(()=>note.remove(), 6000);
 }, 800);
+
+// ==================== FUNDO EFEITO (PONTOS E LINHAS) ====================
+const bgCanvas = document.getElementById('bg-canvas');
+const bgCtx = bgCanvas.getContext('2d');
+
+let BW, BH;
+function resizeBg() {
+  BW = bgCanvas.width = window.innerWidth;
+  BH = bgCanvas.height = window.innerHeight;
+}
+resizeBg();
+window.addEventListener('resize', resizeBg);
+
+const BG_COLORS = ['#00ff88', '#00ccff', '#ff00aa', '#ffcc00', '#8800ff'];
+const NUM_POINTS = 90;
+const MAX_DIST = 160;
+
+const bgPoints = [];
+for (let i = 0; i < NUM_POINTS; i++) {
+  bgPoints.push({
+    x: Math.random() * BW,
+    y: Math.random() * BH,
+    z: Math.random() * 1 + 0.3,
+    vx: (Math.random() - 0.5) * 0.4,
+    vy: (Math.random() - 0.5) * 0.4,
+    r: Math.random() * 2 + 1,
+    color: BG_COLORS[Math.floor(Math.random() * BG_COLORS.length)]
+  });
+}
+
+function animateBg() {
+  bgCtx.fillStyle = 'rgba(7,7,13,0.25)';
+  bgCtx.fillRect(0, 0, BW, BH);
+
+  for (let i = 0; i < bgPoints.length; i++) {
+    const p = bgPoints[i];
+    p.x += p.vx * p.z;
+    p.y += p.vy * p.z;
+
+    if (p.x < 0 || p.x > BW) p.vx *= -1;
+    if (p.y < 0 || p.y > BH) p.vy *= -1;
+
+    for (let j = i + 1; j < bgPoints.length; j++) {
+      const q = bgPoints[j];
+      const dx = p.x - q.x;
+      const dy = p.y - q.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < MAX_DIST) {
+        const alpha = (1 - dist / MAX_DIST) * 0.35 * Math.min(p.z, q.z);
+        bgCtx.strokeStyle = p.color;
+        bgCtx.globalAlpha = alpha;
+        bgCtx.lineWidth = 0.8;
+        bgCtx.beginPath();
+        bgCtx.moveTo(p.x, p.y);
+        bgCtx.lineTo(q.x, q.y);
+        bgCtx.stroke();
+      }
+    }
+    bgCtx.globalAlpha = 1;
+
+    bgCtx.fillStyle = p.color;
+    bgCtx.shadowBlur = 12;
+    bgCtx.shadowColor = p.color;
+    bgCtx.beginPath();
+    bgCtx.arc(p.x, p.y, p.r * p.z, 0, Math.PI * 2);
+    bgCtx.fill();
+    bgCtx.shadowBlur = 0;
+  }
+
+  requestAnimationFrame(animateBg);
+}
+animateBg();
 
 renderCats(); renderMovies();
 
